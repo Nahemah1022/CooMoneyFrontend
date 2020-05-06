@@ -3,18 +3,20 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-const HelloWorld = () => import("@/components/HelloWorld");
+const Project = () => import("@/components/Project");
 const Index = () => import("@/components/Index");
 
 export default new VueRouter({
     routes: [
         {
             path: '/Index',
+            name: 'Index',
             component: Index
         },
         {
-            path: '/HelloWorld',
-            component: HelloWorld
+            path: '/Project',
+            name: 'Project',
+            component: Project
         }
     ]
 })
