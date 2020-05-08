@@ -1,12 +1,11 @@
 <template>
   <div class="main">
     <div :class="{mask: true, edit: isEditing}">
-      <img class="edit" src="@/assets/image/Project/edit.svg" alt />
+      <img class="edit" src="@/assets/image/Project/edit.svg" @click="$emit('edit', project)" />
       <img
         class="cross"
-        @click="$emit('delete', project.id, project.title)"
         src="@/assets/image/Project/cross.svg"
-        alt
+        @click="$emit('delete', project.id, project.title)"
       />
     </div>
     <img :src="require(`@/assets/image/Project/Theme_${project.theme}.svg`)" alt />
@@ -25,9 +24,6 @@ export default {
       type: Object,
       required: true
     },
-    theme: {
-      type: Number
-    },
     isEditing: {
       type: Boolean
     }
@@ -44,10 +40,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 120px;
-  height: 173px;
+  width: 36%;
   margin: 20px;
-  //   box-shadow: 0px -1px 10px #c8c8c8;
+  box-shadow: 5px 5px 10px #c8c8c8;
+  background-color: transparent;
+  border-radius: 20px;
   .text {
     position: absolute;
     width: 70%;
@@ -55,6 +52,7 @@ export default {
     z-index: 2;
     background-color: transparent;
     text-align: center;
+    font-size: 2vh;
     font-weight: 500;
   }
   .mask {
@@ -66,6 +64,7 @@ export default {
     left: 0;
     transition: 0.4s;
     background-color: rgba(255, 255, 255, 0.54);
+    border: 0;
     opacity: 0;
     &.edit {
       z-index: 1;
@@ -90,6 +89,7 @@ export default {
   }
   img {
     width: 100%;
+    background-color: transparent;
   }
 }
 </style>

@@ -2,7 +2,11 @@
   <div class="main">
     <Header :title="title" @back="$router.go(-1)"></Header>
     <div class="center">
-      <img class="theme" :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt />
+      <ProjectItem
+        class="theme"
+        :project="{id: this.id, title: this.projectName, theme: this.theme}"
+      ></ProjectItem>
+      <!-- <img class="theme" :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt /> -->
       <div class="theme-pick">
         <p>choose cover</p>
         <div class="pick-bar">
@@ -13,7 +17,7 @@
         </div>
       </div>
       <div class="input-block">
-        <input type="text" name="name" placeholder="Project's Name" />
+        <input type="text" name="name" v-model="projectName" placeholder="Project's Name" />
         <input type="text" name="partners[]" placeholder="Your Partners" />
       </div>
       <div class="budget-block">
@@ -25,18 +29,20 @@
         </div>
       </div>
 
-      <button>Confirm</button>
+      <button @click="submit">Confirm</button>
     </div>
   </div>
 </template>
 
 <script>
 import Header from "@/components/common/Header.vue";
+import ProjectItem from "@/components/Project/ProjectItem.vue";
 
 export default {
   name: "NewProject",
   data() {
     return {
+      id: undefined,
       title: "",
       theme: 6,
       projectName: "",
@@ -45,16 +51,27 @@ export default {
     };
   },
   props: {
-    projectId: Number
+    preProject: Object
   },
   components: {
-    Header
+    Header,
+    ProjectItem
   },
   beforeMount() {
-    if (this.projectId === 0) {
-      this.title = "New Project";
-    } else {
+    if (this.preProject) {
+      this.id = this.preProject.id;
       this.title = "Edit Project";
+      this.projectName = this.preProject.title;
+      this.theme = this.preProject.theme;
+      // TODO: get budget, partners from db
+    } else {
+      this.title = "New Project";
+    }
+  },
+  methods: {
+    submit() {
+      console.log(this.projectName);
+      // TODO: submit
     }
   }
 };
@@ -63,6 +80,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
 .center {
+  padding-top: 8vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -70,6 +88,7 @@ export default {
   width: 100%;
   height: 100%;
   .theme {
+    width: 25vh;
     height: 36vh;
     margin: 3vh 0;
   }

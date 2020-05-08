@@ -12,6 +12,7 @@
         :key="index"
         :project="projects[index-1]"
         :isEditing="isEditing"
+        @edit="editProject"
         @delete="deleteProject"
       ></ProjectItem>
       <div @click="newProject" class="new">
@@ -67,11 +68,17 @@ export default {
     ProjectItem
   },
   methods: {
-    newProject() {
-      this.$router.push({ name: "NewProject", params: { projectId: 0 } });
-    },
     editStart() {
       this.isEditing = !this.isEditing;
+    },
+    newProject() {
+      this.$router.push({ name: "NewProject" });
+    },
+    editProject(project) {
+      this.$router.push({
+        name: "NewProject",
+        params: { preProject: project }
+      });
     },
     deleteProject(id, title) {
       if (
@@ -91,6 +98,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
 .project-container {
+  padding-top: 8vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
