@@ -8,8 +8,11 @@
         @click="$emit('delete', project.id, project.title)"
       />
     </div>
-    <img :src="require(`@/assets/image/Project/Theme_${project.theme}.svg`)" alt />
-    <p class="text">{{project.title}}</p>
+    <img
+      :src="require(`@/assets/image/Project/Theme_${project.theme}.svg`)"
+      @click="$emit('enter', project)"
+    />
+    <p :class="{text: true, large: this.large}">{{project.title}}</p>
   </div>
 </template>
 
@@ -24,9 +27,8 @@ export default {
       type: Object,
       required: true
     },
-    isEditing: {
-      type: Boolean
-    }
+    isEditing: Boolean,
+    large: Boolean
   }
 };
 </script>
@@ -52,8 +54,10 @@ export default {
     z-index: 2;
     background-color: transparent;
     text-align: center;
-    font-size: 2vh;
     font-weight: 500;
+    &.large {
+      font-size: x-large;
+    }
   }
   .mask {
     position: absolute;

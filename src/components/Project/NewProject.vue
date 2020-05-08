@@ -4,6 +4,7 @@
     <div class="center">
       <ProjectItem
         class="theme"
+        :large="true"
         :project="{id: this.id, title: this.projectName, theme: this.theme}"
       ></ProjectItem>
       <!-- <img class="theme" :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt /> -->

@@ -12,6 +12,7 @@
         :key="index"
         :project="projects[index-1]"
         :isEditing="isEditing"
+        @enter="enterProject"
         @edit="editProject"
         @delete="deleteProject"
       ></ProjectItem>
@@ -26,7 +27,7 @@
 <script>
 import Header from "@/components/common/Header.vue";
 import Footer from "@/components/common/Footer.vue";
-import ProjectItem from "@/components/Project/ProjectItem";
+import ProjectItem from "@/components/Project/ProjectItem.vue";
 
 export default {
   name: "Project",
@@ -80,6 +81,15 @@ export default {
         params: { preProject: project }
       });
     },
+    enterProject(project) {
+      this.$router.push({
+        name: "ProjectView",
+        params: {
+          projects: this.projects,
+          default: this.projects.indexOf(project)
+        }
+      });
+    },
     deleteProject(id, title) {
       if (
         confirm(
@@ -111,7 +121,7 @@ export default {
     height: 173px;
     margin: 20px;
     img {
-      width: 100%;
+      width: 99%;
     }
   }
 }

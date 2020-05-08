@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
+const ProjectView = () => import("@/components/Project/ProjectView");
 const NewProject = () => import("@/components/Project/NewProject");
 const Project = () => import("@/components/Project/Project");
 const Login = () => import("@/components/Login");
@@ -43,5 +44,11 @@ export default new VueRouter({
             component: NewProject,
             props: true
         },
+        {
+            path: "/ProjectView",
+            name: "ProjectView",
+            component: ProjectView,
+            props: true
+        }
     ]
 })
