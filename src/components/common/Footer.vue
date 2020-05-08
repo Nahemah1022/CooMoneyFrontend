@@ -23,6 +23,6 @@ export default {
   align-items: center;
   bottom: 0;
   background-color: #fff;
-  box-shadow: 0px -1px 10px #b3b2b2;
+  box-shadow: 0px -1px 10px #c8c8c8;
 }
 </style>
