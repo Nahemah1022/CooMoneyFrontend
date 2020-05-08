@@ -25,6 +25,7 @@ export default {
 @import "@/assets/css/global.scss";
 
 .main {
+  position: fixed;
   background-color: #fff;
   z-index: 9999;
   display: flex;
