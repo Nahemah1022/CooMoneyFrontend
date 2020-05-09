@@ -56,7 +56,7 @@ export default {
 .slider {
   background-color: #dffffe;
   height: 100vh;
-  padding-top: 5vh;
+  padding-top: 4vh;
   overflow-y: hidden;
 }
 </style>

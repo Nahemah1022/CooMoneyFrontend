@@ -3,12 +3,32 @@
     <div class="block">
       <p class="title">{{title}}</p>
       <div class="money-block">
-        <div class="money left">
+        <div class="first">
+          <div class="money">
+            <p class="text">Remaining budget</p>
+            <span>$</span>
+            {{costFormat(this.budget)}}
+          </div>
+          <img :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt />
+        </div>
+        <div class="second">
+          <div class="money">
+            <p class="text">Monthly income</p>
+            <span>$</span>
+            {{costFormat(this.income)}}
+          </div>
+          <div class="money">
+            <p class="text">Monthly expenses</p>
+            <span>$</span>
+            {{costFormat(this.expanse)}}
+          </div>
+        </div>
+        <!-- version 1 -->
+        <!-- <div class="money left">
           <p class="text">Expenses</p>
           <span>$</span>
           {{this.expanse}}
         </div>
-        <!-- <div class="line"></div> -->
         <img src="@/assets/image/Project/line.svg" alt />
         <div class="right-block">
           <div class="money">
@@ -21,11 +41,11 @@
             <span>$</span>
             {{this.budget}}
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="account-block">
         <div class="header">
-          <p>account</p>
+          <p>Account</p>
           <img src="@/assets/image/Project/option.svg" alt />
         </div>
         <div v-for="account in accounts" :key="account.id" class="account">
@@ -41,7 +61,7 @@
       </div>
       <div class="bills-block">
         <div class="header">
-          <p>Bills for the last three days</p>
+          <p>Recent Bills</p>
           <img src="@/assets/image/Project/option.svg" alt />
         </div>
         <div v-for="bill in bills" :key="bill.id" class="bill">
@@ -61,7 +81,12 @@
           <span>{{notificationCount}}</span>
         </div>
         <button :class="{add: true, click: adding}" @click="add">
-          <img src="@/assets/image/Project/add.svg" />
+          <img v-if="!adding" src="@/assets/image/Project/add.svg" />
+          <div v-else>
+            <span class="remind">Remind&nbsp;</span>
+            <div class="line"></div>
+            <span class="now">Paying</span>
+          </div>
         </button>
       </div>
     </div>
@@ -86,8 +111,7 @@ export default {
         { id: 1, title: "Equipment Purchase", cost: 6092, categoty: "repair" },
         { id: 2, title: "Software Purchase", cost: 2000, categoty: "purchase" },
         { id: 3, title: "Equipment Rental", cost: 3000, categoty: "repair" },
-        { id: 4, title: "Equipment Repair", cost: 1020, categoty: "repair" },
-        { id: 5, title: "Software Purchase", cost: 2000, categoty: "purchase" }
+        { id: 4, title: "Equipment Repair", cost: 1020, categoty: "repair" }
       ]
     };
   },
@@ -99,11 +123,20 @@ export default {
   methods: {
     add() {
       this.adding = !this.adding;
+    },
+    costFormat(cost) {
+      let str = cost.toString();
+      let rtn = str.substr(0, str.length % 3) + ", ";
+      for (var i = str.length % 3; i < str.length; i += 3) {
+        rtn += str.substr(i, 3) + ", ";
+      }
+      rtn = rtn.slice(0, -2);
+      return rtn;
     }
   },
   beforeMount() {
     // TODO: read expanse, income, budget, accoints from db
-    // TODO: read last 7-this.accounts.length bills
+    // TODO: read last 6-this.accounts.length bills
   }
 };
 </script>
@@ -116,8 +149,8 @@ export default {
 .main {
   height: 100%;
   .block {
-    width: 85%;
-    height: 80%;
+    width: 90%;
+    height: 82vh;
     margin: 0 auto;
     background-color: #fff;
     border: #fff 1px solid;
@@ -131,46 +164,69 @@ export default {
       color: #00c5b8;
     }
     .money-block {
-      width: 90%;
-      height: 12vh;
-      margin: 0 0 0 10%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      img {
-        height: 100%;
-      }
-      .right-block {
+      width: 85%;
+      height: 22vh;
+      margin: 0 auto;
+      .first {
         display: flex;
-        flex-direction: column;
         align-items: flex-start;
         justify-content: space-between;
-        width: 30%;
-        margin: 0 20px 0 10px;
-      }
-      .money {
-        font-size: 16px;
         width: 100%;
-        .text {
-          font-size: 12px;
-          text-align: left;
-          margin: 6px 0;
-        }
-        span {
-          margin-left: 16px;
-        }
-        &.left {
-          width: 50%;
-          font-size: 36px;
-          span {
-            margin-left: 4px;
-          }
-          .text {
+        height: 15vh;
+        .money {
+          width: 70%;
+          font-size: 42px;
+          text-align: center;
+          p {
             font-size: 24px;
-            margin: 5px 0;
+            text-align: left;
           }
+        }
+        img {
+          width: 24%;
         }
       }
+      .second {
+        display: flex;
+        justify-content: space-between;
+        .momny {
+          width: 45%;
+        }
+      }
+      //   img {
+      //     height: 100%;
+      //   }
+      //   .right-block {
+      //     display: flex;
+      //     flex-direction: column;
+      //     align-items: flex-start;
+      //     justify-content: space-between;
+      //     width: 30%;
+      //     margin: 0 20px 0 10px;
+      //   }
+      //   .money {
+      //     font-size: 16px;
+      //     width: 100%;
+      //     .text {
+      //       font-size: 12px;
+      //       text-align: left;
+      //       margin: 6px 0;
+      //     }
+      //     span {
+      //       margin-left: 16px;
+      //     }
+      //     &.left {
+      //       width: 50%;
+      //       font-size: 36px;
+      //       span {
+      //         margin-left: 4px;
+      //       }
+      //       .text {
+      //         font-size: 24px;
+      //         margin: 5px 0;
+      //       }
+      //     }
+      //   }
     }
     .account-block,
     .bills-block {
@@ -210,6 +266,21 @@ export default {
         transition: 0.4s;
         &.click {
           width: 55%;
+        }
+        div {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          .line {
+            height: 50px;
+            margin: 0 5px;
+            border: 1.5px #fff solid;
+          }
+          span {
+            color: #fff;
+            font-weight: 600;
+            font-size: 20px;
+          }
         }
       }
       .notification {
