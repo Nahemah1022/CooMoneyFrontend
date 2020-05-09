@@ -40,12 +40,11 @@ export default {
       slideBy: "page",
       center: true,
       mouseDrag: true,
-      swipeAngle: false,
       edgePadding: 0,
       gutter: 0,
-      speed: 400,
+      speed: 600,
       loop: false,
-      preventScrollOnTouch: "force"
+      preventScrollOnTouch: "auto"
     });
   }
 };
@@ -55,8 +54,8 @@ export default {
 <style lang='scss' scoped>
 .slider {
   background-color: #dffffe;
-  height: 100vh;
+  height: 90vh;
   padding-top: 4vh;
-  overflow-y: hidden;
+  touch-action: none;
 }
 </style>

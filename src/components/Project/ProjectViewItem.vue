@@ -55,25 +55,12 @@
           </div>
           <p>
             <span>$</span>
-            {{account.remain}}
+            {{costFormat(account.remain)}}
           </p>
         </div>
       </div>
-      <div class="bills-block">
-        <div class="header">
-          <p>Recent Bills</p>
-          <img src="@/assets/image/Project/option.svg" alt />
-        </div>
-        <div v-for="bill in bills" :key="bill.id" class="bill">
-          <div>
-            <img :src="require(`@/assets/image/Project/${bill.categoty}.svg`)" />
-            {{bill.title}}
-          </div>
-          <p>
-            <span>$</span>
-            {{bill.cost}}
-          </p>
-        </div>
+      <div class="cont">
+        <Revenue :class="{revenue: true, full: fullRevenue}" @full="toggleRevenue"></Revenue>
       </div>
       <div class="btns">
         <div :class="{notification: true, click: adding}">
@@ -94,11 +81,17 @@
 </template>
 
 <script>
+import Revenue from "@/components/Project/Revenue/Revenue.vue";
+
 export default {
   name: "ProjectViewItem",
+  components: {
+    Revenue
+  },
   data() {
     return {
       adding: false,
+      fullRevenue: false,
       expanse: 13724,
       income: 9080,
       budget: 38092,
@@ -106,12 +99,6 @@ export default {
       accounts: [
         { id: 1, name: "cash", remain: 2092, img: "cash" },
         { id: 2, name: "Bank Sinopac", remain: 36000, img: "bank" }
-      ],
-      bills: [
-        { id: 1, title: "Equipment Purchase", cost: 6092, categoty: "repair" },
-        { id: 2, title: "Software Purchase", cost: 2000, categoty: "purchase" },
-        { id: 3, title: "Equipment Rental", cost: 3000, categoty: "repair" },
-        { id: 4, title: "Equipment Repair", cost: 1020, categoty: "repair" }
       ]
     };
   },
@@ -132,11 +119,14 @@ export default {
       }
       rtn = rtn.slice(0, -2);
       return rtn;
+    },
+    toggleRevenue() {
+      this.fullRevenue = !this.fullRevenue;
     }
   },
   beforeMount() {
     // TODO: read expanse, income, budget, accoints from db
-    // TODO: read last 6-this.accounts.length bills
+    // TODO: read last three's bills with title, cost, categoty, status, date from db
   }
 };
 </script>
@@ -228,8 +218,7 @@ export default {
       //     }
       //   }
     }
-    .account-block,
-    .bills-block {
+    .account-block {
       width: 80%;
       margin: 15px auto;
       box-shadow: 0 0 12px #e6e6e6;
@@ -240,12 +229,28 @@ export default {
         justify-content: space-between;
         margin: 0 0 2vh 0;
       }
-      .account,
-      .bill {
+      .account {
         display: flex;
         margin: 10px auto;
         justify-content: space-between;
         align-items: center;
+      }
+    }
+    .cont {
+      position: relative;
+      height: 24vh;
+      .revenue {
+        width: 90vw;
+        position: absolute;
+        top: -2vh;
+        left: 0;
+        transition: 0.5s;
+        &.full {
+          width: 110vw;
+          top: -50vh;
+          left: -10vw;
+          height: 100vh;
+        }
       }
     }
     .btns {
