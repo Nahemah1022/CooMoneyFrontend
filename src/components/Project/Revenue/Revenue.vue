@@ -9,15 +9,23 @@
         />
       </div>
       <div :class="{bills: true, fullBills: full}">
-        <div v-for="bill in bills" :key="bill.id" class="bill">
-          <div>
-            <img :src="require(`@/assets/image/Project/${bill.categoty}.svg`)" />
-            {{bill.title}}
+        <div v-for="bill in bills" :key="bill.id">
+          <p class="date" v-if="showDate(full && bill.date)">{{bill.date}}</p>
+          <div class="bill">
+            <div>
+              <img :src="require(`@/assets/image/Project/${bill.categoty}.svg`)" />
+              {{bill.title}}
+            </div>
+            <div :class="{right: true, fullRight: full}">
+              <span>$</span>
+              {{costFormat(bill.cost)}}
+              <span>&nbsp;</span>
+              <img
+                :class="{fullImg: full}"
+                :src="require(`@/assets/image/Project/Revenue/${bill.status}.svg`)"
+              />
+            </div>
           </div>
-          <p>
-            <span>$</span>
-            {{costFormat(bill.cost)}}
-          </p>
         </div>
       </div>
     </div>
@@ -36,7 +44,7 @@ export default {
           title: "Equipment Purchase",
           cost: 6092,
           categoty: "repair",
-          status: "accepted",
+          status: "approved",
           date: "2020-04-30 Thursday"
         },
         {
@@ -68,7 +76,7 @@ export default {
           title: "Equipment Repair",
           cost: 1222,
           categoty: "repair",
-          status: "accepted",
+          status: "approved",
           date: "2020-04-25 Saturday"
         },
         {
@@ -76,10 +84,11 @@ export default {
           title: "Equipment Repair",
           cost: 4241,
           categoty: "repair",
-          status: "accepted",
+          status: "approved",
           date: "2020-04-25 Saturday"
         }
       ],
+      dates: {},
       detailedBills: {}
     };
   },
@@ -88,6 +97,11 @@ export default {
   },
   methods: {
     fullRevenue() {
+      if (!this.full) {
+        for (const date in this.dates) {
+          this.dates[date] = false;
+        }
+      }
       this.full = !this.full;
       this.$emit("full");
     },
@@ -99,12 +113,21 @@ export default {
       }
       rtn = rtn.slice(0, -2);
       return rtn;
+    },
+    showDate(date) {
+      if (!this.dates[date]) {
+        this.dates[date] = true;
+        return date;
+      } else {
+        return false;
+      }
     }
   },
   beforeMount() {
     for (const bill of this.bills) {
       if (this.detailedBills[bill.date] == undefined) {
         this.detailedBills[bill.date] = new Array();
+        this.dates[bill.date] = false;
       }
       this.detailedBills[bill.date].push(bill);
     }
@@ -148,11 +171,32 @@ export default {
       &.fullBills {
         height: 100vh;
       }
+      .date {
+        font-size: 10px;
+        margin-top: 10px;
+      }
       .bill {
         display: flex;
-        margin: 10px auto;
+        margin: 16px auto;
         justify-content: space-between;
         align-items: center;
+        .right {
+          width: 16vw;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: 0.5s;
+          &.fullRight {
+            width: 27vw;
+          }
+          img {
+            transition: 0.5s;
+            width: 0vw;
+            &.fullImg {
+              width: 10vw;
+            }
+          }
+        }
       }
     }
   }
