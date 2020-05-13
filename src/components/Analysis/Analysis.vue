@@ -4,12 +4,9 @@
     <Option></Option>
     <div class="example-3d">
       <swiper class="swiper" :options="swiperOption" :activeIndex="3">
-        <swiper-slide
-          ><Pie
-            v-bind:Outproject="Outproject1"
-            v-bind:Inproject="Inproject1"
-          ></Pie
-        ></swiper-slide>
+        <swiper-slide>
+          <Pie v-bind:Outproject="Outproject1" v-bind:Inproject="Inproject1"></Pie>
+        </swiper-slide>
         <swiper-slide>Slide 2</swiper-slide>
         <swiper-slide>Slide 3</swiper-slide>
 
@@ -20,7 +17,7 @@
       </swiper>
     </div>
 
-    <Footer></Footer>
+    <Footer :active="1"></Footer>
   </div>
 </template>
 
@@ -31,315 +28,315 @@ var project2 = [
     month: 9,
     day: 28,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 9,
     day: 26,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'jason',
+    charge: "jason"
   },
   {
     year: 2019,
     month: 9,
     day: 23,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'dick',
+    charge: "dick"
   },
   {
     year: 2019,
     month: 9,
     day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 8,
     day: 19,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'jason',
+    charge: "jason"
   },
   {
     year: 2019,
     month: 8,
     day: 14,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'dick',
+    charge: "dick"
   },
   {
     year: 2019,
     month: 7,
     day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 7,
     day: 16,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'jason',
+    charge: "jason"
   },
   {
     year: 2019,
     month: 7,
     day: 13,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'dick',
+    charge: "dick"
   },
   {
     year: 2019,
     month: 5,
     day: 8,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 5,
     day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'jason',
+    charge: "jason"
   },
   {
     year: 2019,
     month: 5,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'dick',
+    charge: "dick"
   },
   {
     year: 2019,
     month: 4,
     day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: false,
-    charge: 'vargin',
+    charge: "vargin"
   },
   {
     year: 2019,
     month: 4,
     day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
+    Classification: "Equipment",
     pass: false,
-    charge: 'helloni',
+    charge: "helloni"
   },
   {
     year: 2019,
     month: 4,
     day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
+    Classification: "others",
     pass: true,
-    charge: 'sggag',
+    charge: "sggag"
   },
   {
     year: 2019,
     month: 4,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'qqq',
+    charge: "qqq"
   },
   {
     year: 2019,
     month: 3,
     day: 25,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'wrqggr',
+    charge: "wrqggr"
   },
   {
     year: 2019,
     month: 3,
     day: 13,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'gasgf',
+    charge: "gasgf"
   },
   {
     year: 2019,
     month: 3,
     day: 11,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
+    Classification: "others",
     pass: true,
-    charge: 'hfjdfhj',
+    charge: "hfjdfhj"
   },
   {
     year: 2019,
     month: 3,
     day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'gadg',
+    charge: "gadg"
   },
   {
     year: 2019,
     month: 3,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 3,
     day: 1,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 3,
     day: 1,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 3,
     day: 1,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'sdgfsdfg',
+    charge: "sdgfsdfg"
   },
   {
     year: 2019,
     month: 2,
     day: 26,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 23,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
+    Classification: "Equipment",
     pass: true,
-    charge: 'gsdg',
+    charge: "gsdg"
   },
   {
     year: 2019,
     month: 2,
     day: 21,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 7,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 9,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: false,
-    charge: 'sfdgsdg',
+    charge: "sfdgsdg"
   },
   {
     year: 2019,
     month: 2,
     day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
+    Classification: "Equipment",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 2,
     money: 690,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 1,
     money: 920,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 1,
     money: 990,
-    Classification: 'others',
+    Classification: "others",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 1,
     money: 870,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
 
   {
@@ -347,269 +344,269 @@ var project2 = [
     month: 5,
     day: 8,
     money: 320,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 5,
     day: 6,
     money: 520,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'jason',
+    charge: "jason"
   },
   {
     year: 2018,
     month: 5,
     day: 3,
     money: 620,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'dick',
+    charge: "dick"
   },
   {
     year: 2018,
     month: 4,
     day: 22,
     money: 920,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: false,
-    charge: 'vargin',
+    charge: "vargin"
   },
   {
     year: 2018,
     month: 4,
     day: 22,
     money: 120,
-    Classification: 'Equipment',
+    Classification: "Equipment",
     pass: false,
-    charge: 'helloni',
+    charge: "helloni"
   },
   {
     year: 2018,
     month: 4,
     day: 22,
     money: 820,
-    Classification: 'others',
+    Classification: "others",
     pass: true,
-    charge: 'sggag',
+    charge: "sggag"
   },
   {
     year: 2018,
     month: 4,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'qqq',
+    charge: "qqq"
   },
   {
     year: 2018,
     month: 3,
     day: 25,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'wrqggr',
+    charge: "wrqggr"
   },
   {
     year: 2018,
     month: 3,
     day: 13,
     money: 6720,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'gasgf',
+    charge: "gasgf"
   },
   {
     year: 2018,
     month: 3,
     day: 11,
     money: 3220,
-    Classification: 'others',
+    Classification: "others",
     pass: true,
-    charge: 'hfjdfhj',
+    charge: "hfjdfhj"
   },
   {
     year: 2018,
     month: 3,
     day: 6,
     money: 2220,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'gadg',
+    charge: "gadg"
   },
   {
     year: 2018,
     month: 3,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 3,
     day: 1,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 3,
     day: 1,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 3,
     day: 1,
     money: 220,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'sdgfsdfg',
+    charge: "sdgfsdfg"
   },
   {
     year: 2018,
     month: 2,
     day: 26,
     money: 820,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2019,
     month: 2,
     day: 23,
     money: 520,
-    Classification: 'Equipment',
+    Classification: "Equipment",
     pass: true,
-    charge: 'gsdg',
+    charge: "gsdg"
   },
   {
     year: 2018,
     month: 2,
     day: 21,
     money: 420,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 2,
     day: 7,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 2,
     day: 9,
     money: 640,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: false,
-    charge: 'sfdgsdg',
+    charge: "sfdgsdg"
   },
   {
     year: 2018,
     month: 2,
     day: 6,
     money: 410,
-    Classification: 'Equipment',
+    Classification: "Equipment",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 2,
     day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
+    Classification: "Meals",
     pass: false,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 2,
     day: 2,
     money: 690,
-    Classification: 'Rental',
+    Classification: "Rental",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 2,
     day: 1,
     money: 920,
-    Classification: 'Transportation',
+    Classification: "Transportation",
     pass: true,
-    charge: 'Amy',
+    charge: "Amy"
   },
   {
     year: 2018,
     month: 2,
     day: 1,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
+    Classification: "others",
     pass: false,
-    charge: 'Amy',
-  },
+    charge: "Amy"
+  }
 ];
 
 console.log(project2);
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
-import Option from '@/components/Analysis/Option';
-import Pie from '@/components/Analysis/Pie';
+import Header from "@/components/common/Header";
+import Footer from "@/components/common/Footer";
+import Option from "@/components/Analysis/Option";
+import Pie from "@/components/Analysis/Pie";
 
 //import { Carousel3d, Slide } from 'vue-carousel-3d';
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/css/swiper.css';
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/css/swiper.css";
 
 export default {
-  name: 'Analysis',
+  name: "Analysis",
   components: {
     Header,
     Footer,
     Option,
     Pie,
     Swiper,
-    SwiperSlide,
+    SwiperSlide
     // Bar
   },
   data() {
     return {
       swiperOption: {
-        direction: 'horizontal',
-        effect: 'coverflow',
+        direction: "horizontal",
+        effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 'auto',
+        slidesPerView: "auto",
         loop: true,
         coverflowEffect: {
           rotate: 50,
           stretch: 0,
           depth: 200,
           modifier: 1,
-          slideShadows: true,
+          slideShadows: true
         },
         pagination: {
-          el: '.swiper-pagination',
+          el: ".swiper-pagination"
         },
-        activeIndex: 3, //当前滑块索引
+        activeIndex: 3 //当前滑块索引
       },
       Outproject1: [
         {
@@ -617,315 +614,315 @@ export default {
           month: 9,
           day: 28,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 9,
           day: 26,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 9,
           day: 23,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 9,
           day: 18,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 8,
           day: 19,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 8,
           day: 14,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 7,
           day: 18,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 7,
           day: 16,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 7,
           day: 13,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 5,
           day: 8,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 5,
           day: 6,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 5,
           day: 3,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 4,
           day: 22,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: false,
-          charge: 'vargin',
+          charge: "vargin"
         },
         {
           year: 2019,
           month: 4,
           day: 22,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: false,
-          charge: 'helloni',
+          charge: "helloni"
         },
         {
           year: 2019,
           month: 4,
           day: 22,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'sggag',
+          charge: "sggag"
         },
         {
           year: 2019,
           month: 4,
           day: 3,
           money: 3200,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'qqq',
+          charge: "qqq"
         },
         {
           year: 2019,
           month: 3,
           day: 25,
           money: 1320,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'wrqggr',
+          charge: "wrqggr"
         },
         {
           year: 2019,
           month: 3,
           day: 13,
           money: 6720,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'gasgf',
+          charge: "gasgf"
         },
         {
           year: 2019,
           month: 3,
           day: 11,
           money: 3220,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'hfjdfhj',
+          charge: "hfjdfhj"
         },
         {
           year: 2019,
           month: 3,
           day: 6,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'gadg',
+          charge: "gadg"
         },
         {
           year: 2019,
           month: 3,
           day: 3,
           money: 1820,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 3,
           day: 1,
           money: 7720,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 3,
           day: 1,
           money: 6220,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 3,
           day: 1,
           money: 220,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'sdgfsdfg',
+          charge: "sdgfsdfg"
         },
         {
           year: 2019,
           month: 2,
           day: 26,
           money: 820,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 23,
           money: 520,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'gsdg',
+          charge: "gsdg"
         },
         {
           year: 2019,
           month: 2,
           day: 21,
           money: 420,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 7,
           money: 4420,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 9,
           money: 640,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: false,
-          charge: 'sfdgsdg',
+          charge: "sfdgsdg"
         },
         {
           year: 2019,
           month: 2,
           day: 6,
           money: 410,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 3,
           money: 380,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 2,
           money: 690,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 1,
           money: 920,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 1,
           money: 990,
-          Classification: 'others',
+          Classification: "others",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 1,
           money: 870,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
 
         {
@@ -933,226 +930,226 @@ export default {
           month: 5,
           day: 8,
           money: 320,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 5,
           day: 6,
           money: 520,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2018,
           month: 5,
           day: 3,
           money: 620,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2018,
           month: 4,
           day: 22,
           money: 920,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: false,
-          charge: 'vargin',
+          charge: "vargin"
         },
         {
           year: 2018,
           month: 4,
           day: 22,
           money: 120,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: false,
-          charge: 'helloni',
+          charge: "helloni"
         },
         {
           year: 2018,
           month: 4,
           day: 22,
           money: 820,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'sggag',
+          charge: "sggag"
         },
         {
           year: 2018,
           month: 4,
           day: 3,
           money: 3200,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'qqq',
+          charge: "qqq"
         },
         {
           year: 2018,
           month: 3,
           day: 25,
           money: 1320,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'wrqggr',
+          charge: "wrqggr"
         },
         {
           year: 2018,
           month: 3,
           day: 13,
           money: 6720,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'gasgf',
+          charge: "gasgf"
         },
         {
           year: 2018,
           month: 3,
           day: 11,
           money: 3220,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'hfjdfhj',
+          charge: "hfjdfhj"
         },
         {
           year: 2018,
           month: 3,
           day: 6,
           money: 2220,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'gadg',
+          charge: "gadg"
         },
         {
           year: 2018,
           month: 3,
           day: 3,
           money: 1820,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 3,
           day: 1,
           money: 7720,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 3,
           day: 1,
           money: 6220,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 3,
           day: 1,
           money: 220,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'sdgfsdfg',
+          charge: "sdgfsdfg"
         },
         {
           year: 2018,
           month: 2,
           day: 26,
           money: 820,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 23,
           money: 520,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'gsdg',
+          charge: "gsdg"
         },
         {
           year: 2018,
           month: 2,
           day: 21,
           money: 420,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 7,
           money: 4420,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 9,
           money: 640,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: false,
-          charge: 'sfdgsdg',
+          charge: "sfdgsdg"
         },
         {
           year: 2018,
           month: 2,
           day: 6,
           money: 410,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 3,
           money: 380,
-          Classification: 'Meals',
+          Classification: "Meals",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 2,
           money: 690,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 1,
           money: 920,
-          Classification: 'Transportation',
+          Classification: "Transportation",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 1,
           money: 990,
-          Classification: 'others',
+          Classification: "others",
           pass: false,
-          charge: 'Amy',
-        },
+          charge: "Amy"
+        }
       ],
       Inproject1: [
         {
@@ -1161,315 +1158,315 @@ export default {
           month: 9,
           day: 28,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 9,
           day: 26,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 9,
           day: 23,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 9,
           day: 18,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 8,
           day: 19,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 8,
           day: 14,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 7,
           day: 18,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 7,
           day: 16,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 7,
           day: 13,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 5,
           day: 8,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 5,
           day: 6,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2019,
           month: 5,
           day: 3,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2019,
           month: 4,
           day: 22,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: false,
-          charge: 'vargin',
+          charge: "vargin"
         },
         {
           year: 2019,
           month: 4,
           day: 22,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: false,
-          charge: 'helloni',
+          charge: "helloni"
         },
         {
           year: 2019,
           month: 4,
           day: 22,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'sggag',
+          charge: "sggag"
         },
         {
           year: 2019,
           month: 4,
           day: 3,
           money: 3200,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'qqq',
+          charge: "qqq"
         },
         {
           year: 2019,
           month: 3,
           day: 25,
           money: 1320,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'wrqggr',
+          charge: "wrqggr"
         },
         {
           year: 2019,
           month: 3,
           day: 13,
           money: 6720,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'gasgf',
+          charge: "gasgf"
         },
         {
           year: 2019,
           month: 3,
           day: 11,
           money: 3220,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'hfjdfhj',
+          charge: "hfjdfhj"
         },
         {
           year: 2019,
           month: 3,
           day: 6,
           money: Math.floor(Math.random() * 1000) + 100,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'gadg',
+          charge: "gadg"
         },
         {
           year: 2019,
           month: 3,
           day: 3,
           money: 1820,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 3,
           day: 1,
           money: 7720,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 3,
           day: 1,
           money: 6220,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 3,
           day: 1,
           money: 220,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'sdgfsdfg',
+          charge: "sdgfsdfg"
         },
         {
           year: 2019,
           month: 2,
           day: 26,
           money: 820,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 23,
           money: 520,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'gsdg',
+          charge: "gsdg"
         },
         {
           year: 2019,
           month: 2,
           day: 21,
           money: 420,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 7,
           money: 4420,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 9,
           money: 640,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: false,
-          charge: 'sfdgsdg',
+          charge: "sfdgsdg"
         },
         {
           year: 2019,
           month: 2,
           day: 6,
           money: 410,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 3,
           money: 380,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 2,
           money: 690,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 1,
           money: 920,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 1,
           money: 990,
-          Classification: 'others',
+          Classification: "others",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 1,
           money: 870,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
 
         {
@@ -1477,229 +1474,229 @@ export default {
           month: 5,
           day: 8,
           money: 320,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 5,
           day: 6,
           money: 520,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'jason',
+          charge: "jason"
         },
         {
           year: 2018,
           month: 5,
           day: 3,
           money: 620,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'dick',
+          charge: "dick"
         },
         {
           year: 2018,
           month: 4,
           day: 22,
           money: 920,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: false,
-          charge: 'vargin',
+          charge: "vargin"
         },
         {
           year: 2018,
           month: 4,
           day: 22,
           money: 120,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: false,
-          charge: 'helloni',
+          charge: "helloni"
         },
         {
           year: 2018,
           month: 4,
           day: 22,
           money: 820,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'sggag',
+          charge: "sggag"
         },
         {
           year: 2018,
           month: 4,
           day: 3,
           money: 3200,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'qqq',
+          charge: "qqq"
         },
         {
           year: 2018,
           month: 3,
           day: 25,
           money: 1320,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'wrqggr',
+          charge: "wrqggr"
         },
         {
           year: 2018,
           month: 3,
           day: 13,
           money: 6720,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'gasgf',
+          charge: "gasgf"
         },
         {
           year: 2018,
           month: 3,
           day: 11,
           money: 3220,
-          Classification: 'others',
+          Classification: "others",
           pass: true,
-          charge: 'hfjdfhj',
+          charge: "hfjdfhj"
         },
         {
           year: 2018,
           month: 3,
           day: 6,
           money: 2220,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'gadg',
+          charge: "gadg"
         },
         {
           year: 2018,
           month: 3,
           day: 3,
           money: 1820,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 3,
           day: 1,
           money: 7720,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 3,
           day: 1,
           money: 6220,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 3,
           day: 1,
           money: 220,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'sdgfsdfg',
+          charge: "sdgfsdfg"
         },
         {
           year: 2018,
           month: 2,
           day: 26,
           money: 820,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2019,
           month: 2,
           day: 23,
           money: 520,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'gsdg',
+          charge: "gsdg"
         },
         {
           year: 2018,
           month: 2,
           day: 21,
           money: 420,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 7,
           money: 4420,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 9,
           money: 640,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: false,
-          charge: 'sfdgsdg',
+          charge: "sfdgsdg"
         },
         {
           year: 2018,
           month: 2,
           day: 6,
           money: 410,
-          Classification: 'Equipment',
+          Classification: "Equipment",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 3,
           money: 380,
-          Classification: 'Fees',
+          Classification: "Fees",
           pass: false,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 2,
           money: 690,
-          Classification: 'Rental',
+          Classification: "Rental",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 1,
           money: 920,
-          Classification: 'Sponsor',
+          Classification: "Sponsor",
           pass: true,
-          charge: 'Amy',
+          charge: "Amy"
         },
         {
           year: 2018,
           month: 2,
           day: 1,
           money: 990,
-          Classification: 'others',
+          Classification: "others",
           pass: false,
-          charge: 'Amy',
-        },
-      ],
+          charge: "Amy"
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 

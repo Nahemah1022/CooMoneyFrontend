@@ -67,20 +67,23 @@
           @full="toggleRevenue"
         ></Revenue>
       </div>
-      <div class="btns">
-        <!-- <div :class="{notification: true, click: isClicked}">
+      <button :class="{add: true, click: isClicked, fullPlus: fullRevenue}" @click="add">
+        <img src="@/assets/image/Project/add.svg" />
+      </button>
+      <!-- <div class="btns">
+        <div :class="{notification: true, click: isClicked}">
           Notification of Paying
           <span>{{notificationCount}}</span>
-        </div>-->
+        </div>
         <button :class="{add: true, click: isClicked}" @click="add">
-          <img v-if="!isClicked" src="@/assets/image/Project/add.svg" />
+          <img v-if="isClick" src="@/assets/image/Project/add.svg" />
           <div v-else>
             <div class="remind">Remind&nbsp;</div>
             <div class="line"></div>
             <div class="now" @click="isAdding=!isAdding">Paying</div>
           </div>
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -262,70 +265,85 @@ export default {
         }
       }
     }
-    .btns {
-      display: flex;
-      margin: 0 auto;
+    .add{
       position: absolute;
-      bottom: 4vh;
-      left: 70vw;
-      justify-content: space-between;
+      bottom: 3vh;
+      right: 7vw;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      background-color: #00c5b8;
+      border-radius: 40px;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      .add {
-        width: 40px;
-        height: 40px;
-        border: 0;
-        background-color: #00c5b8;
-        border-radius: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.4s;
-        &.click {
-          width: 55%;
-        }
-        div {
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          .line {
-            height: 40px;
-            margin: 0 5px;
-            border: 1.5px #fff solid;
-          }
-          div {
-            color: #fff;
-            height: 40px;
-            font-weight: 600;
-            font-size: 20px;
-          }
-        }
-      }
-      .notification {
-        width: 66%;
-        height: 7vh;
-        padding: 0 20px;
-        border-radius: 40px;
-        box-shadow: 0 0 12px #e6e6e6;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        transition: 0.4s;
-        &.click {
-          width: 35%;
-        }
-        span {
-          width: 20px;
-          height: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-weight: 500;
-          color: #fff;
-          background-color: #00c5b8;
-          border-radius: 50%;
-        }
+      transition: 0.4s;
+      &.fullPlus {
+        bottom: 2vh;
+        right: 1vw;        
       }
     }
+    // .btns {
+    //   display: flex;
+    //   margin: 0 auto;
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   .add {
+    //     width: 40px;
+    //     height: 40px;
+    //     border: 0;
+    //     background-color: #00c5b8;
+    //     border-radius: 40px;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     transition: 0.4s;
+    //     &.click {
+          
+    //     }
+    //     div {
+    //       display: flex;
+    //       justify-content: space-around;
+    //       align-items: center;
+    //       .line {
+    //         height: 40px;
+    //         margin: 0 5px;
+    //         border: 1.5px #fff solid;
+    //       }
+    //       div {
+    //         color: #fff;
+    //         height: 40px;
+    //         font-weight: 600;
+    //         font-size: 20px;
+    //       }
+    //     }
+    //   }
+    //   .notification {
+    //     width: 66%;
+    //     height: 7vh;
+    //     padding: 0 20px;
+    //     border-radius: 40px;
+    //     box-shadow: 0 0 12px #e6e6e6;
+    //     display: flex;
+    //     justify-content: space-evenly;
+    //     align-items: center;
+    //     transition: 0.4s;
+    //     &.click {
+    //       width: 35%;
+    //     }
+    //     span {
+    //       width: 20px;
+    //       height: 20px;
+    //       display: flex;
+    //       justify-content: center;
+    //       align-items: center;
+    //       font-weight: 500;
+    //       color: #fff;
+    //       background-color: #00c5b8;
+    //       border-radius: 50%;
+    //     }
+    //   }
+    // }
   }
 }
 </style>
