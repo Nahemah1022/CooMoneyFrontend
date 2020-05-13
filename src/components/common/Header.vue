@@ -27,7 +27,7 @@ export default {
 .main {
   position: fixed;
   background-color: #fff;
-  z-index: 9999;
+  z-index: 1000;
   display: flex;
   justify-content: space-evenly;
   width: 100%;

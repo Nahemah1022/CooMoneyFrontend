@@ -7,7 +7,7 @@
         :key="preProject.id"
         :title="preProject.title"
         :theme="preProject.theme"
-        :id="preProject.id"
+        :projectId="preProject.id"
       ></ProjectViewItem>
     </div>
     <Footer></Footer>
