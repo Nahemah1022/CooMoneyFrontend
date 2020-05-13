@@ -10,7 +10,7 @@
         :projectId="preProject.id"
       ></ProjectViewItem>
     </div>
-    <Footer></Footer>
+    <Footer :active="2"></Footer>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <Header :title="'Analysis'" @back="$router.go(-1)"></Header>
-    <Footer></Footer>
+    <Footer :active="1"></Footer>
   </div>
 </template>
 

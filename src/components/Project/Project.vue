@@ -20,7 +20,7 @@
         <img src="@/assets/image/Project/Theme_new.svg" alt />
       </div>
     </div>
-    <Footer></Footer>
+    <Footer :active="2"></Footer>
   </div>
 </template>
 
