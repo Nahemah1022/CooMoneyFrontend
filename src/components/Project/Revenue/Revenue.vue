@@ -93,7 +93,7 @@ export default {
     };
   },
   props: {
-    id: Number
+    projectId: Number
   },
   methods: {
     fullRevenue() {
@@ -150,7 +150,7 @@ export default {
     border-radius: 16px;
     padding: 10px 5vw;
     transition: 0.5s;
-    height: 20vh;
+    height: 29vh;
     &.fullBlock {
       height: 90vh;
     }
@@ -165,7 +165,7 @@ export default {
       }
     }
     .bills {
-      height: 16vh;
+      height: 24vh;
       overflow: scroll;
       transition: 0.5s;
       &.fullBills {

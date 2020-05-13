@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <div class="block">
+      <CreateBill v-if="isAdding" :projectId="projectId" :title="title"></CreateBill>
       <p class="title">{{title}}</p>
       <div class="money-block">
         <div class="first">
@@ -60,19 +61,23 @@
         </div>
       </div>
       <div class="cont">
-        <Revenue :class="{revenue: true, full: fullRevenue}" @full="toggleRevenue"></Revenue>
+        <Revenue
+          :class="{revenue: true, full: fullRevenue}"
+          :projectId="projectId"
+          @full="toggleRevenue"
+        ></Revenue>
       </div>
       <div class="btns">
-        <div :class="{notification: true, click: adding}">
+        <!-- <div :class="{notification: true, click: isClicked}">
           Notification of Paying
           <span>{{notificationCount}}</span>
-        </div>
-        <button :class="{add: true, click: adding}" @click="add">
-          <img v-if="!adding" src="@/assets/image/Project/add.svg" />
+        </div>-->
+        <button :class="{add: true, click: isClicked}" @click="add">
+          <img v-if="!isClicked" src="@/assets/image/Project/add.svg" />
           <div v-else>
-            <span class="remind">Remind&nbsp;</span>
+            <div class="remind">Remind&nbsp;</div>
             <div class="line"></div>
-            <span class="now">Paying</span>
+            <div class="now" @click="isAdding=!isAdding">Paying</div>
           </div>
         </button>
       </div>
@@ -82,15 +87,18 @@
 
 <script>
 import Revenue from "@/components/Project/Revenue/Revenue.vue";
+import CreateBill from "@/components/Project/CreateBill/CreateBill.vue";
 
 export default {
   name: "ProjectViewItem",
   components: {
-    Revenue
+    Revenue,
+    CreateBill
   },
   data() {
     return {
-      adding: false,
+      isClicked: false,
+      isAdding: false,
       fullRevenue: false,
       expanse: 13724,
       income: 9080,
@@ -104,12 +112,12 @@ export default {
   },
   props: {
     title: String,
-    id: Number,
+    projectId: Number,
     theme: Number
   },
   methods: {
     add() {
-      this.adding = !this.adding;
+      this.isClicked = !this.isClicked;
     },
     costFormat(cost) {
       let str = cost.toString();
@@ -141,6 +149,7 @@ export default {
   .block {
     width: 90%;
     height: 82vh;
+    position: relative;
     margin: 0 auto;
     background-color: #fff;
     border: #fff 1px solid;
@@ -238,7 +247,7 @@ export default {
     }
     .cont {
       position: relative;
-      height: 24vh;
+      height: 50vh;
       .revenue {
         width: 90vw;
         position: absolute;
@@ -255,13 +264,15 @@ export default {
     }
     .btns {
       display: flex;
-      width: 90%;
       margin: 0 auto;
+      position: absolute;
+      bottom: 4vh;
+      left: 70vw;
       justify-content: space-between;
       align-items: center;
       .add {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         border: 0;
         background-color: #00c5b8;
         border-radius: 40px;
@@ -277,12 +288,13 @@ export default {
           justify-content: space-around;
           align-items: center;
           .line {
-            height: 50px;
+            height: 40px;
             margin: 0 5px;
             border: 1.5px #fff solid;
           }
-          span {
+          div {
             color: #fff;
+            height: 40px;
             font-weight: 600;
             font-size: 20px;
           }
