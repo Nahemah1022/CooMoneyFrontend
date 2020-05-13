@@ -1,162 +1,189 @@
 <template>
   <div id="content2">
+    <h1>Category comparison</h1>
     <div :methods="itemExpenseCount()" id="pieExpense">
+      <h2>expense</h2>
       <ve-ring
         width="90%"
         height="90%"
         id="pie1"
         :backgroundColor="backgroundColor"
-        :data="chartData"
+        :data="pie1Data"
         :colors="colors"
-        :extend="pie1Extend"
+        :extend="pieExtend"
       ></ve-ring>
-      <!-- 弟二個虛圖 -->
-      <!-- <ve-ring -->
-      <!-- width="100%" -->
-      <!-- height="100%" -->
-      <!-- id="pie2" -->
-      <!-- :backgroundColor="backgroundColor" -->
-      <!-- :data="chartData" -->
-      <!-- :colors="colors" -->
-      <!-- :extend="pie2Extend" -->
-      <!-- :setRadius="setRadius(100,false)" -->
-      <!-- :legendVisible="false" -->
-      <!-- ></ve-ring> -->
     </div>
 
-    <div id="pieInCome"></div>
+    <div id="pieInCome" :methods="itemIncomeCount()">
+      <h2>income</h2>
+      <ve-ring
+        width="90%"
+        height="90%"
+        id="pie1"
+        :backgroundColor="backgroundColor"
+        :data="pie2Data"
+        :colors="colors"
+        :extend="pieExtend"
+      ></ve-ring>
+    </div>
   </div>
 </template>
 
 <script>
 //這裡import vue.chart
-import Vue from "vue";
-import VCharts from "v-charts";
+import Vue from 'vue';
+import VCharts from 'v-charts';
 
 Vue.use(VCharts);
 
 //這裡用來存算好的item總和
 let itemAll = [
-  { name: "Transportation", money: 0 },
-  { name: "Meals", money: 0 },
-  { name: "Equipment", money: 0 },
-  { name: "others", money: 0 },
-  { name: "Rental", money: 0 }
+  { name: 'Transportation', money: 0 },
+  { name: 'Meals', money: 0 },
+  { name: 'Equipment', money: 0 },
+  { name: 'others', money: 0 },
+  { name: 'Rental', money: 0 },
+];
+let IncomeAll = [
+  { name: 'Fees', money: 0 },
+  { name: 'Sponsor', money: 0 },
+  { name: 'Equipment', money: 0 },
+  { name: 'others', money: 0 },
+  { name: 'Rental', money: 0 },
 ];
 export default {
-  name: "pie",
+  name: 'pie',
   props: {
-    project: Array
+    Outproject: Array,
+    Inproject: Array,
   },
   components: {},
   data() {
     //上層實圖
 
     //设置echart的详细属性(setting失效用這格)
-    this.pie1Extend = {
+    this.pieExtend = {
       series: {
-        dataType: "normal",
+        dataType: 'normal',
         hoverAnimation: true,
-        cursor: "pointer",
+        cursor: 'pointer',
         itemStyle: {
-          shadowColor: "rgba(0, 0, 0, 0.3)",
-          shadowBlur: 10
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
+          shadowBlur: 10,
         },
         //圖示
 
         label: {
           show: false,
-          position: "center"
+          position: 'center',
         },
         emphasis: {
           label: {
             show: true,
 
-            fontSize: "20",
-            fontWeight: "bold"
-          }
+            fontSize: '20',
+            fontWeight: 'bold',
+          },
         },
         radius: [20, 70],
-        right: "100",
-        bottom: "280"
-      }
+        right: '50',
+        bottom: '280',
+      },
     };
     this.lengend = {
-      show: false
+      show: false,
     };
-    //下層虛圖
-    /*this.pie2Extend = {
-      series: {
-        dataType: "normal",
-        hoverAnimation: false,
-        cursor: "pointer",
 
-        itemStyle: {
-          shadowColor: "rgba(0, 0, 0, 0.3)",
-          shadowBlur: 10
-        },
-        label: {
-          show: false
-        },
-        right: "100",
-        bottom: "300"
-      }
-    };*/
-    this.backgroundColor = "white";
+    this.backgroundColor = 'white';
     //顏色藥用v-bind設置
-    this.colors = ["#97EBCE", "#FBDA99", "#FF9798", "#82FFF7", "#A6CEE3"];
+    this.colors = ['#97EBCE', '#FBDA99', '#FF9798', '#82FFF7', '#A6CEE3'];
     return {
-      chartData: {
-        columns: ["項目", "花費金錢"],
+      //expense
+      pie1Data: {
+        columns: ['項目', '花費金錢'],
         rows: [
           { 項目: itemAll[0].name, 花費金錢: itemAll[0].money },
           { 項目: itemAll[1].name, 花費金錢: itemAll[1].money },
           { 項目: itemAll[2].name, 花費金錢: itemAll[2].money },
           { 項目: itemAll[3].name, 花費金錢: itemAll[3].money },
-          { 項目: itemAll[4].name, 花費金錢: itemAll[4].money }
-        ]
-      }
+          { 項目: itemAll[4].name, 花費金錢: itemAll[4].money },
+        ],
+      },
+      //income
+      pie2Data: {
+        columns: ['項目', '花費金錢'],
+        rows: [
+          { 項目: IncomeAll[0].name, 花費金錢: IncomeAll[0].money },
+          { 項目: IncomeAll[1].name, 花費金錢: IncomeAll[1].money },
+          { 項目: IncomeAll[2].name, 花費金錢: IncomeAll[2].money },
+          { 項目: IncomeAll[3].name, 花費金錢: IncomeAll[3].money },
+          { 項目: IncomeAll[4].name, 花費金錢: IncomeAll[4].money },
+        ],
+      },
     };
   },
 
   methods: {
     itemExpenseCount() {
-      console.log("successful");
-      Object.keys(this.project).forEach(p => {
-        switch (this.project[p].Classification) {
-          case "Transportation":
-            itemAll[0].money += this.project[p].money;
+      //console.log("successful");
+      Object.keys(this.Outproject).forEach((p) => {
+        switch (this.Outproject[p].Classification) {
+          case 'Transportation':
+            itemAll[0].money += this.Outproject[p].money;
             break;
-          case "Meals":
-            itemAll[1].money += this.project[p].money;
+          case 'Meals':
+            itemAll[1].money += this.Outproject[p].money;
             break;
-          case "Equipment":
-            itemAll[2].money += this.project[p].money;
+          case 'Equipment':
+            itemAll[2].money += this.Outproject[p].money;
             break;
-          case "others":
-            itemAll[3].money += this.project[p].money;
+          case 'others':
+            itemAll[3].money += this.Outproject[p].money;
             break;
-          case "Rental":
-            itemAll[4].others += this.project[p].money;
+          case 'Rental':
+            itemAll[4].others += this.Outproject[p].money;
             break;
         }
       });
       //console.log(itemAll[2].money);
-      this.chartData.rows = [
+      this.pie1Data.rows = [
         { 項目: itemAll[0].name, 花費金錢: itemAll[0].money },
         { 項目: itemAll[1].name, 花費金錢: itemAll[1].money },
         { 項目: itemAll[2].name, 花費金錢: itemAll[2].money },
         { 項目: itemAll[3].name, 花費金錢: itemAll[3].money },
-        { 項目: itemAll[4].name, 花費金錢: itemAll[4].money }
+        { 項目: itemAll[4].name, 花費金錢: itemAll[4].money },
       ];
-    }
-    /*setRadius(r, flag) {
-      //上層實圖
-      if (flag) this.pie1Extend.series.radius = [20, r];
-      //下層虛圖
-      else this.pie2Extend.series.radius = [20, r];
-    }*/
-  }
+    },
+    itemIncomeCount() {
+      Object.keys(this.Inproject).forEach((p) => {
+        switch (this.Inproject[p].Classification) {
+          case 'Fees':
+            IncomeAll[0].money += this.Inproject[p].money;
+            break;
+          case 'Sponsor':
+            IncomeAll[1].money += this.Inproject[p].money;
+            break;
+          case 'Equipment':
+            IncomeAll[2].money += this.Inproject[p].money;
+            break;
+          case 'others':
+            IncomeAll[3].money += this.Inproject[p].money;
+            break;
+          case 'Rental':
+            IncomeAll[4].others += this.Inproject[p].money;
+            break;
+        }
+      });
+      //console.log(IncomeAll[2].money);
+      this.pie2Data.rows = [
+        { 項目: IncomeAll[0].name, 花費金錢: IncomeAll[0].money },
+        { 項目: IncomeAll[1].name, 花費金錢: IncomeAll[1].money },
+        { 項目: IncomeAll[2].name, 花費金錢: IncomeAll[2].money },
+        { 項目: IncomeAll[3].name, 花費金錢: IncomeAll[3].money },
+        { 項目: IncomeAll[4].name, 花費金錢: IncomeAll[4].money },
+      ];
+    },
+  },
 };
 </script>
 
@@ -169,25 +196,31 @@ h1 {
   background: none;
   position: relative;
   left: 30px;
-  top: 10px;
+}
+h2 {
+  font-size: 15px;
+  color: #8d8d8d;
+  font-weight: 50px;
+  background: none;
+  position: relative;
 }
 #pieExpense {
   width: 90%;
   margin: 0 auto;
   height: 200px;
   position: relative;
-  top: 20px;
+
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
   border-radius: 40px 40px;
 }
 #pieInCome {
-  display: none;
+  display: block;
   width: 90%;
   margin: 0 auto;
   height: 200px;
   position: relative;
-  top: 40px;
+
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
   border-radius: 40px 40px;
@@ -196,9 +229,9 @@ h1 {
   display: block;
   margin: 0 auto;
   position: relative;
-  top: 50px;
+  top: 10px;
   width: 90%;
-  height: 480px;
+  height: 100%;
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
   border-radius: 40px 40px;
