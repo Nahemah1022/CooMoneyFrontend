@@ -11,7 +11,7 @@ export default {
   name: "Footer",
   props: {
     active: {
-      type: String,
+      type: Number,
       required: true
     }
   }

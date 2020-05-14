@@ -11,7 +11,7 @@
       <div :class="{bills: true, fullBills: full}">
         <div v-for="bill in bills" :key="bill.id">
           <p class="date" v-if="showDate(full && bill.date)">{{bill.date}}</p>
-          <div class="bill">
+          <!-- <div class="bill">
             <div>
               <img :src="require(`@/assets/image/Project/${bill.categoty}.svg`)" />
               {{bill.title}}
@@ -25,7 +25,8 @@
                 :src="require(`@/assets/image/Project/Revenue/${bill.status}.svg`)"
               />
             </div>
-          </div>
+          </div> -->
+          <RevenueItem :costTitle="bill.title" :category="bill.categoty" :cost="costFormat(bill.cost)" :status="bill.status" :fullRevenue="full"></RevenueItem>
         </div>
       </div>
     </div>
@@ -33,6 +34,8 @@
 </template>
 
 <script>
+import RevenueItem from "@/components/Project/Revenue/RevenueItem.vue";
+
 export default {
   name: "",
   data() {
@@ -41,7 +44,7 @@ export default {
       bills: [
         {
           id: 1,
-          title: "Equipment Purchase",
+          title: "Equipment Repair",
           cost: 6092,
           categoty: "repair",
           status: "approved",
@@ -91,6 +94,9 @@ export default {
       dates: {},
       detailedBills: {}
     };
+  },
+  components: {
+    RevenueItem
   },
   props: {
     projectId: Number
@@ -172,32 +178,32 @@ export default {
         height: 100vh;
       }
       .date {
-        font-size: 10px;
+        font-size: 14px;
         margin-top: 10px;
       }
-      .bill {
-        display: flex;
-        margin: 16px auto;
-        justify-content: space-between;
-        align-items: center;
-        .right {
-          width: 16vw;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          transition: 0.5s;
-          &.fullRight {
-            width: 27vw;
-          }
-          img {
-            transition: 0.5s;
-            width: 0vw;
-            &.fullImg {
-              width: 10vw;
-            }
-          }
-        }
-      }
+      // .bill {
+      //   display: flex;
+      //   margin: 16px auto;
+      //   justify-content: space-between;
+      //   align-items: center;
+      //   .right {
+      //     width: 16vw;
+      //     display: flex;
+      //     justify-content: space-between;
+      //     align-items: center;
+      //     transition: 0.5s;
+      //     &.fullRight {
+      //       width: 27vw;
+      //     }
+      //     img {
+      //       transition: 0.5s;
+      //       width: 0vw;
+      //       &.fullImg {
+      //         width: 10vw;
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
 }
