@@ -1,157 +1,94 @@
 <template>
   <div class="main">
-    <h1 class="title">SignUp</h1>
-    <div class="buttons">
-      <img class="fb" src="@/assets/image/Login/fb_icon.svg" alt />
-      <img class="google" src="@/assets/image/Login/google_icon.svg" alt />
+    <Header :title="'CooMoney'" @back="$router.go(-1)"></Header>
+    <div class="block">
+      <h1 class="title">Sign Up</h1>
+      <div>
+        <div class="buttons">
+          <img class="fb" src="@/assets/image/Login/fb_icon.svg" alt />
+          <img class="google" src="@/assets/image/Login/google_icon.svg" alt />
+        </div>
+        <br />
+        <div class="input-block">
+          <input placeholder="   Your Email" type="email" v-model="username" />
+          <br />
+          <br />
+          <input placeholder="   Password" type="password" v-model="password" />
+        </div>
+      </div>
+      <button @click="SignUp">Sign Up</button>
     </div>
-    <input placeholder="   Your Email" class="account" type="email" v-model="username" />
-    <input placeholder="   Password" class="password" type="password" v-model="password" />
-    <button class="loginbtn" @click="Login">SignUp</button>
   </div>
 </template>
 
 <script>
+import Header from "@/components/common/Header.vue";
+
 export default {
-  name: ""
+  name: "SignUp",
+  components: {
+    Header
+  },
+  methods: {
+    SignUp() {
+      // TODO: SignUp
+    }
+  }
 };
 </script>
 
 <style lang='scss' scoped>
-.main
-{
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  background-color: #ffffff;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-
-.title
-{
-  position: absolute;
-  font-size: 10vw;
-  font-weight:bold;
-  top: 20vh;
-  left: 10vw;
-  padding: 0;
-  color: #000000;
-  background-color: #ffffff;
-}
-
-.subtitle
-{
-  position: absolute;
-  font-size: 3vw;
-  font-weight:bold;
-  top: 55vh;
-  left: 12vw;
-  padding: 0;
-  color: #0eb9ab;
-  background-color: #ffffff;
-}
-
-
-.forgot
-{
-  position: absolute;
-  font-size: 3vw;
-  font-weight:bold;
-  top: 63vh;
-  left: 58vw;
-  padding: 0;
-  color: #8D8D8D;
-  background-color: #ffffff;
-}
-
-.dont
-{
-  position: absolute;
-  font-size: 3vw;
-  font-weight:bold;
-  top: 90vh;
-  left: 28vw;
-  padding: 0;
-  color: #0eb9ab;
-  background-color: #ffffff;
-}
-.signup
-{
-  position: absolute;
-  font-size: 3vw;
-  font-weight:bold;
-  top: 80vh;
-  left: 10vw;
-  padding: 0;
-  color: #0eb9ab;
-  background-color: #ffffff;
-}
-
-.account
-{
-  position: absolute;
-  font-size: 5vw;
-  font-weight:normal;
-  border-radius: 5vw;
-  width: 80vw;
-  height: 12vw;
-  top: 45vh;
-  left: 10vw;
-  padding: 0;
-  color: rgb(153, 153, 153);
-  background-color: #ffffff;
-  border-color : #0eb9ab;
-}
-.password
-{
-  position: absolute;
-  font-size: 5vw;
-  font-weight:normal;
-  border-radius: 5vw;
-  width: 80vw;
-  height: 12vw;
-  top: 55vh;
-  left: 10vw;
-  padding: 0;
-  color: rgb(153, 153, 153);
-  background-color: #ffffff;
-  border-color : #0eb9ab;
-}
-
-.fb
-{
-  position: absolute;
-  top: 30vh;
-  left: 10vw;
-  width: 38vw;
-  padding: 0;
-  background-color: #ffffff;
-}
-.google
-{
-  position: absolute;
-  top: 30vh;
-  left: 55vw;
-  width: 38vw;
-  padding: 0;
-  background-color: #ffffff;
-}
-
-.loginbtn
-{
-  position: absolute;
-  font-size: 5vw;
-  font-weight:normal;
-  border-radius: 5vw;
-  width: 40vw;
-  height: 12vw;
-  top: 68vh;
-  left: 30vw;
-  padding: 0;
-  color: rgb(255, 255, 255);
-  background-color: #ffffff;
-  background-color : #0eb9ab;
+.block {
+  width: 85%;
+  height: 90vh;
+  margin: 0 auto;
+  padding-top: 8vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  h1 {
+    font-size: 44px;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  .input-block {
+    input {
+      width: 90%;
+      border: 1px solid #00c5b8;
+      line-height: 44px;
+      border-radius: 30px;
+      padding: 0 5%;
+      font-size: 18px;
+    }
+    .p2 {
+      color: #8d8d8d;
+      text-align: right;
+      margin-top: 1vh;
+    }
+  }
+  .p1 {
+    color: #8d8d8d;
+    text-align: center;
+    margin: 2vh;
+    font-size: 14px;
+  }
+  button {
+    color: #fff;
+    font-size: 20px;
+    width: 70%;
+    margin: 0 auto;
+    border: 1px solid #00c5b8;
+    background-color: #00c5b8;
+    line-height: 40px;
+    border-radius: 30px;
+    margin-top: 0vh;
+    margin-bottom: 10vh;
+  }
+  p {
+    color: #8d8d8d;
+    text-align: center;
+  }
 }
 </style>

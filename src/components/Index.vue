@@ -1,34 +1,60 @@
 <template>
-<div class="main">
-  <div class="rwd_slider_container_wrapper">
-    <div class="rwd_slider_container">  
+  <div class="main">
+    <div class="rwd_slider_container_wrapper">
+      <div class="rwd_slider_container">
         <div class="slider_container">
-            <div>
-                <img src="@/assets/image/Login/hover04.png" alt="pure css slider" width="400" height="280" />
-            </div>
-            <div>
-                <img src="@/assets/image/Login/hover03.png" alt="pure css slider" width="400" height="280" />
-            </div>
-            <div>
-                <img src="@/assets/image/Login/hover02.png" alt="pure css slider" width="400" height="280" />
-            </div>
-            <div>
-                <img src="@/assets/image/Login/hover01.png" alt="pure css slider" width="400" height="280" />
-            </div>
-            <div>
-                <img src="@/assets/image/Login/hover01.png" alt="pure css slider" width="400" height="280" />
-            </div>
-        </div><!-- end of .slider_container -->
-    </div><!-- end of .rwd_slider_container -->
-  </div><!-- rwd_slider_container_wrapper-->
+          <div>
+            <img
+              src="@/assets/image/Login/hover04.png"
+              alt="pure css slider"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div>
+            <img
+              src="@/assets/image/Login/hover03.png"
+              alt="pure css slider"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div>
+            <img
+              src="@/assets/image/Login/hover02.png"
+              alt="pure css slider"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div>
+            <img
+              src="@/assets/image/Login/hover01.png"
+              alt="pure css slider"
+              width="400"
+              height="280"
+            />
+          </div>
+          <div>
+            <img
+              src="@/assets/image/Login/hover01.png"
+              alt="pure css slider"
+              width="400"
+              height="280"
+            />
+          </div>
+        </div>
+        <!-- end of .slider_container -->
+      </div>
+      <!-- end of .rwd_slider_container -->
+    </div>
+    <!-- rwd_slider_container_wrapper-->
 
-  <p class="title">Keep Track Of Money</p>
-  <p class="subtitle">Tracking every expenses you have and understand your spending pattern</p>
-  <button class="login" @click="Login">Log In</button>
-  <button class="signup" @click="SignUp">Sign Up</button>
-
-</div>
-
+    <p class="title">Keep Track Of Money</p>
+    <p class="subtitle">Tracking every expenses you have and understand your spending pattern</p>
+    <button class="login" @click="Login">Log In</button>
+    <button class="signup" @click="SignUp">Sign Up</button>
+  </div>
 </template>
 
 <script>
@@ -49,9 +75,8 @@ export default {
 
 
 <style lang='scss' scoped>
-
-
-.main{
+.main {
+  padding-top: 5vh;
   width: 100vw;
   height: 100vh;
   position: absolute;
@@ -200,11 +225,10 @@ export default {
   overflow: hidden;
 }
 
-.title
-{
+.title {
   position: absolute;
   font-size: 5vw;
-  font-weight:bold;
+  font-weight: bold;
   top: 48vh;
   left: 24vw;
   padding: 0;
@@ -212,11 +236,10 @@ export default {
   background-color: #ffffff;
 }
 
-.subtitle
-{
+.subtitle {
   position: absolute;
   font-size: 3vw;
-  font-weight:bold;
+  font-weight: bold;
   top: 55vh;
   left: 12vw;
   padding: 0;
@@ -224,11 +247,10 @@ export default {
   background-color: #ffffff;
 }
 
-.login
-{
+.login {
   position: absolute;
   font-size: 5vw;
-  font-weight:normal;
+  font-weight: normal;
   border-radius: 5vw;
   width: 50vw;
   height: 10vw;
@@ -237,16 +259,13 @@ export default {
   padding: 0;
   color: rgb(153, 153, 153);
   background-color: #ffffff;
-  border-color : #0eb9ab;
+  border-color: #0eb9ab;
   box-shadow: none;
-
-
 }
-.signup
-{
+.signup {
   position: absolute;
   font-size: 5vw;
-  font-weight:normal;
+  font-weight: normal;
   border-radius: 5vw;
   width: 50vw;
   height: 10vw;
@@ -255,6 +274,6 @@ export default {
   padding: 0;
   color: rgb(153, 153, 153);
   background-color: #ffffff;
-  border-color : #0eb9ab;
+  border-color: #0eb9ab;
 }
 </style>
