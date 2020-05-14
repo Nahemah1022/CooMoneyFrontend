@@ -162,7 +162,7 @@ export default {
     border-radius: 16px;
     padding: 10px 0;
     transition: 0.5s;
-    height: 29vh;
+    height: 27vh;
     &.fullBlock {
       height: 90vh;
     }

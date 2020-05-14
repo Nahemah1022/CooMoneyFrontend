@@ -1,5 +1,8 @@
 <template>
-  <div :class="{bill: true, expand: expand}" @click="fullRevenue && (expand=!expand)">
+  <div
+    :class="{bill: true, fullBill: fullRevenue, expand: expand}"
+    @click="fullRevenue && (expand=!expand)"
+  >
     <div :class="{titleBlock: true, titleExpand: expand}">
       <img :src="require(`@/assets/image/Project/${category}.svg`)" />
       <img class="space" src alt />
@@ -48,17 +51,20 @@ export default {
   height: 3vh;
   width: 90%;
   margin: 16px auto;
-  padding: 4px;
+  padding: 0px;
   border-radius: 0px;
   justify-content: space-between;
   align-items: flex-start;
   transition: 0.3s;
-  &.expand {
-    height: 20vh;
-    width: 92%;
-    background-color: #f1f1f1;
-    padding: 12px;
-    border-radius: 16px;
+  &.fullBill {
+    padding: 4px;
+    &.expand {
+      height: 20vh;
+      width: 92%;
+      background-color: #f1f1f1;
+      padding: 12px;
+      border-radius: 16px;
+    }
   }
   .titleBlock {
     width: 70%;

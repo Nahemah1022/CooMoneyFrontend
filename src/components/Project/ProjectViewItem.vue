@@ -83,7 +83,7 @@
             <div class="now" @click="isAdding=!isAdding">Paying</div>
           </div>
         </button>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -151,7 +151,7 @@ export default {
   height: 100%;
   .block {
     width: 90%;
-    height: 82vh;
+    height: 80vh;
     position: relative;
     margin: 0 auto;
     background-color: #fff;
@@ -265,7 +265,7 @@ export default {
         }
       }
     }
-    .add{
+    .add {
       position: absolute;
       bottom: 3vh;
       right: 7vw;
@@ -280,7 +280,7 @@ export default {
       transition: 0.4s;
       &.fullPlus {
         bottom: 2vh;
-        right: 1vw;        
+        right: 1vw;
       }
     }
     // .btns {
@@ -299,7 +299,7 @@ export default {
     //     align-items: center;
     //     transition: 0.4s;
     //     &.click {
-          
+
     //     }
     //     div {
     //       display: flex;
