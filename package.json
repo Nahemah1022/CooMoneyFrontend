@@ -13,6 +13,7 @@
   "main": "index.js",
   "dependencies": {
     "chart.js": "^2.9.3",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "echarts": "^4.7.0",
     "highcharts": "^8.1.0",
