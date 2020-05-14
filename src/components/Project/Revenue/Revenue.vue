@@ -25,8 +25,14 @@
                 :src="require(`@/assets/image/Project/Revenue/${bill.status}.svg`)"
               />
             </div>
-          </div> -->
-          <RevenueItem :costTitle="bill.title" :category="bill.categoty" :cost="costFormat(bill.cost)" :status="bill.status" :fullRevenue="full"></RevenueItem>
+          </div>-->
+          <RevenueItem
+            :costTitle="bill.title"
+            :category="bill.categoty"
+            :cost="costFormat(bill.cost)"
+            :status="bill.status"
+            :fullRevenue="full"
+          ></RevenueItem>
         </div>
       </div>
     </div>
@@ -44,7 +50,7 @@ export default {
       bills: [
         {
           id: 1,
-          title: "Equipment Repair",
+          title: "Equipment Purchase",
           cost: 6092,
           categoty: "repair",
           status: "approved",
@@ -149,12 +155,12 @@ export default {
 .submain {
   width: 100%;
   .block {
-    width: 80%;
+    width: 90%;
     margin: 15px auto;
     box-shadow: 0 0 12px #e6e6e6;
     background-color: #fff;
     border-radius: 16px;
-    padding: 10px 5vw;
+    padding: 10px 0;
     transition: 0.5s;
     height: 29vh;
     &.fullBlock {
@@ -164,6 +170,7 @@ export default {
       display: flex;
       justify-content: space-between;
       margin: 0 0 2vh 0;
+      padding: 0 4vw;
       font-size: 16px;
       transition: 0.5s;
       &.fullHeader {
@@ -172,14 +179,16 @@ export default {
     }
     .bills {
       height: 24vh;
+      width: 100%;
       overflow: scroll;
       transition: 0.5s;
       &.fullBills {
-        height: 100vh;
+        height: 76vh;
       }
       .date {
         font-size: 14px;
         margin-top: 10px;
+        margin-left: 12px;
       }
       // .bill {
       //   display: flex;
