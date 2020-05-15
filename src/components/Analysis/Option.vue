@@ -119,7 +119,7 @@ h2 {
   display: flex;
   margin: 0 auto;
   position: relative;
-  top: 20px;
+  top: 80px;
   width: 90%;
   height: 101px;
   background-color: white;
