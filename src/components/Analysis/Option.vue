@@ -33,63 +33,63 @@
 
 <script>
 //toggleButton
-import Vue from 'vue';
-import ToggleButton from 'vue-js-toggle-button';
+import Vue from "vue";
+import ToggleButton from "vue-js-toggle-button";
 
 //slide project
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/css/swiper.css';
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/css/swiper.css";
 
 Vue.use(ToggleButton);
 export default {
-  name: 'Option',
+  name: "Option",
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
   data() {
     return {
       //swiper
       swiperOption: {
-        effect: 'coverflow',
+        effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 'auto',
+        slidesPerView: "auto",
         loop: true,
-        direction: 'vertical',
+        direction: "vertical",
         coverflowEffect: {
           rotate: 30,
           stretch: 10,
           depth: 200,
           modifier: 1,
-          slideShadows: false,
+          slideShadows: false
         },
 
         pagination: {
-          el: '.swiper-pagination',
-        },
+          el: ".swiper-pagination"
+        }
       },
 
       value: true,
-      color: { checked: '#E3EDF7', unchecked: '#A6F3F3' },
-      fontSize: 20,
+      color: { checked: "#E3EDF7", unchecked: "#A6F3F3" },
+      fontSize: 20
     };
   },
   methods: {
     onChangeEventHandler() {
       //false=>all true=>project
       if (this.value) {
-        document.querySelector('h1').style.color = '#02AA9E';
-        document.querySelector('h2').style.color = '#DBDBDB';
+        document.querySelector("h1").style.color = "#02AA9E";
+        document.querySelector("h2").style.color = "#DBDBDB";
         this.value = false;
       } else {
-        document.querySelector('h2').style.color = '#02AA9E';
-        document.querySelector('h1').style.color = '#DBDBDB';
+        document.querySelector("h2").style.color = "#02AA9E";
+        document.querySelector("h1").style.color = "#DBDBDB";
 
         this.value = true;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

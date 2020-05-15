@@ -1,7 +1,6 @@
 <template>
   <div class="main">
     <div class="block">
-      <CreateBill v-if="isAdding" :projectId="projectId" :title="title"></CreateBill>
       <p class="title">{{title}}</p>
       <div class="money-block">
         <div class="first">
@@ -24,29 +23,10 @@
             {{costFormat(this.expanse)}}
           </div>
         </div>
-        <!-- version 1 -->
-        <!-- <div class="money left">
-          <p class="text">Expenses</p>
-          <span>$</span>
-          {{this.expanse}}
-        </div>
-        <img src="@/assets/image/Project/line.svg" alt />
-        <div class="right-block">
-          <div class="money">
-            <p class="text">Income</p>
-            <span>$</span>
-            {{this.income}}
-          </div>
-          <div class="money">
-            <p class="text">Remaining</p>
-            <span>$</span>
-            {{this.budget}}
-          </div>
-        </div>-->
       </div>
       <div class="account-block">
         <div class="header">
-          <p>Account</p>
+          <p>Accounts</p>
           <img src="@/assets/image/Project/option.svg" alt />
         </div>
         <div v-for="account in accounts" :key="account.id" class="account">
@@ -64,26 +44,19 @@
         <Revenue
           :class="{revenue: true, full: fullRevenue}"
           :projectId="projectId"
+          :full="fullRevenue"
           @full="toggleRevenue"
         ></Revenue>
       </div>
-      <button :class="{add: true, click: isClicked, fullPlus: fullRevenue}" @click="add">
+      <button :class="{add: true, fullPlus: fullRevenue}" @click="add">
         <img src="@/assets/image/Project/add.svg" />
       </button>
-      <!-- <div class="btns">
-        <div :class="{notification: true, click: isClicked}">
-          Notification of Paying
-          <span>{{notificationCount}}</span>
-        </div>
-        <button :class="{add: true, click: isClicked}" @click="add">
-          <img v-if="isClick" src="@/assets/image/Project/add.svg" />
-          <div v-else>
-            <div class="remind">Remind&nbsp;</div>
-            <div class="line"></div>
-            <div class="now" @click="isAdding=!isAdding">Paying</div>
-          </div>
-        </button>
-      </div>-->
+      <CreateBill
+        :class="{create: true, show: isAdding}"
+        :projectId="projectId"
+        :accounts="accounts"
+        @collapse="isAdding=false"
+      ></CreateBill>
     </div>
   </div>
 </template>
@@ -100,7 +73,6 @@ export default {
   },
   data() {
     return {
-      isClicked: false,
       isAdding: false,
       fullRevenue: false,
       expanse: 13724,
@@ -109,7 +81,7 @@ export default {
       notificationCount: 3,
       accounts: [
         { id: 1, name: "cash", remain: 2092, img: "cash" },
-        { id: 2, name: "Bank Sinopac", remain: 36000, img: "bank" }
+        { id: 2, name: "Sinopac", remain: 36000, img: "bank" }
       ]
     };
   },
@@ -120,7 +92,8 @@ export default {
   },
   methods: {
     add() {
-      this.isClicked = !this.isClicked;
+      this.isAdding = !this.isAdding;
+      this.fullRevenue = false;
     },
     costFormat(cost) {
       let str = cost.toString();
@@ -144,13 +117,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
+$transition: 0.5s;
 * {
   background-color: transparent;
 }
 .main {
+  width: 90%;
   height: 100%;
+  margin: 0 auto;
   .block {
-    width: 90%;
     height: 80vh;
     position: relative;
     margin: 0 auto;
@@ -195,40 +170,6 @@ export default {
           width: 45%;
         }
       }
-      //   img {
-      //     height: 100%;
-      //   }
-      //   .right-block {
-      //     display: flex;
-      //     flex-direction: column;
-      //     align-items: flex-start;
-      //     justify-content: space-between;
-      //     width: 30%;
-      //     margin: 0 20px 0 10px;
-      //   }
-      //   .money {
-      //     font-size: 16px;
-      //     width: 100%;
-      //     .text {
-      //       font-size: 12px;
-      //       text-align: left;
-      //       margin: 6px 0;
-      //     }
-      //     span {
-      //       margin-left: 16px;
-      //     }
-      //     &.left {
-      //       width: 50%;
-      //       font-size: 36px;
-      //       span {
-      //         margin-left: 4px;
-      //       }
-      //       .text {
-      //         font-size: 24px;
-      //         margin: 5px 0;
-      //       }
-      //     }
-      //   }
     }
     .account-block {
       width: 80%;
@@ -256,7 +197,7 @@ export default {
         position: absolute;
         top: -2vh;
         left: 0;
-        transition: 0.5s;
+        transition: $transition;
         &.full {
           width: 110vw;
           top: -50vh;
@@ -283,67 +224,17 @@ export default {
         right: 1vw;
       }
     }
-    // .btns {
-    //   display: flex;
-    //   margin: 0 auto;
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   .add {
-    //     width: 40px;
-    //     height: 40px;
-    //     border: 0;
-    //     background-color: #00c5b8;
-    //     border-radius: 40px;
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     transition: 0.4s;
-    //     &.click {
-
-    //     }
-    //     div {
-    //       display: flex;
-    //       justify-content: space-around;
-    //       align-items: center;
-    //       .line {
-    //         height: 40px;
-    //         margin: 0 5px;
-    //         border: 1.5px #fff solid;
-    //       }
-    //       div {
-    //         color: #fff;
-    //         height: 40px;
-    //         font-weight: 600;
-    //         font-size: 20px;
-    //       }
-    //     }
-    //   }
-    //   .notification {
-    //     width: 66%;
-    //     height: 7vh;
-    //     padding: 0 20px;
-    //     border-radius: 40px;
-    //     box-shadow: 0 0 12px #e6e6e6;
-    //     display: flex;
-    //     justify-content: space-evenly;
-    //     align-items: center;
-    //     transition: 0.4s;
-    //     &.click {
-    //       width: 35%;
-    //     }
-    //     span {
-    //       width: 20px;
-    //       height: 20px;
-    //       display: flex;
-    //       justify-content: center;
-    //       align-items: center;
-    //       font-weight: 500;
-    //       color: #fff;
-    //       background-color: #00c5b8;
-    //       border-radius: 50%;
-    //     }
-    //   }
-    // }
+    .create {
+      position: absolute;
+      width: 100%;
+      height: 80vh;
+      left: 0;
+      top: 110vh;
+      transition: $transition;
+      &.show {
+        top: 8vh;
+      }
+    }
   }
 }
 </style>

@@ -46,7 +46,6 @@ export default {
   name: "",
   data() {
     return {
-      full: false,
       bills: [
         {
           id: 1,
@@ -105,7 +104,8 @@ export default {
     RevenueItem
   },
   props: {
-    projectId: Number
+    projectId: Number,
+    full: Boolean
   },
   methods: {
     fullRevenue() {
@@ -114,7 +114,6 @@ export default {
           this.dates[date] = false;
         }
       }
-      this.full = !this.full;
       this.$emit("full");
     },
     costFormat(cost) {
@@ -149,6 +148,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
+$transition: 0.5s;
 * {
   background-color: transparent;
 }
@@ -161,7 +161,7 @@ export default {
     background-color: #fff;
     border-radius: 16px;
     padding: 10px 0;
-    transition: 0.5s;
+    transition: $transition;
     height: 27vh;
     &.fullBlock {
       height: 90vh;
@@ -172,16 +172,16 @@ export default {
       margin: 0 0 2vh 0;
       padding: 0 4vw;
       font-size: 16px;
-      transition: 0.5s;
+      transition: $transition;
       &.fullHeader {
         font-size: 24px;
       }
     }
     .bills {
-      height: 24vh;
+      height: 22vh;
       width: 100%;
       overflow: scroll;
-      transition: 0.5s;
+      transition: $transition;
       &.fullBills {
         height: 76vh;
       }

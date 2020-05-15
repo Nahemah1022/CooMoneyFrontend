@@ -9,4 +9,11 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-router.replace('/');
+if (localStorage.getItem('token')) {
+  router.replace('/Project');
+}
+else {
+  router.replace('/');
+}
+
+

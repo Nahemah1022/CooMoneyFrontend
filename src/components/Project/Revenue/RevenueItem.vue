@@ -1,22 +1,22 @@
 <template>
   <div
-    :class="{bill: true, fullBill: fullRevenue, expand: expand}"
+    :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand}"
     @click="fullRevenue && (expand=!expand)"
   >
-    <div :class="{titleBlock: true, titleExpand: expand}">
+    <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
       <img :src="require(`@/assets/image/Project/${category}.svg`)" />
       <img class="space" src alt />
       <div>{{costTitle}}</div>
     </div>
-    <div :class="{right: true, fullRight: fullRevenue, expandRight: expand}">
+    <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
       <div>
         <span>$</span>
         {{cost}}
       </div>
       <span>&nbsp;</span>
       <img
-        :class="{fullImg: fullRevenue, imgRxpand: expand}"
-        :src="require(`@/assets/image/Project/Revenue/${status}${expand ? '_expand' : ''}.svg`)"
+        :class="{fullImg: fullRevenue, imgRxpand: fullRevenue&&expand}"
+        :src="require(`@/assets/image/Project/Revenue/${status}${fullRevenue&&expand ? '_expand' : ''}.svg`)"
       />
     </div>
   </div>
@@ -42,6 +42,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
+$transition: 0.3s;
 * {
   background-color: transparent;
 }
@@ -55,7 +56,7 @@ export default {
   border-radius: 0px;
   justify-content: space-between;
   align-items: flex-start;
-  transition: 0.3s;
+  transition: $transition;
   &.fullBill {
     padding: 4px;
     &.expand {
@@ -73,10 +74,10 @@ export default {
     justify-content: flex-start;
     height: 3vh;
     font-size: 16px;
-    transition: 0.3s;
+    transition: $transition;
     img {
       width: 5vw;
-      transition: 0.3s;
+      transition: $transition;
     }
     &.titleExpand {
       width: 100%;
@@ -101,7 +102,7 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
     font-size: 16px;
-    transition: 0.3s;
+    transition: $transition;
     &.fullRight {
       position: absolute;
       width: 27vw;
@@ -113,7 +114,7 @@ export default {
       }
     }
     img {
-      transition: 0.3s;
+      transition: $transition;
       width: 0vw;
       &.fullImg {
         width: 10vw;
