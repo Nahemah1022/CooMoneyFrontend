@@ -29,9 +29,15 @@
               </swiper-slide>
             </swiper>
           </div>
-          <div class="cost">
-            <span>$</span>
-            <p>{{costFormat(money)}}</p>
+          <div class="money-block">
+            <div v-if="costBufferDisplay" class="buffer">
+              <span>$</span>
+              <p>{{costBufferDisplay}}</p>
+            </div>
+            <div class="cost">
+              <span>$</span>
+              <p>{{costFormat(money)}}</p>
+            </div>
           </div>
         </div>
         <hr />
@@ -46,6 +52,7 @@
               <input
                 type="radio"
                 name="categorys"
+                :value="category.index"
                 :checked="categoryIndex==category.index?'checked':''"
                 :id="`category_${category.index}`"
               />
@@ -57,28 +64,48 @@
             </div>
           </div>
         </div>
-        <div class="description">
-          <datepicker :format="'yyyy/MM/dd'" :placeholder="'pick a date'"></datepicker>
-          <img class="icon_calander" src="@/assets/image/Project/icon_calander.svg" alt />
-          <input type="text" placeholder="brief description" />
+        <div :class="{inputBlock: true, focus: focus}">
+          <div class="description">
+            <datepicker
+              v-model="date"
+              :value="new Date(2016, 9, 16)"
+              :format="'yyyy-MM-dd'"
+              :placeholder="'pick a date'"
+            ></datepicker>
+            <img class="icon_calander" src="@/assets/image/Project/icon_calander.svg" alt />
+            <input
+              v-model="title"
+              @focus="focus=true"
+              @blur="focus=false"
+              type="text"
+              placeholder="Title here"
+            />
+          </div>
+          <textarea
+            @focus="focus=true"
+            @blur="focus=false"
+            name="description"
+            :class="{desc: true, focus: focus}"
+            placeholder="brief description"
+          ></textarea>
         </div>
       </div>
       <div class="keyboard">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>+</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>-</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
-        <div>x</div>
-        <div>⮨</div>
-        <div>0</div>
-        <div class="apply">Apply</div>
+        <div @click="caculate(1)">1</div>
+        <div @click="caculate(2)">2</div>
+        <div @click="caculate(3)">3</div>
+        <div @click="caculate('+')">+</div>
+        <div @click="caculate(4)">4</div>
+        <div @click="caculate(5)">5</div>
+        <div @click="caculate(6)">6</div>
+        <div @click="caculate('-')">-</div>
+        <div @click="caculate(7)">7</div>
+        <div @click="caculate(8)">8</div>
+        <div @click="caculate(9)">9</div>
+        <div @click="caculate('x')">x</div>
+        <div @click="caculate(-1)">⮨</div>
+        <div @click="caculate(0)">0</div>
+        <div class="apply" @click="apply">Apply</div>
       </div>
     </div>
   </div>
@@ -94,7 +121,9 @@ export default {
   data() {
     return {
       selectedIndex: 1,
-      money: 1000,
+      money: 0,
+      title: "",
+      date: "",
       swiperOption: {
         effect: "coverflow",
         grabCursor: true,
@@ -115,7 +144,11 @@ export default {
         { index: 3, type: "repair" },
         { index: 4, type: "more" }
       ],
-      categoryIndex: 0
+      categoryIndex: 0,
+      focus: false,
+      costBufferDisplay: "",
+      operation: "",
+      costBuffer: 0
     };
   },
   props: {
@@ -137,9 +170,89 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
+    operate(a, b, op) {
+      if (!b) {
+        return a;
+      }
+      switch (op) {
+        case "+":
+          return a + b;
+        case "-":
+          return b - a;
+        case "x":
+          return a * b;
+      }
+    },
     caculate(input) {
-      this.money += input;
-      console.log(input);
+      switch (input) {
+        case -1:
+          this.money = Math.floor(this.money / 10);
+          break;
+        case "+":
+          this.costBuffer = this.operate(
+            this.money,
+            this.costBuffer,
+            this.operation
+          );
+          this.costBufferDisplay = this.costFormat(this.costBuffer) + input;
+          this.money = 0;
+          this.operation = "+";
+          break;
+        case "x":
+          this.costBuffer = this.operate(
+            this.money,
+            this.costBuffer,
+            this.operation
+          );
+          this.costBufferDisplay = this.costFormat(this.costBuffer) + input;
+          this.money = 0;
+          this.operation = "x";
+          break;
+        case "-":
+          this.costBuffer = this.operate(
+            this.money,
+            this.costBuffer,
+            this.operation
+          );
+          this.costBufferDisplay = this.costFormat(this.costBuffer) + input;
+          this.money = 0;
+          this.operation = "-";
+          break;
+        default:
+          this.money = this.money * 10 + input;
+      }
+    },
+    apply() {
+      let month = {
+        Jan: "01",
+        Feb: "02",
+        Mar: "03",
+        Apr: "04",
+        May: "05",
+        Jun: "06",
+        Jul: "07",
+        Aug: "08",
+        Sep: "09",
+        Oct: "10",
+        Nov: "11",
+        Dec: "12"
+      };
+      let y = this.date.toString().substring(11, 15);
+      let m = month[this.date.toString().substring(4, 7)];
+      let d = this.date.toString().substring(8, 10);
+      this.$emit("newRevenue", {
+        title: this.title,
+        cost: this.costBuffer ? this.costBuffer : this.money,
+        categoty: this.categorys[this.categoryIndex - 1].type,
+        status: "pending",
+        date: y + "-" + m + "-" + d + " " + this.date.toString().substring(0, 3)
+      });
+      this.$emit("collapse");
+      this.title = "";
+      this.costBuffer = 0;
+      this.costBufferDisplay = "";
+      this.money = 0;
+      this.categoryIndex = 0;
     }
   }
 };
@@ -231,43 +344,86 @@ $radius: 14px;
       }
     }
     .cost-block {
-      width: 95%;
+      width: 90%;
+      margin: 0 auto;
       height: 6vh;
       padding-top: 2vh;
       display: flex;
-      overflow: hidden;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       .account {
         width: 50%;
         height: 8vh;
       }
-      .cost {
-        display: flex;
-        justify-content: space-between;
-        font-size: 40px;
-        margin-bottom: 3vh;
+      .money-block {
+        position: relative;
+        .buffer {
+          position: absolute;
+          width: 20vw;
+          top: -2vh;
+          right: 0;
+          display: flex;
+          justify-content: flex-end;
+          text-align: right;
+        }
+        .cost {
+          display: flex;
+          justify-content: space-between;
+          font-size: 40px;
+          margin-bottom: 3vh;
+        }
       }
     }
-    .description {
+    .inputBlock {
       width: 80vw;
       margin: 2vh auto;
+      padding: 0 3px;
       position: relative;
-      display: flex;
-      justify-content: space-between;
-      .icon_calander {
-        position: absolute;
-        left: 30%;
-        top: 5px;
+      box-sizing: border-box;
+      border: 0px #00c5b8 solid;
+      transition: 0.3s;
+      &.focus {
+        border: 2px #00c5b8 solid;
+        border-radius: 16px 16px 0 0;
       }
-      input {
-        width: auto;
-        line-height: 24px;
-        padding: 0 20px;
+      .description {
+        display: flex;
+        justify-content: space-between;
+        .icon_calander {
+          position: absolute;
+          left: 30%;
+          top: 5px;
+        }
+        input {
+          color: #5d5d5d;
+          width: auto;
+          line-height: 24px;
+          padding: 0 14px;
+          box-sizing: border-box;
+          border: 0;
+          border-bottom: 1px solid;
+          text-align: center;
+        }
+      }
+      .desc {
+        color: #5d5d5d;
+        width: 80vw;
+        position: absolute;
+        top: 3vh;
+        left: -2px;
+        z-index: 10;
+        height: 0vh;
+        border: 0px #00c5b8 solid;
+        border-radius: 0;
+        background-color: #fff;
+        transition: 0.3s;
         box-sizing: border-box;
-        border: 0;
-        border-bottom: 1px solid;
-        text-align: center;
+        &.focus {
+          height: 16vh;
+          padding: 5px 10px;
+          border: 2px #00c5b8 solid;
+          border-radius: 0 0 16px 16px;
+        }
       }
     }
     .category-block {

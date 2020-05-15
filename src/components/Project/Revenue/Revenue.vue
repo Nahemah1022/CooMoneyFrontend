@@ -46,56 +46,6 @@ export default {
   name: "",
   data() {
     return {
-      bills: [
-        {
-          id: 1,
-          title: "Equipment Purchase",
-          cost: 6092,
-          categoty: "repair",
-          status: "approved",
-          date: "2020-04-30 Thursday"
-        },
-        {
-          id: 2,
-          title: "Software Purchase",
-          cost: 2000,
-          categoty: "purchase",
-          status: "rejected",
-          date: "2020-04-27 Monday"
-        },
-        {
-          id: 3,
-          title: "Equipment Rental",
-          cost: 3000,
-          categoty: "repair",
-          status: "pending",
-          date: "2020-04-27 Monday"
-        },
-        {
-          id: 4,
-          title: "Equipment Repair",
-          cost: 1020,
-          categoty: "repair",
-          status: "pending",
-          date: "2020-04-27 Monday"
-        },
-        {
-          id: 5,
-          title: "Equipment Repair",
-          cost: 1222,
-          categoty: "repair",
-          status: "approved",
-          date: "2020-04-25 Saturday"
-        },
-        {
-          id: 6,
-          title: "Equipment Repair",
-          cost: 4241,
-          categoty: "repair",
-          status: "approved",
-          date: "2020-04-25 Saturday"
-        }
-      ],
       dates: {},
       detailedBills: {}
     };
@@ -105,7 +55,8 @@ export default {
   },
   props: {
     projectId: Number,
-    full: Boolean
+    full: Boolean,
+    bills: Array
   },
   methods: {
     fullRevenue() {
@@ -118,13 +69,15 @@ export default {
     },
     costFormat(cost) {
       let str = cost.toString();
-      let rtn = str.substr(0, str.length % 3) + ", ";
+      let rtn =
+        str.length % 3 === 0 ? "" : str.substr(0, str.length % 3) + ", ";
       for (var i = str.length % 3; i < str.length; i += 3) {
         rtn += str.substr(i, 3) + ", ";
       }
       rtn = rtn.slice(0, -2);
       return rtn;
     },
+
     showDate(date) {
       if (!this.dates[date]) {
         this.dates[date] = true;

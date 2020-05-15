@@ -45,6 +45,7 @@
           :class="{revenue: true, full: fullRevenue}"
           :projectId="projectId"
           :full="fullRevenue"
+          :bills="bills"
           @full="toggleRevenue"
         ></Revenue>
       </div>
@@ -56,6 +57,7 @@
         :projectId="projectId"
         :accounts="accounts"
         @collapse="isAdding=false"
+        @newRevenue="newRevenue"
       ></CreateBill>
     </div>
   </div>
@@ -82,6 +84,56 @@ export default {
       accounts: [
         { id: 1, name: "cash", remain: 2092, img: "cash" },
         { id: 2, name: "Sinopac", remain: 36000, img: "bank" }
+      ],
+      bills: [
+        {
+          id: 1,
+          title: "Equipment Purchase",
+          cost: 6092,
+          categoty: "repair",
+          status: "approved",
+          date: "2020-04-30 Thursday"
+        },
+        {
+          id: 2,
+          title: "Software Purchase",
+          cost: 2000,
+          categoty: "purchase",
+          status: "rejected",
+          date: "2020-04-27 Monday"
+        },
+        {
+          id: 3,
+          title: "Equipment Rental",
+          cost: 3000,
+          categoty: "repair",
+          status: "pending",
+          date: "2020-04-27 Monday"
+        },
+        {
+          id: 4,
+          title: "Equipment Repair",
+          cost: 1020,
+          categoty: "repair",
+          status: "pending",
+          date: "2020-04-27 Monday"
+        },
+        {
+          id: 5,
+          title: "Equipment Repair",
+          cost: 1222,
+          categoty: "repair",
+          status: "approved",
+          date: "2020-04-25 Saturday"
+        },
+        {
+          id: 6,
+          title: "Equipment Repair",
+          cost: 4241,
+          categoty: "repair",
+          status: "approved",
+          date: "2020-04-25 Saturday"
+        }
       ]
     };
   },
@@ -97,7 +149,8 @@ export default {
     },
     costFormat(cost) {
       let str = cost.toString();
-      let rtn = str.substr(0, str.length % 3) + ", ";
+      let rtn =
+        str.length % 3 === 0 ? "" : str.substr(0, str.length % 3) + ", ";
       for (var i = str.length % 3; i < str.length; i += 3) {
         rtn += str.substr(i, 3) + ", ";
       }
@@ -106,6 +159,10 @@ export default {
     },
     toggleRevenue() {
       this.fullRevenue = !this.fullRevenue;
+    },
+    newRevenue(obj) {
+      console.log(obj);
+      this.bills.unshift(obj);
     }
   },
   beforeMount() {
