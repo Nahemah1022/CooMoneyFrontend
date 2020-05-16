@@ -8,6 +8,9 @@
             :title="preProject.title"
             :theme="preProject.theme"
             :projectId="preProject.id"
+            :budget="preProject.budget"
+            :expanse="preProject.expanse"
+            :income="preProject.income"
           ></ProjectViewItem>
         </swiper-slide>
       </swiper>

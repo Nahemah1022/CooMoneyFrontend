@@ -77,9 +77,6 @@ export default {
     return {
       isAdding: false,
       fullRevenue: false,
-      expanse: 13724,
-      income: 9080,
-      budget: 38092,
       notificationCount: 3,
       accounts: [
         { id: 1, name: "cash", remain: 2092, img: "cash" },
@@ -146,7 +143,10 @@ export default {
   props: {
     title: String,
     projectId: Number,
-    theme: Number
+    theme: Number,
+    expanse: Number,
+    budget: Number,
+    income: Number
   },
   methods: {
     add() {
@@ -167,7 +167,6 @@ export default {
       this.fullRevenue = !this.fullRevenue;
     },
     newRevenue(obj) {
-      console.log(obj);
       this.bills.unshift(obj);
     }
   },
