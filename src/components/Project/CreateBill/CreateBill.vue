@@ -84,7 +84,7 @@
           <textarea
             @focus="focus=true"
             @blur="focus=false"
-            name="description"
+            v-model="description"
             :class="{desc: true, focus: focus}"
             placeholder="brief description"
           ></textarea>
@@ -124,6 +124,7 @@ export default {
       money: 0,
       title: "",
       date: "",
+      description: "",
       swiperOption: {
         effect: "coverflow",
         grabCursor: true,
@@ -223,29 +224,30 @@ export default {
       }
     },
     apply() {
-      let month = {
-        Jan: "01",
-        Feb: "02",
-        Mar: "03",
-        Apr: "04",
-        May: "05",
-        Jun: "06",
-        Jul: "07",
-        Aug: "08",
-        Sep: "09",
-        Oct: "10",
-        Nov: "11",
-        Dec: "12"
-      };
-      let y = this.date.toString().substring(11, 15);
-      let m = month[this.date.toString().substring(4, 7)];
-      let d = this.date.toString().substring(8, 10);
+      let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ];
+      let d = new Date(this.date);
       this.$emit("newRevenue", {
         title: this.title,
         cost: this.costBuffer ? this.costBuffer : this.money,
         categoty: this.categorys[this.categoryIndex - 1].type,
         status: "pending",
-        date: y + "-" + m + "-" + d + " " + this.date.toString().substring(0, 3)
+        date:
+          new Date(d).getFullYear() +
+          "-" +
+          ("0" + (new Date(d).getMonth() + 1)).slice(-2) +
+          "-" +
+          ("0" + new Date(d).getDate()).slice(-2) +
+          " " +
+          days[d.getDay()],
+        description: this.description
       });
       this.$emit("collapse");
       this.title = "";

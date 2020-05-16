@@ -31,6 +31,7 @@
             :category="bill.categoty"
             :cost="costFormat(bill.cost)"
             :status="bill.status"
+            :description="bill.description"
             :fullRevenue="full"
           ></RevenueItem>
         </div>

@@ -92,7 +92,8 @@ export default {
           cost: 6092,
           categoty: "repair",
           status: "approved",
-          date: "2020-04-30 Thursday"
+          date: "2020-04-30 Thursday",
+          description: "sample description"
         },
         {
           id: 2,
@@ -100,7 +101,8 @@ export default {
           cost: 2000,
           categoty: "purchase",
           status: "rejected",
-          date: "2020-04-27 Monday"
+          date: "2020-04-27 Monday",
+          description: "sample description"
         },
         {
           id: 3,
@@ -108,7 +110,8 @@ export default {
           cost: 3000,
           categoty: "repair",
           status: "pending",
-          date: "2020-04-27 Monday"
+          date: "2020-04-27 Monday",
+          description: "sample description"
         },
         {
           id: 4,
@@ -116,7 +119,8 @@ export default {
           cost: 1020,
           categoty: "repair",
           status: "pending",
-          date: "2020-04-27 Monday"
+          date: "2020-04-27 Monday",
+          description: "sample description"
         },
         {
           id: 5,
@@ -124,7 +128,8 @@ export default {
           cost: 1222,
           categoty: "repair",
           status: "approved",
-          date: "2020-04-25 Saturday"
+          date: "2020-04-25 Saturday",
+          description: "sample description"
         },
         {
           id: 6,
@@ -132,7 +137,8 @@ export default {
           cost: 4241,
           categoty: "repair",
           status: "approved",
-          date: "2020-04-25 Saturday"
+          date: "2020-04-25 Saturday",
+          description: "sample description"
         }
       ]
     };

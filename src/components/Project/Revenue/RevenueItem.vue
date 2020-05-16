@@ -3,10 +3,14 @@
     :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand}"
     @click="fullRevenue && (expand=!expand)"
   >
-    <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
-      <img :src="require(`@/assets/image/Project/${category}.svg`)" />
-      <img class="space" src alt />
-      <div>{{costTitle}}</div>
+    <div class="block">
+      <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
+        <img :src="require(`@/assets/image/Project/${category}.svg`)" />
+        <img class="space" src alt />
+        <div>{{costTitle}}</div>
+      </div>
+      <hr />
+      <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
     </div>
     <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
       <div>
@@ -35,6 +39,7 @@ export default {
     category: String,
     cost: String,
     status: String,
+    description: String,
     fullRevenue: Boolean
   }
 };
@@ -67,26 +72,35 @@ $transition: 0.3s;
       border-radius: 16px;
     }
   }
-  .titleBlock {
-    width: 70%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 3vh;
-    font-size: 16px;
-    transition: $transition;
-    img {
-      width: 5vw;
-      transition: $transition;
+  .block {
+    width: 100%;
+    hr {
+      margin: 1vh auto;
     }
-    &.titleExpand {
-      width: 100%;
-      height: 20vh;
-      font-size: 20px;
+    .desc {
+      font-size: 18px;
+    }
+    .titleBlock {
+      width: 70%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 3vh;
+      font-size: 16px;
+      transition: $transition;
       img {
         width: 5vw;
-        &:not(.space) {
-          width: 16vw;
+        transition: $transition;
+      }
+      &.titleExpand {
+        width: 100%;
+        height: auto;
+        font-size: 20px;
+        img {
+          width: 5vw;
+          &:not(.space) {
+            width: 16vw;
+          }
         }
       }
     }
