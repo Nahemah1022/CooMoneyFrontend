@@ -206,7 +206,7 @@ export default {
     monthExpenseCount() {
       let thisYear = [];
       thisYear = this.sendExpense[0];
-      console.log(thisYear);
+      //console.log(thisYear);
       let lastYear = [];
       lastYear = this.sendExpense[1];
 

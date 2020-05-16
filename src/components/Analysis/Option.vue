@@ -17,14 +17,16 @@
     </div>
     <div id="projectView">
       <div class="example-3d">
-        <swiper class="swiper" :options="swiperOption">
+        <swiper
+          class="swiper"
+          :options="swiperOption"
+          @slideChange="onSwiperSlideChange"
+        >
           <swiper-slide>Project 1</swiper-slide>
           <swiper-slide>Project 2</swiper-slide>
           <swiper-slide>Project 3</swiper-slide>
           <swiper-slide>Project 4</swiper-slide>
           <swiper-slide>Project 5</swiper-slide>
-          <swiper-slide>Project 6</swiper-slide>
-          <swiper-slide>Project 7</swiper-slide>
         </swiper>
       </div>
     </div>
@@ -33,73 +35,87 @@
 
 <script>
 //toggleButton
-import Vue from "vue";
-import ToggleButton from "vue-js-toggle-button";
+import Vue from 'vue';
+import ToggleButton from 'vue-js-toggle-button';
 
 //slide project
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 
 Vue.use(ToggleButton);
+
+//啊在data就改變不了阿
+let projectName = 'Project1';
 export default {
-  name: "Option",
+  name: 'Option',
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   data() {
     return {
       //swiper
       swiperOption: {
-        effect: "coverflow",
+        effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: "auto",
+        slidesPerView: 'auto',
         loop: true,
-        direction: "vertical",
+        direction: 'vertical',
         coverflowEffect: {
           rotate: 30,
           stretch: 75, //彼此swiper的距離
           depth: 0, //swiper離z軸的距離
           modifier: 1,
-          slideShadows: false
+          slideShadows: false,
         },
 
         pagination: {
-          el: ".swiper-pagination"
-        }
+          el: '.swiper-pagination',
+        },
+        on: {
+          slideChange: function() {
+            projectName = this.slides[this.activeIndex].textContent;
+            // console.log(this.projectName);
+          },
+        },
       },
 
       //button
 
       value: false,
-      color: { checked: "#E3EDF7", unchecked: "#A6F3F3" },
-      fontSize: 20
+      color: { checked: '#E3EDF7', unchecked: '#A6F3F3' },
+      fontSize: 20,
     };
   },
   methods: {
     onChangeEventHandler() {
       //false=>all true=>project
-      console.log(this.value);
+      //console.log(this.value);
       //all
       if (this.value) {
-        document.querySelector("h1").style.color = "#02AA9E";
-        document.querySelector("h2").style.color = "#DBDBDB";
+        document.querySelector('h1').style.color = '#02AA9E';
+        document.querySelector('h2').style.color = '#DBDBDB';
         this.value = false;
-        this.$emit("buttonSubmit", this.value);
+        this.$emit('buttonSubmit', this.value);
       }
 
       //project
       else {
-        document.querySelector("h2").style.color = "#02AA9E";
-        document.querySelector("h1").style.color = "#DBDBDB";
+        document.querySelector('h2').style.color = '#02AA9E';
+        document.querySelector('h1').style.color = '#DBDBDB';
 
         this.value = true;
 
-        this.$emit("buttonSubmit", this.value);
+        this.$emit('buttonSubmit', this.value);
       }
-    }
-  }
+    },
+    onSwiperSlideChange() {
+      console.log(projectName);
+      this.$emit('swiperSubmit', projectName);
+    },
+  },
+  computed: {},
 };
 </script>
 
@@ -121,7 +137,7 @@ h2 {
   position: relative;
   top: 80px;
   width: 90%;
-  heixght: 101px;
+  height: 101px;
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
   border-radius: 22px 22px;
