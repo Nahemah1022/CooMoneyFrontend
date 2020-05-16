@@ -16,7 +16,6 @@
         <swiper-slide>Slide 7</swiper-slide>
       </swiper>
     </div>
-
     <Footer :active="1"></Footer>
   </div>
 </template>
