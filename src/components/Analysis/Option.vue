@@ -72,7 +72,7 @@ export default {
 
       //button
 
-      value: true,
+      value: false,
       color: { checked: "#E3EDF7", unchecked: "#A6F3F3" },
       fontSize: 20
     };
@@ -80,7 +80,7 @@ export default {
   methods: {
     onChangeEventHandler() {
       //false=>all true=>project
-
+      console.log(this.value);
       //all
       if (this.value) {
         document.querySelector("h1").style.color = "#02AA9E";
@@ -121,7 +121,7 @@ h2 {
   position: relative;
   top: 80px;
   width: 90%;
-  height: 101px;
+  heixght: 101px;
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
   border-radius: 22px 22px;

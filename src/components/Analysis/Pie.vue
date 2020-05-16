@@ -33,33 +33,33 @@
 
 <script>
 //這裡import vue.chart
-import Vue from 'vue';
-import VCharts from 'v-charts';
+import Vue from "vue";
+import VCharts from "v-charts";
 
 Vue.use(VCharts);
 
 //這裡用來存算好的item總和
 let expenseItem = [
-  { name: 'Transportation', money: 0 },
-  { name: 'Meals', money: 0 },
-  { name: 'Equipment', money: 0 },
-  { name: 'others', money: 0 },
-  { name: 'Rental', money: 0 },
+  { name: "Transportation", money: 0 },
+  { name: "Meals", money: 0 },
+  { name: "Equipment", money: 0 },
+  { name: "others", money: 0 },
+  { name: "Rental", money: 0 }
 ];
 let incomeItem = [
-  { name: 'Fees', money: 0 },
-  { name: 'Sponsor', money: 0 },
-  { name: 'Equipment', money: 0 },
-  { name: 'others', money: 0 },
-  { name: 'Rental', money: 0 },
+  { name: "Fees", money: 0 },
+  { name: "Sponsor", money: 0 },
+  { name: "Equipment", money: 0 },
+  { name: "others", money: 0 },
+  { name: "Rental", money: 0 }
 ];
 
 export default {
-  name: 'pie',
+  name: "pie",
   props: {
-    Outproject: Array,
-    Inproject: Array,
-    selectType: String,
+    sendExpense: Array,
+    sendIncome: Array,
+    selectType: String
   },
   components: {},
   data() {
@@ -68,118 +68,166 @@ export default {
     //设置echart的详细属性(setting失效用這格)
     this.pieExtend = {
       series: {
-        dataType: 'normal',
+        dataType: "normal",
         hoverAnimation: true,
-        cursor: 'pointer',
+        cursor: "pointer",
         itemStyle: {
-          shadowColor: 'rgba(0, 0, 0, 0.3)',
-          shadowBlur: 10,
+          shadowColor: "rgba(0, 0, 0, 0.3)",
+          shadowBlur: 10
         },
         //圖示
 
         label: {
           show: false,
-          position: 'center',
+          position: "center"
         },
         emphasis: {
           label: {
             show: true,
 
-            fontSize: '20',
-            fontWeight: 'bold',
-          },
+            fontSize: "20",
+            fontWeight: "bold"
+          }
         },
         radius: [20, 70],
-        right: '50',
-        bottom: '280',
-      },
+        right: "50",
+        bottom: "280"
+      }
     };
     this.legend = {
-      icon: 'circle',
-      orient: 'vertical',
-      left: '150',
-      top: '20',
+      icon: "circle",
+      orient: "vertical",
+      left: "150",
+      top: "20"
     };
 
-    this.backgroundColor = 'white';
+    this.backgroundColor = "white";
     //顏色藥用v-bind設置
-    this.colors = ['#97EBCE', '#FBDA99', '#FF9798', '#82FFF7', '#A6CEE3'];
-    return {};
+    this.colors = ["#97EBCE", "#FBDA99", "#FF9798", "#82FFF7", "#A6CEE3"];
+    return {
+      allExpense: [],
+      allIncome: []
+    };
   },
 
-  methods: {},
   computed: {
     expenseCount() {
-      console.log(this.selectType);
+      //console.log(this.sendExpense);
+      let flag;
+      if (this.selectType === "Project") flag = true;
+      else if (this.selectType === "All") flag = false;
       //每次change都要初始化
       //console.log(this.selectType);
-      for (let i = 0; i < expenseItem.length; ++i) expenseItem[i].money = 0;
-      Object.keys(this.Outproject).forEach((p) => {
-        switch (this.Outproject[p].Classification) {
-          case 'Transportation':
-            expenseItem[0].money += this.Outproject[p].money;
-            break;
-          case 'Meals':
-            expenseItem[1].money += this.Outproject[p].money;
-            break;
-          case 'Equipment':
-            expenseItem[2].money += this.Outproject[p].money;
-            break;
-          case 'others':
-            expenseItem[3].money += this.Outproject[p].money;
-            break;
-          case 'Rental':
-            expenseItem[4].others += this.Outproject[p].money;
-            break;
-        }
-      });
-      //console.log(expenseItem[2].money);
-      return {
-        columns: ['name', 'money'],
-        rows: [
-          { name: expenseItem[0].name, money: expenseItem[0].money },
-          { name: expenseItem[1].name, money: expenseItem[1].money },
-          { name: expenseItem[2].name, money: expenseItem[2].money },
-          { name: expenseItem[3].name, money: expenseItem[3].money },
-          { name: expenseItem[4].name, money: expenseItem[4].money },
-        ],
-      };
+      if (flag) {
+        for (let i = 0; i < expenseItem.length; ++i) expenseItem[i].money = 0;
+        Object.keys(this.sendExpense).forEach(p => {
+          switch (this.sendExpense[p].Classification) {
+            case "Transportation":
+              expenseItem[0].money += this.sendExpense[p].money;
+              break;
+            case "Meals":
+              expenseItem[1].money += this.sendExpense[p].money;
+              break;
+            case "Equipment":
+              expenseItem[2].money += this.sendExpense[p].money;
+              break;
+            case "others":
+              expenseItem[3].money += this.sendExpense[p].money;
+              break;
+            case "Rental":
+              expenseItem[4].others += this.sendExpense[p].money;
+              break;
+          }
+        });
+        return {
+          columns: ["name", "money"],
+          rows: expenseItem
+        };
+      } else {
+        let count = 0;
+
+        //每次都要初始化再去計算
+        console.log(this.allExpense);
+        Object.keys(this.sendExpense).forEach(p => {
+          let index = this.allExpense.findIndex(
+            e => e.name === this.sendExpense[p].name
+          );
+          if (index === -1) {
+            //代表還沒有存取這個project所以要先建立一個
+            this.allExpense[count] = {
+              name: this.sendExpense[p].name,
+              money: this.sendExpense[p].money
+            };
+            ++count;
+          } else {
+            //已經存在繼續存
+            this.allExpense[index].money += this.sendExpense[p].money;
+          }
+        });
+        return {
+          columns: ["name", "money"],
+          rows: this.allExpense
+        };
+      }
     },
     incomeCount() {
-      //每次change都要初始化
-      for (let i = 0; i < incomeItem.length; ++i) incomeItem[i].money = 0;
-      Object.keys(this.Inproject).forEach((p) => {
-        switch (this.Inproject[p].Classification) {
-          case 'Fees':
-            incomeItem[0].money += this.Inproject[p].money;
-            break;
-          case 'Sponsor':
-            incomeItem[1].money += this.Inproject[p].money;
-            break;
-          case 'Equipment':
-            incomeItem[2].money += this.Inproject[p].money;
-            break;
-          case 'others':
-            incomeItem[3].money += this.Inproject[p].money;
-            break;
-          case 'Rental':
-            incomeItem[4].others += this.Inproject[p].money;
-            break;
-        }
-      });
-      //console.log(incomeItem[2].money);
-      return {
-        columns: ['name', 'money'],
-        rows: [
-          { name: incomeItem[0].name, money: incomeItem[0].money },
-          { name: incomeItem[1].name, money: incomeItem[1].money },
-          { name: incomeItem[2].name, money: incomeItem[2].money },
-          { name: incomeItem[3].name, money: incomeItem[3].money },
-          { name: incomeItem[4].name, money: incomeItem[4].money },
-        ],
-      };
-    },
-  },
+      let flag;
+      if (this.selectType === "Project") flag = true;
+      else if (this.selectType === "All") flag = false;
+      //看室this.all 還是 project型態
+      if (flag) {
+        //每次change都要初始化
+        for (let i = 0; i < incomeItem.length; ++i) incomeItem[i].money = 0;
+        Object.keys(this.sendIncome).forEach(p => {
+          switch (this.sendIncome[p].Classification) {
+            case "Fees":
+              incomeItem[0].money += this.sendIncome[p].money;
+              break;
+            case "Sponsor":
+              incomeItem[1].money += this.sendIncome[p].money;
+              break;
+            case "Equipment":
+              incomeItem[2].money += this.sendIncome[p].money;
+              break;
+            case "others":
+              incomeItem[3].money += this.sendIncome[p].money;
+              break;
+            case "Rental":
+              incomeItem[4].others += this.sendIncome[p].money;
+              break;
+          }
+        });
+        //console.log(incomeItem[2].money);
+        return {
+          columns: ["name", "money"],
+          rows: incomeItem
+        };
+      } else {
+        let count = 0;
+
+        Object.keys(this.sendExpense).forEach(p => {
+          let index = this.allIncome.findIndex(
+            e => e.name === this.sendExpense[p].name
+          );
+          if (index === -1) {
+            //代表還沒有存取這個project所以要先建立一個
+            this.allIncome[count] = {
+              name: this.sendExpense[p].name,
+              money: this.sendExpense[p].money
+            };
+            ++count;
+          } else {
+            //已經存在繼續存
+            this.allIncome[index].money += this.sendExpense[p].money;
+          }
+        });
+        return {
+          columns: ["name", "money"],
+          rows: this.allIncome
+        };
+      }
+    }
+  }
 };
 </script>
 

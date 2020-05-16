@@ -6,17 +6,17 @@
       <swiper ref="mySwiper" class="swiper" :options="swiperOption">
         <swiper-slide>
           <Pie
-            v-bind:Outproject="outcomeSelect()"
-            :selectType="selectType"
-            v-bind:Inproject="incomeSelect()"
+            v-bind:sendExpense="pieOutcomeSelect()"
+            :selectType="SelectType"
+            v-bind:sendIncome="pieIncomeSelect()"
           ></Pie>
         </swiper-slide>
         <swiper-slide>
-          <Pie
-            v-bind:Outproject="outcomeSelect()"
-            :selectType="selectType"
-            v-bind:Inproject="incomeSelect()"
-          ></Pie>
+          <Bar
+            v-bind:sendExpense="BarExpenseSelect()"
+            v-bind:sendIncome="BarIncomeSelect()"
+            :selectType="SelectType"
+          ></Bar>
         </swiper-slide>
       </swiper>
     </div>
@@ -30,8 +30,8 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import Option from '@/components/Analysis/Option';
 import Pie from '@/components/Analysis/Pie';
+import Bar from '@/components/Analysis/Bar';
 
-//import { Carousel3d, Slide } from 'vue-carousel-3d';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
@@ -44,11 +44,12 @@ export default {
     Pie,
     Swiper,
     SwiperSlide,
-    // Bar
+    Bar,
   },
   data() {
     return {
-      selectType: 'Project',
+      SelectType: 'All',
+
       swiperOption: {
         direction: 'horizontal',
         effect: 'coverflow',
@@ -73,10 +74,13 @@ export default {
         on: {
           slideChange: function() {
             //console.log(this.activeIndex); //必須用activeIndex因為event是以他為基準 //切换结束时，告诉我现在是第几个slide
+
+            //把目前的slide變回白色
             let c1 = this.slides[this.activeIndex].children;
             c1[0].style.backgroundColor = '#FFFFFF';
             c1[0].style.opacity = '1';
 
+            //左右弄成透明
             let cForward = this.slides[this.activeIndex + 1].children;
             cForward[0].style.backgroundColor = '#FFFFFF';
             cForward[0].style.opacity = '0.5';
@@ -88,6 +92,8 @@ export default {
           },
         },
       },
+
+      //pie=>all
       outAll: [
         {
           name: 'Project' + (Math.floor(Math.random() * 7) + 1).toString(),
@@ -1295,6 +1301,7 @@ export default {
           charge: 'Amy',
         },
       ],
+      //pie=>project bar=>project
       Outproject1: [
         {
           year: 2019,
@@ -3469,24 +3476,1014 @@ export default {
           charge: 'Amy',
         },
       ],
+      //line=>all
+      thisYearExpense: [
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+      ],
+      lastYearExpense: [
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+      ],
+      thisYearIncome: [
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+        {
+          year: 2020,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 500) + 1300,
+        },
+      ],
+      lastYearIncome: [
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 1000) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+        {
+          year: 2019,
+          month: Math.floor(Math.random() * 12) + 1,
+          money: Math.floor(Math.random() * 700) + 100,
+        },
+      ],
+      //line
     };
   },
   methods: {
     //選擇是project 還是all類型
     analysisType(flag) {
-      if (flag) this.selectType = 'Project';
-      else this.selectType = 'All';
+      if (flag) {
+        this.SelectType = 'Project';
+      } else {
+        this.SelectType = 'All';
+      }
       //console.log(flag);
     },
-    outcomeSelect() {
-      if (this.selectType === 'All') return this.Outproject1;
-      else if (this.selectType === 'Project') return this.Outproject2;
+    pieOutcomeSelect() {
+      if (this.SelectType === 'All') return this.outAll;
+      else if (this.SelectType === 'Project') return this.Outproject1;
     },
-    incomeSelect() {
-      if (this.selectType === 'All') return this.Inproject1;
-      else if (this.selectType === 'Project') return this.Inproject2;
+    pieIncomeSelect() {
+      if (this.SelectType === 'All') return this.inAll;
+      else if (this.SelectType === 'Project') return this.Inproject1;
     },
-    selectProject() {},
+    BarExpenseSelect() {
+      //console.log(compareYear);
+      if (this.SelectType === 'All') {
+        let compareYear1 = [this.thisYearExpense, this.lastYearExpense];
+        return compareYear1;
+      } else {
+        return this.Outproject1;
+      }
+    },
+    BarIncomeSelect() {
+      //console.log(compareYear);
+      if (this.SelectType === 'All') {
+        let compareYear2 = [this.thisYearIncome, this.lastYearIncome];
+        return compareYear2;
+      } else {
+        return this.Inproject1;
+      }
+    },
   },
 };
 </script>
