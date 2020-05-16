@@ -20,7 +20,7 @@
         <img src="@/assets/image/Project/Theme_new.svg" alt />
       </div>
     </div>
-    <Footer></Footer>
+    <Footer :active="2"></Footer>
   </div>
 </template>
 
@@ -38,27 +38,42 @@ export default {
         {
           id: 1,
           title: "Orientation Party",
-          theme: 1
+          theme: 1,
+          budget: 38092,
+          expanse: 13724,
+          income: 9080
         },
         {
           id: 2,
           title: "Public Performance",
-          theme: 2
+          theme: 2,
+          budget: 15641,
+          expanse: 556,
+          income: 0
         },
         {
           id: 3,
           title: "Group Activity",
-          theme: 3
+          theme: 3,
+          budget: 1226,
+          expanse: 151,
+          income: 0
         },
         {
           id: 4,
           title: "Anniversary Activity",
-          theme: 4
+          theme: 4,
+          budget: 30000,
+          expanse: 0,
+          income: 0
         },
         {
           id: 5,
           title: "Daily Expenses",
-          theme: 5
+          theme: 5,
+          budget: 9700,
+          expanse: 300,
+          income: 0
         }
       ]
     };

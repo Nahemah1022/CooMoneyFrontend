@@ -23,29 +23,10 @@
             {{costFormat(this.expanse)}}
           </div>
         </div>
-        <!-- version 1 -->
-        <!-- <div class="money left">
-          <p class="text">Expenses</p>
-          <span>$</span>
-          {{this.expanse}}
-        </div>
-        <img src="@/assets/image/Project/line.svg" alt />
-        <div class="right-block">
-          <div class="money">
-            <p class="text">Income</p>
-            <span>$</span>
-            {{this.income}}
-          </div>
-          <div class="money">
-            <p class="text">Remaining</p>
-            <span>$</span>
-            {{this.budget}}
-          </div>
-        </div>-->
       </div>
       <div class="account-block">
         <div class="header">
-          <p>Account</p>
+          <p>Accounts</p>
           <img src="@/assets/image/Project/option.svg" alt />
         </div>
         <div v-for="account in accounts" :key="account.id" class="account">
@@ -60,60 +41,122 @@
         </div>
       </div>
       <div class="cont">
-        <Revenue :class="{revenue: true, full: fullRevenue}" @full="toggleRevenue"></Revenue>
+        <Revenue
+          :class="{revenue: true, full: fullRevenue}"
+          :projectId="projectId"
+          :full="fullRevenue"
+          :bills="bills"
+          @full="toggleRevenue"
+        ></Revenue>
       </div>
-      <div class="btns">
-        <div :class="{notification: true, click: adding}">
-          Notification of Paying
-          <span>{{notificationCount}}</span>
-        </div>
-        <button :class="{add: true, click: adding}" @click="add">
-          <img v-if="!adding" src="@/assets/image/Project/add.svg" />
-          <div v-else>
-            <span class="remind">Remind&nbsp;</span>
-            <div class="line"></div>
-            <span class="now">Paying</span>
-          </div>
-        </button>
-      </div>
+      <button :class="{add: true, fullPlus: fullRevenue}" @click="add">
+        <img src="@/assets/image/Project/add.svg" />
+      </button>
+      <CreateBill
+        :class="{create: true, show: isAdding}"
+        :projectId="projectId"
+        :accounts="accounts"
+        @collapse="isAdding=false"
+        @newRevenue="newRevenue"
+      ></CreateBill>
     </div>
   </div>
 </template>
 
 <script>
 import Revenue from "@/components/Project/Revenue/Revenue.vue";
+import CreateBill from "@/components/Project/CreateBill/CreateBill.vue";
 
 export default {
   name: "ProjectViewItem",
   components: {
-    Revenue
+    Revenue,
+    CreateBill
   },
   data() {
     return {
-      adding: false,
+      isAdding: false,
       fullRevenue: false,
-      expanse: 13724,
-      income: 9080,
-      budget: 38092,
       notificationCount: 3,
       accounts: [
         { id: 1, name: "cash", remain: 2092, img: "cash" },
-        { id: 2, name: "Bank Sinopac", remain: 36000, img: "bank" }
+        { id: 2, name: "Sinopac", remain: 36000, img: "bank" }
+      ],
+      bills: [
+        {
+          id: 1,
+          title: "Equipment Purchase",
+          cost: 6092,
+          categoty: "repair",
+          status: "approved",
+          date: "2020-04-30 Thursday",
+          description: "sample description"
+        },
+        {
+          id: 2,
+          title: "Software Purchase",
+          cost: 2000,
+          categoty: "purchase",
+          status: "rejected",
+          date: "2020-04-27 Monday",
+          description: "sample description"
+        },
+        {
+          id: 3,
+          title: "Equipment Rental",
+          cost: 3000,
+          categoty: "repair",
+          status: "pending",
+          date: "2020-04-27 Monday",
+          description: "sample description"
+        },
+        {
+          id: 4,
+          title: "Equipment Repair",
+          cost: 1020,
+          categoty: "repair",
+          status: "pending",
+          date: "2020-04-27 Monday",
+          description: "sample description"
+        },
+        {
+          id: 5,
+          title: "Equipment Repair",
+          cost: 1222,
+          categoty: "repair",
+          status: "approved",
+          date: "2020-04-25 Saturday",
+          description: "sample description"
+        },
+        {
+          id: 6,
+          title: "Equipment Repair",
+          cost: 4241,
+          categoty: "repair",
+          status: "approved",
+          date: "2020-04-25 Saturday",
+          description: "sample description"
+        }
       ]
     };
   },
   props: {
     title: String,
-    id: Number,
-    theme: Number
+    projectId: Number,
+    theme: Number,
+    expanse: Number,
+    budget: Number,
+    income: Number
   },
   methods: {
     add() {
-      this.adding = !this.adding;
+      this.isAdding = !this.isAdding;
+      this.fullRevenue = false;
     },
     costFormat(cost) {
       let str = cost.toString();
-      let rtn = str.substr(0, str.length % 3) + ", ";
+      let rtn =
+        str.length % 3 === 0 ? "" : str.substr(0, str.length % 3) + ", ";
       for (var i = str.length % 3; i < str.length; i += 3) {
         rtn += str.substr(i, 3) + ", ";
       }
@@ -122,6 +165,9 @@ export default {
     },
     toggleRevenue() {
       this.fullRevenue = !this.fullRevenue;
+    },
+    newRevenue(obj) {
+      this.bills.unshift(obj);
     }
   },
   beforeMount() {
@@ -133,14 +179,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
+$transition: 0.5s;
 * {
   background-color: transparent;
 }
 .main {
+  width: 90%;
   height: 100%;
+  margin: 0 auto;
   .block {
-    width: 90%;
-    height: 82vh;
+    height: 80vh;
+    position: relative;
     margin: 0 auto;
     background-color: #fff;
     border: #fff 1px solid;
@@ -183,40 +232,6 @@ export default {
           width: 45%;
         }
       }
-      //   img {
-      //     height: 100%;
-      //   }
-      //   .right-block {
-      //     display: flex;
-      //     flex-direction: column;
-      //     align-items: flex-start;
-      //     justify-content: space-between;
-      //     width: 30%;
-      //     margin: 0 20px 0 10px;
-      //   }
-      //   .money {
-      //     font-size: 16px;
-      //     width: 100%;
-      //     .text {
-      //       font-size: 12px;
-      //       text-align: left;
-      //       margin: 6px 0;
-      //     }
-      //     span {
-      //       margin-left: 16px;
-      //     }
-      //     &.left {
-      //       width: 50%;
-      //       font-size: 36px;
-      //       span {
-      //         margin-left: 4px;
-      //       }
-      //       .text {
-      //         font-size: 24px;
-      //         margin: 5px 0;
-      //       }
-      //     }
-      //   }
     }
     .account-block {
       width: 80%;
@@ -238,13 +253,13 @@ export default {
     }
     .cont {
       position: relative;
-      height: 24vh;
+      height: 50vh;
       .revenue {
         width: 90vw;
         position: absolute;
         top: -2vh;
         left: 0;
-        transition: 0.5s;
+        transition: $transition;
         &.full {
           width: 110vw;
           top: -50vh;
@@ -253,65 +268,33 @@ export default {
         }
       }
     }
-    .btns {
+    .add {
+      position: absolute;
+      bottom: 3vh;
+      right: 7vw;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      background-color: #00c5b8;
+      border-radius: 40px;
       display: flex;
-      width: 90%;
-      margin: 0 auto;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      .add {
-        width: 50px;
-        height: 50px;
-        border: 0;
-        background-color: #00c5b8;
-        border-radius: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.4s;
-        &.click {
-          width: 55%;
-        }
-        div {
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          .line {
-            height: 50px;
-            margin: 0 5px;
-            border: 1.5px #fff solid;
-          }
-          span {
-            color: #fff;
-            font-weight: 600;
-            font-size: 20px;
-          }
-        }
+      transition: 0.4s;
+      &.fullPlus {
+        bottom: 2vh;
+        right: 1vw;
       }
-      .notification {
-        width: 66%;
-        height: 7vh;
-        padding: 0 20px;
-        border-radius: 40px;
-        box-shadow: 0 0 12px #e6e6e6;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        transition: 0.4s;
-        &.click {
-          width: 35%;
-        }
-        span {
-          width: 20px;
-          height: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-weight: 500;
-          color: #fff;
-          background-color: #00c5b8;
-          border-radius: 50%;
-        }
+    }
+    .create {
+      position: absolute;
+      width: 100%;
+      height: 80vh;
+      left: 0;
+      top: 110vh;
+      transition: $transition;
+      &.show {
+        top: 8vh;
       }
     }
   }

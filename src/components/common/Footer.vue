@@ -1,14 +1,32 @@
 <template>
   <div class="main">
-    <img @click="$router.push('/Analysis')" src="@/assets/image/Footer/icon_analysis.svg" alt />
-    <img @click="$router.push('/Project')" src="@/assets/image/Footer/icon_home.svg" alt />
-    <img @click="$router.push('/')" src="@/assets/image/Footer/icon_chat.svg" alt />
+    <img
+      @click="$router.push('/Analysis')"
+      :src="require(`@/assets/image/Footer/icon_analysis${(active==1) ? '_active' : ''}.svg`)"
+      alt
+    />
+    <img
+      @click="$router.push('/Project')"
+      :src="require(`@/assets/image/Footer/icon_home${(active==2) ? '_active' : ''}.svg`)"
+      alt
+    />
+    <img
+      @click="$router.push('/')"
+      :src="require(`@/assets/image/Footer/icon_chat${(active==3) ? '_active' : ''}.svg`)"
+      alt
+    />
   </div>
 </template>
 
 <script>
 export default {
-  name: "Footer"
+  name: "Footer",
+  props: {
+    active: {
+      type: Number,
+      required: true
+    }
+  }
 };
 </script>
 
@@ -16,7 +34,7 @@ export default {
 <style lang='scss' scoped>
 .main {
   width: 100%;
-  height: 9vh;
+  height: 7vh;
   position: fixed;
   display: flex;
   justify-content: space-evenly;
