@@ -3,55 +3,71 @@
     <h1>Category comparison</h1>
     <div id="BarExpense">
       <h2>expense</h2>
-      <ve-line class="line" width="97%" height="90%" :data="chooseType(1)" :extend="lineExtend"></ve-line>
+      <ve-line
+        class="line"
+        width="97%"
+        height="90%"
+        :data="chooseType(1)"
+        :extend="lineExtend"
+      ></ve-line>
     </div>
     <div id="BarInCome">
       <h2>income</h2>
-      <ve-line class="line" width="97%" height="90%" :data="chooseType(2)" :extend="lineExtend"></ve-line>
+      <ve-line
+        class="line"
+        width="97%"
+        height="90%"
+        :data="chooseType(2)"
+        :extend="lineExtend"
+      ></ve-line>
     </div>
   </div>
 </template>
 
 <script>
 //這裡import vue.chart
-import Vue from "vue";
-import VCharts from "v-charts";
+import Vue from 'vue';
+import VCharts from 'v-charts';
 
 //下拉是選單
 //import VueDropdown from 'vue-dynamic-dropdown';
 Vue.use(VCharts);
 
 export default {
-  name: "Bar",
+  name: 'Bar',
   props: {
     sendExpense: Array,
     sendIncome: Array,
-    selectType: String
+    selectType: String,
   },
   components: {},
   data() {
     //這裡調整canvas
     this.lineExtend = {
-      backgroundColor: "white",
+      backgroundColor: 'white',
       grid: {
         x: 10,
         y: 10,
         x2: 10,
         y2: 10,
 
-        width: "95%"
+        width: '95%',
       },
       xAxis: {
-        axisLabel: { fontSize: 7, interval: 0 }
+        axisLabel: { fontSize: 7, interval: 0 },
       },
       yAxis: {
-        axisLabel: { fontSize: 7, interval: 0 }
+        axisLabel: { fontSize: 7, interval: 0 },
       },
       series: {
         lineStyle: {
-          type: "solid"
-        }
-      }
+          type: 'solid',
+          width: 1,
+        },
+        symbol: 'circle',
+        smooth: 0,
+      },
+      color: ['#61dddd', '#b3b2b2'],
     };
     return {};
   },
@@ -59,15 +75,15 @@ export default {
     chooseType(Bar) {
       //expense
       if (Bar === 1) {
-        if (this.selectType === "All") return this.monthExpenseCount;
+        if (this.selectType === 'All') return this.monthExpenseCount;
         else return this.projectExpenseCount;
       }
       //income
       else if (Bar === 2) {
-        if (this.selectType === "All") return this.monthIncomeCount;
+        if (this.selectType === 'All') return this.monthIncomeCount;
         else return this.projectIncomeCount;
       }
-    }
+    },
   },
   computed: {
     projectExpenseCount() {
@@ -75,14 +91,14 @@ export default {
       let projectMonth = [];
       for (let i = 0; i < this.sendExpense.length; ++i) {
         let index = projectMonth.findIndex(
-          e => e.month === this.sendExpense[i].month
+          (e) => e.month === this.sendExpense[i].month
         );
 
         //沒有這個month創建一個
         if (index === -1) {
           projectMonth[count] = {
             month: this.sendExpense[i].month,
-            This: this.sendExpense[i].money
+            This: this.sendExpense[i].money,
           };
           ++count;
         }
@@ -92,8 +108,8 @@ export default {
         }
       }
       return {
-        columns: ["month", "This"],
-        rows: projectMonth
+        columns: ['month', 'This'],
+        rows: projectMonth,
       };
     },
     projectIncomeCount() {
@@ -101,14 +117,14 @@ export default {
       let projectMonth = [];
       for (let i = 0; i < this.sendIncome.length; ++i) {
         let index = projectMonth.findIndex(
-          e => e.month === this.sendIncome[i].month
+          (e) => e.month === this.sendIncome[i].month
         );
 
         //沒有這個month創建一個
         if (index === -1) {
           projectMonth[count] = {
             month: this.sendIncome[i].month,
-            This: this.sendIncome[i].money
+            This: this.sendIncome[i].money,
           };
           ++count;
         }
@@ -119,8 +135,8 @@ export default {
       }
       console.log(projectMonth);
       return {
-        columns: ["month", "This"],
-        rows: projectMonth
+        columns: ['month', 'This'],
+        rows: projectMonth,
       };
     },
 
@@ -133,18 +149,18 @@ export default {
 
       //使用前請先歸零
       let allMonth = [
-        { month: "Jan", This: 0, Last: 0 },
-        { month: "Feb", This: 0, Last: 0 },
-        { month: "Mar", This: 0, Last: 0 },
-        { month: "Apr", This: 0, Last: 0 },
-        { month: "May", This: 0, Last: 0 },
-        { month: "Jun", This: 0, Last: 0 },
-        { month: "Jul", This: 0, Last: 0 },
-        { month: "Aug", This: 0, Last: 0 },
-        { month: "Sep", This: 0, Last: 0 },
-        { month: "Oct", This: 0, Last: 0 },
-        { month: "Nov", This: 0, Last: 0 },
-        { month: "Dec", This: 0, Last: 0 }
+        { month: 'Jan', This: 0, Last: 0 },
+        { month: 'Feb', This: 0, Last: 0 },
+        { month: 'Mar', This: 0, Last: 0 },
+        { month: 'Apr', This: 0, Last: 0 },
+        { month: 'May', This: 0, Last: 0 },
+        { month: 'Jun', This: 0, Last: 0 },
+        { month: 'Jul', This: 0, Last: 0 },
+        { month: 'Aug', This: 0, Last: 0 },
+        { month: 'Sep', This: 0, Last: 0 },
+        { month: 'Oct', This: 0, Last: 0 },
+        { month: 'Nov', This: 0, Last: 0 },
+        { month: 'Dec', This: 0, Last: 0 },
       ];
 
       //console.log("hello " + allMonth[0].money);
@@ -234,8 +250,8 @@ export default {
       //console.log(allMonth);
 
       return {
-        columns: ["month", "This", "Last"],
-        rows: allMonth
+        columns: ['month', 'This', 'Last'],
+        rows: allMonth,
       };
     },
     monthIncomeCount() {
@@ -245,18 +261,18 @@ export default {
       lastYear = this.sendIncome[1];
 
       let allMonth = [
-        { month: "Jan", This: 0, Last: 0 },
-        { month: "Feb", This: 0, Last: 0 },
-        { month: "Mar", This: 0, Last: 0 },
-        { month: "Apr", This: 0, Last: 0 },
-        { month: "May", This: 0, Last: 0 },
-        { month: "Jun", This: 0, Last: 0 },
-        { month: "Jul", This: 0, Last: 0 },
-        { month: "Aug", This: 0, Last: 0 },
-        { month: "Sep", This: 0, Last: 0 },
-        { month: "Oct", This: 0, Last: 0 },
-        { month: "Nov", This: 0, Last: 0 },
-        { month: "Dec", This: 0, Last: 0 }
+        { month: 'Jan', This: 0, Last: 0 },
+        { month: 'Feb', This: 0, Last: 0 },
+        { month: 'Mar', This: 0, Last: 0 },
+        { month: 'Apr', This: 0, Last: 0 },
+        { month: 'May', This: 0, Last: 0 },
+        { month: 'Jun', This: 0, Last: 0 },
+        { month: 'Jul', This: 0, Last: 0 },
+        { month: 'Aug', This: 0, Last: 0 },
+        { month: 'Sep', This: 0, Last: 0 },
+        { month: 'Oct', This: 0, Last: 0 },
+        { month: 'Nov', This: 0, Last: 0 },
+        { month: 'Dec', This: 0, Last: 0 },
       ];
       //console.log("hello " + allMonth[0].money);
       //this
@@ -343,31 +359,34 @@ export default {
       }
 
       return {
-        columns: ["month", "This", "Last"],
-        rows: allMonth
+        columns: ['month', 'This', 'Last'],
+        rows: allMonth,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 h1 {
-  font-size: 25px;
+  font-size: 19px;
   color: #00c5b8;
-  font-weight: 100px;
+  font-weight: normal;
   background: none;
   position: relative;
-  right: 20px;
+  right: 60px;
+  top: 10px;
 }
 h2 {
   font-size: 15px;
-  right: 50px;
+  right: 100px;
+  top: 5px;
   color: #8d8d8d;
-  font-weight: 50px;
+  font-weight: normal;
   background: none;
   position: relative;
+  z-index: 1;
 }
 #BarExpense {
   width: 90%;
@@ -399,7 +418,7 @@ h2 {
   height: 98%;
   background-color: #ffffff;
   opacity: 0.5;
-  box-shadow: 0px 0px 9px #b3b2b2;
+  box-shadow: 0px 0px 9px #b2b3b3;
   border-radius: 22px 22px;
 }
 

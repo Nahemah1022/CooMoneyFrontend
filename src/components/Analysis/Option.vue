@@ -12,9 +12,11 @@
       @change="onChangeEventHandler"
     />
     <div id="choose">
-      <h1 style="font-size:17px; top:10px">All</h1>
+      <h1 style="font-size:17px; top:10px">ALL</h1>
       <h2 style="font-size:17px; top:40px">Project</h2>
     </div>
+    <div class="split"></div>
+
     <div id="projectView">
       <div class="example-3d">
         <swiper
@@ -23,7 +25,9 @@
           :options="swiperOption"
           @slideChange="onSwiperSlideChange"
         >
-          <SwiperSlide v-for="project in allProjectName" :key="project">{{project}}</SwiperSlide>
+          <SwiperSlide v-for="project in allProjectName" :key="project">{{
+            project
+          }}</SwiperSlide>
         </swiper>
       </div>
     </div>
@@ -32,60 +36,60 @@
 
 <script>
 //toggleButton
-import Vue from "vue";
-import ToggleButton from "vue-js-toggle-button";
+import Vue from 'vue';
+import ToggleButton from 'vue-js-toggle-button';
 
 //slide project
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 
 Vue.use(ToggleButton);
 
 //啊在data就改變不了阿
-let projectName = "";
+let projectName = '';
 export default {
-  name: "Option",
+  name: 'Option',
   props: {
-    allProjectName: Array
+    allProjectName: Array,
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   data() {
     return {
       //swiper
       swiperOption: {
-        effect: "coverflow",
+        effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: "auto",
+        slidesPerView: 'auto',
         loop: true,
-        direction: "vertical",
+        direction: 'vertical',
         coverflowEffect: {
           rotate: 30,
           stretch: 75, //彼此swiper的距離
           depth: 0, //swiper離z軸的距離
           modifier: 1,
-          slideShadows: false
+          slideShadows: false,
         },
 
         pagination: {
-          el: ".swiper-pagination"
+          el: '.swiper-pagination',
         },
         on: {
           slideChange: function() {
             projectName = this.slides[this.activeIndex].textContent;
             // console.log(this.projectName);
-          }
-        }
+          },
+        },
       },
 
       //button
 
       value: false,
-      color: { checked: "#E3EDF7", unchecked: "#A6F3F3" },
-      fontSize: 20
+      color: { checked: '#E3EDF7', unchecked: '#A6F3F3' },
+      fontSize: 20,
     };
   },
   methods: {
@@ -94,26 +98,26 @@ export default {
       //console.log(this.value);
       //all
       if (this.value) {
-        document.querySelector("h1").style.color = "#02AA9E";
-        document.querySelector("h2").style.color = "#DBDBDB";
+        document.querySelector('h1').style.color = '#02AA9E';
+        document.querySelector('h2').style.color = '#DBDBDB';
         this.value = false;
-        this.$emit("buttonSubmit", this.value);
+        this.$emit('buttonSubmit', this.value);
       }
 
       //project
       else {
-        document.querySelector("h2").style.color = "#02AA9E";
-        document.querySelector("h1").style.color = "#DBDBDB";
+        document.querySelector('h2').style.color = '#02AA9E';
+        document.querySelector('h1').style.color = '#DBDBDB';
 
         this.value = true;
 
-        this.$emit("buttonSubmit", this.value);
+        this.$emit('buttonSubmit', this.value);
       }
     },
     onSwiperSlideChange() {
-      this.$emit("swiperSubmit", projectName);
-    }
-  }
+      this.$emit('swiperSubmit', projectName);
+    },
+  },
 
   //swiper請這樣使用function
 };
@@ -128,7 +132,8 @@ h2 {
   color: #dbdbdb;
   background-color: white;
   right: 20px;
-  font-weight: 500;
+  font-weight: normal;
+  font-size: 20px;
 }
 
 #content1 {
@@ -147,6 +152,13 @@ h2 {
 
   height: 100%;
   background-color: transparent;
+}
+.split {
+  position: relative;
+  top: 10px;
+  width: 2px;
+  height: 72px;
+  background-color: #dbdbdb;
 }
 #setButton {
   position: relative;
