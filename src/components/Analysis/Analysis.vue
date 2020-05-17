@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <Header :title="'Analysis'" @back="$router.go(-1)"></Header>
-    <Option @buttonSubmit="analysisType" @swiperSubmit="projectSelect"></Option>
+    <Option @buttonSubmit="analysisType" @swiperSubmit="projectSelect" :allProjectName="allProject"></Option>
     <div class="example-3d">
       <swiper ref="mySwiper" class="swiper" :options="swiperOption">
         <swiper-slide>
@@ -26,4922 +26,924 @@
 </template>
 
 <script>
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
-import Option from '@/components/Analysis/Option';
-import Pie from '@/components/Analysis/Pie';
-import Bar from '@/components/Analysis/Bar';
+import Header from "@/components/common/Header";
+import Footer from "@/components/common/Footer";
+import Option from "@/components/Analysis/Option";
+import Pie from "@/components/Analysis/Pie";
+import Bar from "@/components/Analysis/Bar";
 
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/css/swiper.css';
-let item1 = ['Transportation', 'Rental', 'Meals', 'Equipment', 'others'];
-let item2 = ['Rental', 'Sponsor', 'Fees', 'Equipment', 'others'];
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/css/swiper.css";
+let item1 = ["Transportation", "Rental", "Meals", "Equipment", "others"];
+let item2 = ["Rental", "Sponsor", "Fees", "Equipment", "others"];
 //pie=>all
+
 let outAll = [
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 28,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 26,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 23,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 18,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 8,
-    day: 19,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 8,
-    day: 14,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 18,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 16,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 13,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 8,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 6,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 13,
-    money: 6520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 6,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 5520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 5,
-    money: 4420,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 850,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
 
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 5,
-    day: 8,
-    money: 320,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 5,
-    day: 6,
-    money: 520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 5,
-    day: 3,
-    money: 620,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
+  },
+
+  {
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 920,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'vargin',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 120,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 820,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 13,
-    money: 6520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 6,
-    money: 2220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 5520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 5,
-    money: 4420,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 1000
+  }
 ];
 let inAll = [
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-
-    month: 9,
-    day: 28,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 26,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 23,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 9,
-    day: 18,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 8,
-    day: 19,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 8,
-    day: 14,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 18,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 16,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 13,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 8,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 6,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 5,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 13,
-    money: 6520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 6,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 5520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 5,
-    money: 4420,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 850,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 5,
-    day: 8,
-    money: 320,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 5,
-    day: 6,
-    money: 520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 5,
-    day: 3,
-    money: 620,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 120,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 820,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 13,
-    money: 6520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 6,
-    money: 2220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 5520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 5,
-    money: 4420,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    name: 'Project' + (Math.floor(Math.random() * 5) + 1).toString(),
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
+    name: "Project" + (Math.floor(Math.random() * 5) + 1).toString(),
+    money: Math.floor(Math.random() * 1000) + 100
+  }
 ];
 //pie=>project bar=>project
 let Outproject1 = [
   {
-    year: 2019,
-    month: 9,
-    day: 28,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: "Transportation",
+    month: 1
   },
   {
-    year: 2019,
-    month: 9,
-    day: 26,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 2
   },
   {
-    year: 2019,
-    month: 9,
-    day: 23,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 3
   },
   {
-    year: 2019,
-    month: 9,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 4
   },
   {
-    year: 2019,
-    month: 8,
-    day: 19,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 5
   },
   {
-    year: 2019,
-    month: 8,
-    day: 14,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 6
   },
   {
-    year: 2019,
-    month: 7,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 7
   },
   {
-    year: 2019,
-    month: 7,
-    day: 16,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 8
   },
   {
-    year: 2019,
-    month: 7,
-    day: 13,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 9
   },
   {
-    year: 2019,
-    month: 5,
-    day: 8,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 10
   },
   {
-    year: 2019,
-    month: 5,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 11
   },
   {
-    year: 2019,
-    month: 5,
-    day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 12
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'vargin',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 13
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 14
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 100) + 100,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    year: 2019,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 11,
-    money: 320,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gadg',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 15
   },
   {
-    year: 2019,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 7720,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 7,
-    money: 4420,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 870,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-
-  {
-    year: 2018,
-    month: 5,
-    day: 8,
-    money: 320,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 6,
-    money: 520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 3,
-    money: 620,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 920,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 120,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 820,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 11,
-    money: 220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 6,
-    money: 2220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 7720,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 7,
-    money: 4420,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 16
+  }
 ];
 let Outproject2 = [
   {
-    year: 2019,
-    month: 9,
-    day: 28,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 1
   },
   {
-    year: 2019,
-    month: 9,
-    day: 26,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 2
   },
   {
-    year: 2019,
-    month: 9,
-    day: 23,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 3
   },
   {
-    year: 2019,
-    month: 9,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 4
   },
   {
-    year: 2019,
-    month: 8,
-    day: 19,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 5
   },
   {
-    year: 2019,
-    month: 8,
-    day: 14,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 6
   },
   {
-    year: 2019,
-    month: 7,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 7
   },
   {
-    year: 2019,
-    month: 7,
-    day: 16,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 8
   },
   {
-    year: 2019,
-    month: 7,
-    day: 13,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 9
   },
   {
-    year: 2019,
-    month: 5,
-    day: 8,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 10
   },
   {
-    year: 2019,
-    month: 5,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 11
   },
   {
-    year: 2019,
-    month: 5,
-    day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 12
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'vargin',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 13
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 14
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 10000) + 1000,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    year: 2019,
-    month: 4,
-    day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'qqq',
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 15
   },
   {
-    year: 2019,
-    month: 3,
-    day: 25,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 13,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 11,
-    money: Math.floor(Math.random() * 10000) + 1000,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 6,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 26,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 21,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 7,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 9,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 6,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 8800,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 870,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-
-  {
-    year: 2018,
-    month: 5,
-    day: 8,
-    money: 320,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 6,
-    money: 520,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 3,
-    money: 620,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 920,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 120,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 820,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 25,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 6,
-    money: 2220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 7,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Transportation',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 3,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Meals',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Transportation',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 16
+  }
 ];
 let outProject3 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 1
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 2
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 3
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 4
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 5
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 6
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 7
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 8
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 9
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 10
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 11
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 12
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 13
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 14
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 15
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
+    month: 16
+  }
 ];
 let outProject4 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 1
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 2
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 3
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 4
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 5
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 6
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 7
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 8
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 9
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 10
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 11
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 12
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 13
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 14
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 15
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
+    month: 16
+  }
 ];
 let outProject5 = [
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 1
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 2
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 3
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 4
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 5
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 6
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 7
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 8
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 9
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 10
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 11
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 12
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 13
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 14
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: 15
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-  },
+    month: 16
+  }
 ];
 let Inproject1 = [
   {
-    year: 2019,
-
-    month: 9,
-    day: 28,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 1
   },
   {
-    year: 2019,
-    month: 9,
-    day: 26,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 2
   },
   {
-    year: 2019,
-    month: 9,
-    day: 23,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 3
   },
   {
-    year: 2019,
-    month: 9,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 4
   },
   {
-    year: 2019,
-    month: 8,
-    day: 19,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 5
   },
   {
-    year: 2019,
-    month: 8,
-    day: 14,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 6
   },
   {
-    year: 2019,
-    month: 7,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 7
   },
   {
-    year: 2019,
-    month: 7,
-    day: 16,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 8
   },
   {
-    year: 2019,
-    month: 7,
-    day: 13,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 9
   },
   {
-    year: 2019,
-    month: 5,
-    day: 8,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 10
   },
   {
-    year: 2019,
-    month: 5,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 11
   },
   {
-    year: 2019,
-    month: 5,
-    day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 12
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'vargin',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 13
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 14
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 15
   },
   {
-    year: 2019,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 7720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 7,
-    money: 4420,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 870,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-
-  {
-    year: 2018,
-    month: 5,
-    day: 8,
-    money: 320,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 6,
-    money: 520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 3,
-    money: 620,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 120,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 820,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 6,
-    money: 2220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 7720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 520,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 7,
-    money: 4420,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 16
+  }
 ];
 let Inproject2 = [
   {
-    year: 2019,
-
-    month: 9,
-    day: 28,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 1
   },
   {
-    year: 2019,
-    month: 9,
-    day: 26,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 2
   },
   {
-    year: 2019,
-    month: 9,
-    day: 23,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 3
   },
   {
-    year: 2019,
-    month: 9,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 4
   },
   {
-    year: 2019,
-    month: 8,
-    day: 19,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 5
   },
   {
-    year: 2019,
-    month: 8,
-    day: 14,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 6
   },
   {
-    year: 2019,
-    month: 7,
-    day: 18,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 7
   },
   {
-    year: 2019,
-    month: 7,
-    day: 16,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 8
   },
   {
-    year: 2019,
-    month: 7,
-    day: 13,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 9
   },
   {
-    year: 2019,
-    month: 5,
-    day: 8,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 10
   },
   {
-    year: 2019,
-    month: 5,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 11
   },
   {
-    year: 2019,
-    month: 5,
-    day: 3,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 12
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'vargin',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 13
   },
   {
-    year: 2019,
-    month: 4,
-    day: 22,
-    money: Math.floor(Math.random() * 10000) + 1000,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    year: 2019,
-    month: 4,
-    day: 22,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 14
   },
   {
-    year: 2019,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 6,
     money: Math.floor(Math.random() * 1000) + 100,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gadg',
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 15
   },
   {
-    year: 2019,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 7720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 5200,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 7,
-    money: 4420,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 6,
-    money: 4100,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 1,
-    money: 870,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-
-  {
-    year: 2018,
-    month: 5,
-    day: 8,
-    money: 320,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 6,
-    money: 520,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'jason',
-  },
-  {
-    year: 2018,
-    month: 5,
-    day: 3,
-    money: 620,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'dick',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'vargin',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 12000,
-    Classification: 'Equipment',
-    pass: false,
-    charge: 'helloni',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 22,
-    money: 820,
-    Classification: 'others',
-    pass: true,
-    charge: 'sggag',
-  },
-  {
-    year: 2018,
-    month: 4,
-    day: 3,
-    money: 3200,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'qqq',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 25,
-    money: 1320,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'wrqggr',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 13,
-    money: 6720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gasgf',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 11,
-    money: 3220,
-    Classification: 'others',
-    pass: true,
-    charge: 'hfjdfhj',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 6,
-    money: 2220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'gadg',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 3,
-    money: 1820,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 7720,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 6220,
-    Classification: 'Fees',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 3,
-    day: 1,
-    money: 220,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'sdgfsdfg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 26,
-    money: 820,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2019,
-    month: 2,
-    day: 23,
-    money: 5200,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'gsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 21,
-    money: 420,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 7,
-    money: 4420,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 9,
-    money: 640,
-    Classification: 'Sponsor',
-    pass: false,
-    charge: 'sfdgsdg',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 6,
-    money: 410,
-    Classification: 'Equipment',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 3,
-    money: 380,
-    Classification: 'Fees',
-    pass: false,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 2,
-    money: 690,
-    Classification: 'Rental',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 920,
-    Classification: 'Sponsor',
-    pass: true,
-    charge: 'Amy',
-  },
-  {
-    year: 2018,
-    month: 2,
-    day: 1,
-    money: 990,
-    Classification: 'others',
-    pass: false,
-    charge: 'Amy',
-  },
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 16
+  }
 ];
 let inProject3 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 1
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 2
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 3
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 4
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 5
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 6
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 7
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 8
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 9
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 10
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 11
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 12
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 13
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 14
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 15
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
+    month: 16
+  }
 ];
 let inProject4 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 1
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 2
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 3
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 4
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 5
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 6
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 7
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 8
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 9
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 10
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 11
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 12
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 13
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 14
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 15
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
+    month: 16
+  }
 ];
 let inProject5 = [
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 1
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 2
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 3
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 4
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 5
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 6
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 7
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 8
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 9
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 10
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 11
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 12
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 13
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 14
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: 15
   },
   {
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-  },
+    month: 16
+  }
 ];
 
 //line=>all
@@ -4949,974 +951,974 @@ let thisYearExpense = [
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-  },
+    money: Math.floor(Math.random() * 1000) + 100
+  }
 ];
 let lastYearExpense = [
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
-  },
+    money: Math.floor(Math.random() * 1000) + 100
+  }
 ];
 let thisYearIncome = [
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
+    money: Math.floor(Math.random() * 500) + 1300
   },
   {
     year: 2020,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 500) + 1300,
-  },
+    money: Math.floor(Math.random() * 500) + 1300
+  }
 ];
 let lastYearIncome = [
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 1000) + 100,
+    money: Math.floor(Math.random() * 1000) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
+    money: Math.floor(Math.random() * 700) + 100
   },
   {
     year: 2019,
     month: Math.floor(Math.random() * 12) + 1,
-    money: Math.floor(Math.random() * 700) + 100,
-  },
+    money: Math.floor(Math.random() * 700) + 100
+  }
 ];
 
 //line
 export default {
-  name: 'Analysis',
+  name: "Analysis",
   components: {
     Header,
     Footer,
@@ -5924,17 +1926,17 @@ export default {
     Pie,
     Swiper,
     SwiperSlide,
-    Bar,
+    Bar
   },
   data() {
     return {
-      SelectType: 'All',
+      SelectType: "All",
       swiperOption: {
-        direction: 'horizontal',
-        effect: 'coverflow',
+        direction: "horizontal",
+        effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 'auto',
+        slidesPerView: "auto",
         loop: true,
 
         spaceBetween: 0, //slide相互距離
@@ -5945,155 +1947,164 @@ export default {
           stretch: 20,
           depth: 100,
           modifier: 1,
-          slideShadows: false,
+          slideShadows: false
         },
         pagination: {
-          el: '.swiper-pagination',
+          el: ".swiper-pagination"
         },
+
+        //切換圖表特效
         on: {
           slideChange: function() {
             //console.log(this.activeIndex); //必須用activeIndex因為event是以他為基準 //切换结束时，告诉我现在是第几个slide
 
             //把目前的slide變回白色
             let c1 = this.slides[this.activeIndex].children;
-            c1[0].style.backgroundColor = '#FFFFFF';
-            c1[0].style.opacity = '1';
+            c1[0].style.backgroundColor = "#FFFFFF";
+            c1[0].style.opacity = "1";
 
             //左右弄成透明
             let cForward = this.slides[this.activeIndex + 1].children;
-            cForward[0].style.backgroundColor = '#FFFFFF';
-            cForward[0].style.opacity = '0.5';
+            cForward[0].style.backgroundColor = "#FFFFFF";
+            cForward[0].style.opacity = "0.5";
 
             let cBack = this.slides[this.activeIndex - 1].children;
-            cBack[0].style.backgroundColor = '#FFFFFF';
-            cBack[0].style.opacity = '0.5';
+            cBack[0].style.backgroundColor = "#FFFFFF";
+            cBack[0].style.opacity = "0.5";
             //c.style.backgroundColor = '#e5e5e5';
-          },
-        },
+          }
+        }
       },
-      sendProject: 'Project 1',
+      recieveProject: "Project 1",
+      allProject: [
+        "Project 1",
+        "Project 2",
+        "Project 3",
+        "Project 4",
+        "Project 5"
+      ]
     };
   },
   methods: {
     //選擇是project 還是all類型
     analysisType(flag) {
       if (flag) {
-        this.SelectType = 'Project';
+        this.SelectType = "Project";
       } else {
-        this.SelectType = 'All';
+        this.SelectType = "All";
       }
       //console.log(flag);
     },
     pieOutcomeSelect() {
-      if (this.SelectType === 'All') return outAll;
-      else if (this.SelectType === 'Project') {
-        switch (this.sendProject) {
-          case 'Project 1':
+      if (this.SelectType === "All") return outAll;
+      else if (this.SelectType === "Project") {
+        switch (this.recieveProject) {
+          case "Project 1":
             return Outproject1;
 
-          case 'Project 2':
+          case "Project 2":
             return Outproject2;
 
-          case 'Project 3':
+          case "Project 3":
             return outProject3;
 
-          case 'Project 4':
+          case "Project 4":
             return outProject4;
 
-          case 'Project 5':
+          case "Project 5":
             return outProject5;
         }
       }
     },
     pieIncomeSelect() {
-      if (this.SelectType === 'All') return inAll;
-      else if (this.SelectType === 'Project') {
-        switch (this.sendProject) {
-          case 'Project 1':
+      if (this.SelectType === "All") return inAll;
+      else if (this.SelectType === "Project") {
+        switch (this.recieveProject) {
+          case "Project 1":
             return Inproject1;
 
-          case 'Project 2':
+          case "Project 2":
             return Inproject2;
 
-          case 'Project 3':
+          case "Project 3":
             return inProject3;
 
-          case 'Project 4':
+          case "Project 4":
             return inProject4;
 
-          case 'Project 5':
+          case "Project 5":
             return inProject5;
         }
       }
     },
     BarExpenseSelect() {
       //console.log(compareYear);
-      if (this.SelectType === 'All') {
+      if (this.SelectType === "All") {
         let compareYear1 = [thisYearExpense, lastYearExpense];
         return compareYear1;
-      } else if (this.SelectType === 'Project') {
-        switch (this.sendProject) {
-          case 'Project 1':
+      } else if (this.SelectType === "Project") {
+        switch (this.recieveProject) {
+          case "Project 1":
             return Outproject1;
 
-          case 'Project 2':
+          case "Project 2":
             return Outproject2;
 
-          case 'Project 3':
+          case "Project 3":
             return outProject3;
 
-          case 'Project 4':
+          case "Project 4":
             return outProject4;
 
-          case 'Project 5':
+          case "Project 5":
             return outProject5;
         }
       }
     },
     BarIncomeSelect() {
       //console.log(compareYear);
-      if (this.SelectType === 'All') {
+      if (this.SelectType === "All") {
         let compareYear2 = [thisYearIncome, lastYearIncome];
         return compareYear2;
-      } else if (this.SelectType === 'Project') {
-        switch (this.sendProject) {
-          case 'Project 1':
+      } else if (this.SelectType === "Project") {
+        switch (this.recieveProject) {
+          case "Project 1":
             return Inproject1;
 
-          case 'Project 2':
+          case "Project 2":
             return Inproject2;
 
-          case 'Project 3':
+          case "Project 3":
             return inProject3;
 
-          case 'Project 4':
+          case "Project 4":
             return inProject4;
 
-          case 'Project 5':
+          case "Project 5":
             return inProject5;
         }
       }
     },
     projectSelect(name) {
       switch (name) {
-        case 'Project 1':
-          this.sendProject = 'Project 1';
+        case "Project 1":
+          this.recieveProject = "Project 1";
           break;
-        case 'Project 2':
-          this.sendProject = 'Project 2';
+        case "Project 2":
+          this.recieveProject = "Project 2";
           break;
-        case 'Project 3':
-          this.sendProject = 'Project 3';
+        case "Project 3":
+          this.recieveProject = "Project 3";
           break;
-        case 'Project 4':
-          this.endProject = 'Project 4';
+        case "Project 4":
+          this.recieveProject = "Project 4";
           break;
-        case 'Project 5':
-          this.sendProject = 'Project 5';
+        case "Project 5":
+          this.recieveProject = "Project 5";
           break;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
