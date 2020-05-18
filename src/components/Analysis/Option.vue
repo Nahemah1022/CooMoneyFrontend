@@ -25,9 +25,11 @@
           :options="swiperOption"
           @slideChange="onSwiperSlideChange"
         >
-          <SwiperSlide v-for="project in allProjectName" :key="project">{{
+          <SwiperSlide v-for="project in allProjectName" :key="project">
+            {{
             project
-          }}</SwiperSlide>
+            }}
+          </SwiperSlide>
         </swiper>
       </div>
     </div>
@@ -46,11 +48,11 @@ import "swiper/css/swiper.css";
 Vue.use(ToggleButton);
 
 //啊在data就改變不了阿
-let projectName = '';
+let projectName = "";
 export default {
-  name: 'Option',
+  name: "Option",
   props: {
-    allProjectName: Array,
+    allProjectName: Array
   },
   components: {
     Swiper,
@@ -74,21 +76,21 @@ export default {
           slideShadows: false
         },
         pagination: {
-          el: '.swiper-pagination',
+          el: ".swiper-pagination"
         },
         on: {
           slideChange: function() {
             projectName = this.slides[this.activeIndex].textContent;
             // console.log(this.projectName);
-          },
-        },
+          }
+        }
       },
 
       //button
 
       value: false,
-      color: { checked: '#E3EDF7', unchecked: '#A6F3F3' },
-      fontSize: 20,
+      color: { checked: "#E3EDF7", unchecked: "#A6F3F3" },
+      fontSize: 20
     };
   },
   methods: {
@@ -100,22 +102,22 @@ export default {
         document.querySelector("h1").style.color = "#02AA9E";
         document.querySelector("h2").style.color = "#DBDBDB";
         this.value = false;
-        this.$emit('buttonSubmit', this.value);
+        this.$emit("buttonSubmit", this.value);
       }
       //project
       else {
-        document.querySelector('h2').style.color = '#02AA9E';
-        document.querySelector('h1').style.color = '#DBDBDB';
+        document.querySelector("h2").style.color = "#02AA9E";
+        document.querySelector("h1").style.color = "#DBDBDB";
 
         this.value = true;
 
-        this.$emit('buttonSubmit', this.value);
+        this.$emit("buttonSubmit", this.value);
       }
     },
     onSwiperSlideChange() {
-      this.$emit('swiperSubmit', projectName);
-    },
-  },
+      this.$emit("swiperSubmit", projectName);
+    }
+  }
 
   //swiper請這樣使用function
 };
