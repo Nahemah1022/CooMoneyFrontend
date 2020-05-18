@@ -172,6 +172,11 @@ export default {
     },
     caculate(input) {
       if (input == -1) {
+        if(this.costBufferDisplay.length <= 1){
+          this.costBufferDisplay = "";
+          this.money = 0;
+          return;
+        }
         this.costBufferDisplay = this.costBufferDisplay.slice(0, -1);
       } else {
         let last = this.costBufferDisplay[this.costBufferDisplay.length - 1];
