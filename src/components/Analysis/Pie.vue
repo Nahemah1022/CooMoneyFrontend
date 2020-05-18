@@ -1,28 +1,30 @@
 <template>
   <div id="content2">
     <h1>Category comparison</h1>
-    <div :methods="itemExpenseCount()" id="pieExpense">
+    <div id="pieExpense">
       <h2>expense</h2>
       <ve-ring
-        width="90%"
-        height="90%"
+        width="95%"
+        height="95%"
         id="pie1"
         :backgroundColor="backgroundColor"
-        :data="pie1Data"
+        :data="expenseCount"
         :colors="colors"
+        :legend="legend"
         :extend="pieExtend"
       ></ve-ring>
     </div>
 
-    <div id="pieInCome" :methods="itemIncomeCount()">
+    <div id="pieInCome">
       <h2>income</h2>
       <ve-ring
-        width="90%"
-        height="90%"
+        width="95%"
+        height="95%"
         id="pie1"
         :backgroundColor="backgroundColor"
-        :data="pie2Data"
+        :data="incomeCount"
         :colors="colors"
+        :legend="legend"
         :extend="pieExtend"
       ></ve-ring>
     </div>
@@ -31,31 +33,19 @@
 
 <script>
 //這裡import vue.chart
-import Vue from 'vue';
-import VCharts from 'v-charts';
+import Vue from "vue";
+import VCharts from "v-charts";
 
 Vue.use(VCharts);
 
 //這裡用來存算好的item總和
-let itemAll = [
-  { name: 'Transportation', money: 0 },
-  { name: 'Meals', money: 0 },
-  { name: 'Equipment', money: 0 },
-  { name: 'others', money: 0 },
-  { name: 'Rental', money: 0 },
-];
-let IncomeAll = [
-  { name: 'Fees', money: 0 },
-  { name: 'Sponsor', money: 0 },
-  { name: 'Equipment', money: 0 },
-  { name: 'others', money: 0 },
-  { name: 'Rental', money: 0 },
-];
+
 export default {
-  name: 'pie',
+  name: "pie",
   props: {
-    Outproject: Array,
-    Inproject: Array,
+    sendExpense: Array,
+    sendIncome: Array,
+    selectType: String
   },
   components: {},
   data() {
@@ -64,191 +54,227 @@ export default {
     //设置echart的详细属性(setting失效用這格)
     this.pieExtend = {
       series: {
-        dataType: 'normal',
+        dataType: "normal",
         hoverAnimation: true,
-        cursor: 'pointer',
+        cursor: "pointer",
         itemStyle: {
-          shadowColor: 'rgba(0, 0, 0, 0.3)',
-          shadowBlur: 10,
+          shadowColor: "rgba(0, 0, 0, 0.3)",
+          shadowBlur: 5
         },
         //圖示
 
         label: {
           show: false,
-          position: 'center',
+          position: "center"
         },
         emphasis: {
           label: {
             show: true,
 
-            fontSize: '20',
-            fontWeight: 'bold',
-          },
+            fontSize: "20",
+            fontWeight: "bold"
+          }
         },
-        radius: [20, 70],
-        right: '50',
-        bottom: '280',
-      },
+        radius: [20, 65],
+        right: "145",
+        bottom: "280"
+      }
     };
-    this.lengend = {
-      show: false,
+    this.legend = {
+      type: "scroll",
+
+      icon: "rect",
+      orient: "vertical",
+      left: "140",
+      top: "10",
+      itemHeight: 5,
+      itemWidth: 80
     };
 
-    this.backgroundColor = 'white';
+    this.backgroundColor = "white";
     //顏色藥用v-bind設置
-    this.colors = ['#97EBCE', '#FBDA99', '#FF9798', '#82FFF7', '#A6CEE3'];
+    this.colors = [
+      "#97EBCE",
+      "#FBDA99",
+      "#FF9798",
+      "#82FFF7",
+      "#A6CEE3",
+      "#C4FFFB",
+      "#B2DF8A",
+      "#CE90E4"
+    ];
     return {
-      //expense
-      pie1Data: {
-        columns: ['項目', '花費金錢'],
-        rows: [
-          { 項目: itemAll[0].name, 花費金錢: itemAll[0].money },
-          { 項目: itemAll[1].name, 花費金錢: itemAll[1].money },
-          { 項目: itemAll[2].name, 花費金錢: itemAll[2].money },
-          { 項目: itemAll[3].name, 花費金錢: itemAll[3].money },
-          { 項目: itemAll[4].name, 花費金錢: itemAll[4].money },
-        ],
-      },
-      //income
-      pie2Data: {
-        columns: ['項目', '花費金錢'],
-        rows: [
-          { 項目: IncomeAll[0].name, 花費金錢: IncomeAll[0].money },
-          { 項目: IncomeAll[1].name, 花費金錢: IncomeAll[1].money },
-          { 項目: IncomeAll[2].name, 花費金錢: IncomeAll[2].money },
-          { 項目: IncomeAll[3].name, 花費金錢: IncomeAll[3].money },
-          { 項目: IncomeAll[4].name, 花費金錢: IncomeAll[4].money },
-        ],
-      },
+      allExpense: [],
+      allIncome: []
     };
   },
 
-  methods: {
-    itemExpenseCount() {
-      //console.log("successful");
-      Object.keys(this.Outproject).forEach((p) => {
-        switch (this.Outproject[p].Classification) {
-          case 'Transportation':
-            itemAll[0].money += this.Outproject[p].money;
-            break;
-          case 'Meals':
-            itemAll[1].money += this.Outproject[p].money;
-            break;
-          case 'Equipment':
-            itemAll[2].money += this.Outproject[p].money;
-            break;
-          case 'others':
-            itemAll[3].money += this.Outproject[p].money;
-            break;
-          case 'Rental':
-            itemAll[4].others += this.Outproject[p].money;
-            break;
+  computed: {
+    expenseCount() {
+      //console.log(this.sendExpense);
+      let flag;
+      if (this.selectType === "Project") flag = true;
+      else if (this.selectType === "All") flag = false;
+      //每次change都要初始化
+      //console.log(this.selectType);
+      if (flag) {
+        let count = 0;
+        let expenseItem = [];
+        for (let i = 0; i < this.sendExpense.length; ++i) {
+          let name = this.sendExpense[i].Classification;
+          let money = this.sendExpense[i].money;
+          let index = expenseItem.findIndex(e => e.name === name);
+          if (index === -1) {
+            expenseItem[count] = { name: name, money: money };
+            ++count;
+          } else {
+            expenseItem[index].money += money;
+          }
         }
-      });
-      //console.log(itemAll[2].money);
-      this.pie1Data.rows = [
-        { 項目: itemAll[0].name, 花費金錢: itemAll[0].money },
-        { 項目: itemAll[1].name, 花費金錢: itemAll[1].money },
-        { 項目: itemAll[2].name, 花費金錢: itemAll[2].money },
-        { 項目: itemAll[3].name, 花費金錢: itemAll[3].money },
-        { 項目: itemAll[4].name, 花費金錢: itemAll[4].money },
-      ];
+        return {
+          columns: ["name", "money"],
+          rows: expenseItem
+        };
+      } else {
+        let count = 0;
+
+        //每次都要初始化再去計算
+        //console.log(this.allExpense);
+        Object.keys(this.sendExpense).forEach(p => {
+          let index = this.allExpense.findIndex(
+            e => e.name === this.sendExpense[p].name
+          );
+          if (index === -1) {
+            //代表還沒有存取這個project所以要先建立一個
+            this.allExpense[count] = {
+              name: this.sendExpense[p].name,
+              money: this.sendExpense[p].money
+            };
+            ++count;
+          } else {
+            //已經存在繼續存
+            this.allExpense[index].money += this.sendExpense[p].money;
+          }
+        });
+        return {
+          columns: ["name", "money"],
+          rows: this.allExpense
+        };
+      }
     },
-    itemIncomeCount() {
-      Object.keys(this.Inproject).forEach((p) => {
-        switch (this.Inproject[p].Classification) {
-          case 'Fees':
-            IncomeAll[0].money += this.Inproject[p].money;
-            break;
-          case 'Sponsor':
-            IncomeAll[1].money += this.Inproject[p].money;
-            break;
-          case 'Equipment':
-            IncomeAll[2].money += this.Inproject[p].money;
-            break;
-          case 'others':
-            IncomeAll[3].money += this.Inproject[p].money;
-            break;
-          case 'Rental':
-            IncomeAll[4].others += this.Inproject[p].money;
-            break;
+    incomeCount() {
+      let flag;
+      if (this.selectType === "Project") flag = true;
+      else if (this.selectType === "All") flag = false;
+      //看室this.all 還是 project型態
+      if (flag) {
+        let count = 0;
+        let incomeItem = [];
+        for (let i = 0; i < this.sendIncome.length; ++i) {
+          let name = this.sendIncome[i].Classification;
+          let money = this.sendIncome[i].money;
+          let index = incomeItem.findIndex(e => e.name === name);
+          if (index === -1) {
+            incomeItem[count] = { name: name, money: money };
+            ++count;
+          } else {
+            incomeItem[index].money += money;
+          }
         }
-      });
-      //console.log(IncomeAll[2].money);
-      this.pie2Data.rows = [
-        { 項目: IncomeAll[0].name, 花費金錢: IncomeAll[0].money },
-        { 項目: IncomeAll[1].name, 花費金錢: IncomeAll[1].money },
-        { 項目: IncomeAll[2].name, 花費金錢: IncomeAll[2].money },
-        { 項目: IncomeAll[3].name, 花費金錢: IncomeAll[3].money },
-        { 項目: IncomeAll[4].name, 花費金錢: IncomeAll[4].money },
-      ];
-    },
-  },
+        //console.log(incomeItem[2].money);
+        return {
+          columns: ["name", "money"],
+          rows: incomeItem
+        };
+      } else {
+        let count = 0;
+
+        Object.keys(this.sendExpense).forEach(p => {
+          let index = this.allIncome.findIndex(
+            e => e.name === this.sendExpense[p].name
+          );
+          if (index === -1) {
+            //代表還沒有存取這個project所以要先建立一個
+            this.allIncome[count] = {
+              name: this.sendExpense[p].name,
+              money: this.sendExpense[p].money
+            };
+            ++count;
+          } else {
+            //已經存在繼續存
+            this.allIncome[index].money += this.sendExpense[p].money;
+          }
+        });
+        return {
+          columns: ["name", "money"],
+          rows: this.allIncome
+        };
+      }
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 h1 {
-  font-size: 20px;
+  font-size: 19px;
   color: #00c5b8;
-  font-weight: 100px;
+  font-weight: normal;
   background: none;
   position: relative;
-  left: 30px;
+  right: 60px;
+  top: 10px;
 }
 h2 {
   font-size: 15px;
+  right: 100px;
+  top: 5px;
   color: #8d8d8d;
-  font-weight: 50px;
+  font-weight: normal;
   background: none;
   position: relative;
+  z-index: 1;
 }
 #pieExpense {
   width: 90%;
   margin: 0 auto;
-  height: 200px;
+  height: 215px;
   position: relative;
-
+  top: 20px;
   background-color: white;
-  box-shadow: 0px 0px 9px #b3b2b2;
-  border-radius: 40px 40px;
+  box-shadow: 0px 0px 5px #b3b2b2;
+  border-radius: 22px 22px;
 }
 #pieInCome {
   display: block;
   width: 90%;
   margin: 0 auto;
-  height: 200px;
+  height: 215px;
   position: relative;
-
+  top: 30px;
   background-color: white;
-  box-shadow: 0px 0px 9px #b3b2b2;
-  border-radius: 40px 40px;
+  box-shadow: 0px 0px 5px #b3b2b2;
+  border-radius: 22px 22px;
 }
 #content2 {
   display: block;
   margin: 0 auto;
   position: relative;
   top: 10px;
-  width: 90%;
-  height: 100%;
-  background-color: white;
-  box-shadow: 0px 0px 9px #b3b2b2;
-  border-radius: 40px 40px;
+  width: 93%;
+  height: 98%;
+  background-color: #ffffff;
+  opacity: 0.5;
+  box-shadow: 0px 0px 5px #b3b2b2;
+  border-radius: 22px 22px;
 }
 #pie1 {
   background-color: transparent;
-  top: 10px;
-
+  bottom: 10px;
+  left: 10px;
   margin: 0 auto;
   position: relative;
-  z-index: 2;
+  z-index: 0;
 }
-/*#pie2 {
-  border: 2px solid red;
-  position: relative;
-  bottom: 200px;
-  opacity: 0.5;
-  z-index: 2;
-}*/
 </style>
