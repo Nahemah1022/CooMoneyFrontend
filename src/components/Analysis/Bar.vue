@@ -122,7 +122,7 @@ export default {
           projectMonth[index].money += this.sendIncome[i].money;
         }
       }
-      console.log(projectMonth);
+      //console.log(projectMonth);
       return {
         columns: ["month", "This"],
         rows: projectMonth

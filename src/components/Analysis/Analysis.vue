@@ -1,6 +1,7 @@
 <template>
-  <div class="main">
+  <div class="main_a">
     <Header :title="'Analysis'" @back="$router.go(-1)"></Header>
+    <div class="block">
     <Option
       @buttonSubmit="analysisType"
       @swiperSubmit="projectSelect"
@@ -25,7 +26,9 @@
       </swiper>
     </div>
 
-    <Footer></Footer>
+    </div>
+
+    <Footer :active=1></Footer>
   </div>
 </template>
 
@@ -2003,7 +2006,7 @@ export default {
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto',
-        loop: true,
+        loop: false,
 
         spaceBetween: 0, //slide相互距離
         initialSlide: 0, //起始頁面
@@ -2021,23 +2024,35 @@ export default {
 
         //切換圖表特效
         on: {
+          init:function(){
+            let c=this.slides[this.activeIndex].children;
+            c[0].style.backgroundColor = '#FFFFFF';
+            c[0].style.opacity = '1';
+          },
           slideChange: function() {
             //console.log(this.activeIndex); //必須用activeIndex因為event是以他為基準 //切换结束时，告诉我现在是第几个slide
 
             //把目前的slide變回白色
+            
             let c1 = this.slides[this.activeIndex].children;
             c1[0].style.backgroundColor = '#FFFFFF';
             c1[0].style.opacity = '1';
-
-            //左右弄成透明
-            let cForward = this.slides[this.activeIndex + 1].children;
-            cForward[0].style.backgroundColor = '#FFFFFF';
-            cForward[0].style.opacity = '0.5';
-
-            let cBack = this.slides[this.activeIndex - 1].children;
-            cBack[0].style.backgroundColor = '#FFFFFF';
-            cBack[0].style.opacity = '0.5';
+            if(this.activeIndex==0)
+            {
+              //左右弄成透明
+              let cForward = this.slides[this.activeIndex + 1].children;
+              cForward[0].style.backgroundColor = '#FFFFFF';
+              cForward[0].style.opacity = '0.5';
+            }
+            else{
+              let cBack = this.slides[this.activeIndex - 1].children;
+              cBack[0].style.backgroundColor = '#FFFFFF';
+              cBack[0].style.opacity = '0.5';
             //c.style.backgroundColor = '#e5e5e5';
+            }
+
+
+
           },
         },
       },
@@ -2179,6 +2194,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style lang="scss" scoped>
+.block{
+  background-color: #DFFFFE;
+  height: 100vh;
+}
 .example-3d {
   width: 100%;
   height: 100%;
