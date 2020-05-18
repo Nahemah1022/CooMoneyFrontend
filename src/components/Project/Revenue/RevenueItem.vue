@@ -66,7 +66,7 @@ $transition: 0.3s;
     padding: 4px;
     &.expand {
       height: 20vh;
-      width: 92%;
+      width: 88%;
       background-color: #f1f1f1;
       padding: 12px;
       border-radius: 16px;

@@ -14,7 +14,7 @@
           </label>
           <label for="transfer" :class="{selected: selectedIndex==3}" @click="selectedIndex=3">
             <input type="radio" name="btns" id="transfer" />
-            <p :class="{selectedP: selectedIndex==3}" @click="selectedIndex=3">Tramsfer</p>
+            <p :class="{selectedP: selectedIndex==3}" @click="selectedIndex=3">Transfer</p>
           </label>
         </div>
         <div class="cost-block">
@@ -91,20 +91,20 @@
         </div>
       </div>
       <div class="keyboard">
-        <div @click="caculate(1)">1</div>
-        <div @click="caculate(2)">2</div>
-        <div @click="caculate(3)">3</div>
+        <div @click="caculate('1')">1</div>
+        <div @click="caculate('2')">2</div>
+        <div @click="caculate('3')">3</div>
         <div @click="caculate('+')">+</div>
-        <div @click="caculate(4)">4</div>
-        <div @click="caculate(5)">5</div>
-        <div @click="caculate(6)">6</div>
+        <div @click="caculate('4')">4</div>
+        <div @click="caculate('5')">5</div>
+        <div @click="caculate('6')">6</div>
         <div @click="caculate('-')">-</div>
-        <div @click="caculate(7)">7</div>
-        <div @click="caculate(8)">8</div>
-        <div @click="caculate(9)">9</div>
+        <div @click="caculate('7')">7</div>
+        <div @click="caculate('8')">8</div>
+        <div @click="caculate('9')">9</div>
         <div @click="caculate('x')">x</div>
         <div @click="caculate(-1)">⮨</div>
-        <div @click="caculate(0)">0</div>
+        <div @click="caculate('0')">0</div>
         <div class="apply" @click="apply">Apply</div>
       </div>
     </div>
@@ -148,8 +148,7 @@ export default {
       categoryIndex: 0,
       focus: false,
       costBufferDisplay: "",
-      operation: "",
-      costBuffer: 0
+      operation: ""
     };
   },
   props: {
@@ -171,57 +170,64 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
-    operate(a, b, op) {
-      if (!b) {
-        return a;
-      }
-      switch (op) {
-        case "+":
-          return a + b;
-        case "-":
-          return b - a;
-        case "x":
-          return a * b;
-      }
-    },
     caculate(input) {
-      switch (input) {
-        case -1:
-          this.money = Math.floor(this.money / 10);
-          break;
-        case "+":
-          this.costBuffer = this.operate(
-            this.money,
-            this.costBuffer,
-            this.operation
-          );
-          this.costBufferDisplay = this.costFormat(this.costBuffer) + input;
+      if (input == -1) {
+        if(this.costBufferDisplay.length <= 1){
+          this.costBufferDisplay = "";
           this.money = 0;
-          this.operation = "+";
-          break;
-        case "x":
-          this.costBuffer = this.operate(
-            this.money,
-            this.costBuffer,
-            this.operation
-          );
-          this.costBufferDisplay = this.costFormat(this.costBuffer) + input;
-          this.money = 0;
-          this.operation = "x";
-          break;
-        case "-":
-          this.costBuffer = this.operate(
-            this.money,
-            this.costBuffer,
-            this.operation
-          );
-          this.costBufferDisplay = this.costFormat(this.costBuffer) + input;
-          this.money = 0;
-          this.operation = "-";
-          break;
-        default:
-          this.money = this.money * 10 + input;
+          return;
+        }
+        this.costBufferDisplay = this.costBufferDisplay.slice(0, -1);
+      } else {
+        let last = this.costBufferDisplay[this.costBufferDisplay.length - 1];
+        if (
+          (last == "+" || last == "x" || last == "-") &&
+          (input == "+" || input == "x" || input == "-")
+        ) {
+          this.costBufferDisplay = this.costBufferDisplay.slice(0, -1);
+        }
+        this.costBufferDisplay += input;
       }
+      let str = this.costBufferDisplay;
+      let operand = [];
+      let operator = [];
+      let tempNum = "";
+      for (let c of str) {
+        if (c == "+" || c == "x" || c == "-") {
+          operand.push(parseInt(tempNum));
+          operator.push(c);
+          tempNum = 0;
+        } else {
+          tempNum += c;
+        }
+      }
+      operand.push(parseInt(tempNum));
+      for (let index = 0; index < operator.length; index++) {
+        if (operator[index] == "x" && operand[parseInt(index) + 1] !== 0) {
+          operator.splice(parseInt(index), 1);
+          operand[index] =
+            operand[parseInt(index)] * operand[parseInt(index) + 1];
+          operand.splice(parseInt(index) + 1, 1);
+          index--;
+        }
+      }
+      for (let index = 0; index < operator.length; index++) {
+        if (operator[index] == "+") {
+          operator.splice(parseInt(index), 1);
+          operand[index] =
+            operand[parseInt(index)] + operand[parseInt(index) + 1];
+          operand.splice(parseInt(index) + 1, 1);
+          index--;
+        }
+        if (operator[index] == "-") {
+          operator.splice(parseInt(index), 1);
+          operand[index] =
+            operand[parseInt(index)] - operand[parseInt(index) + 1];
+          operand.splice(parseInt(index) + 1, 1);
+          index--;
+        }
+      }
+      this.money = operand[0];
     },
     apply() {
       let days = [
@@ -236,7 +242,7 @@ export default {
       let d = new Date(this.date);
       this.$emit("newRevenue", {
         title: this.title,
-        cost: this.costBuffer ? this.costBuffer : this.money,
+        cost: this.money,
         categoty: this.categorys[this.categoryIndex - 1].type,
         status: "pending",
         date:
@@ -251,7 +257,6 @@ export default {
       });
       this.$emit("collapse");
       this.title = "";
-      this.costBuffer = 0;
       this.costBufferDisplay = "";
       this.money = 0;
       this.categoryIndex = 0;
@@ -361,7 +366,7 @@ $radius: 14px;
         position: relative;
         .buffer {
           position: absolute;
-          width: 20vw;
+          width: 80vw;
           top: -2vh;
           right: 0;
           display: flex;
