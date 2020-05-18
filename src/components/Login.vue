@@ -29,49 +29,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import Header from "@/components/common/Header.vue";
-
-export default {
-  name: "Login",
-  components: {
-    Header
-  },
-  data() {
-    return {
-      username: "",
-      password: "",
-      errorMsg: "incorrect account or password!"
-    };
-  },
-  methods: {
-    error() {
-      document.getElementById("dont").text = "ssergsergsergser";
-    },
-    Login() {
-      axios
-        .post("https://coomoney.herokuapp.com/api/v1/user/login", {
-          username: this.username,
-          password: this.password
-        })
-        .then(res => {
-          console.log(res);
-          localStorage.setItem("token", res.data.data.token);
-          this.$router.push("/Project");
-        })
-        .catch(() => {
-          this.error();
-        });
-    },
-    SignUp() {
-      this.$router.push("/SignUp");
-    }
-  }
-};
-</script>
-
-<script>
-
   function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
     console.log('statusChangeCallback');
     console.log(response);                   // The current login status of the person.
@@ -124,6 +81,45 @@ export default {
     });
   }
 
+import axios from "axios";
+import Header from "@/components/common/Header.vue";
+
+export default {
+  name: "Login",
+  components: {
+    Header
+  },
+  data() {
+    return {
+      username: "",
+      password: "",
+      errorMsg: "incorrect account or password!"
+    };
+  },
+  methods: {
+    error() {
+      document.getElementById("dont").text = "ssergsergsergser";
+    },
+    Login() {
+      axios
+        .post("https://coomoney.herokuapp.com/api/v1/user/login", {
+          username: this.username,
+          password: this.password
+        })
+        .then(res => {
+          console.log(res);
+          localStorage.setItem("token", res.data.data.token);
+          this.$router.push("/Project");
+        })
+        .catch(() => {
+          this.error();
+        });
+    },
+    SignUp() {
+      this.$router.push("/SignUp");
+    }
+  }
+};
 </script>
 
 
