@@ -42,10 +42,10 @@ export default {
         width: "95%"
       },
       xAxis: {
-        axisLabel: { fontSize: 7, interval: 0 }
+        axisLabel: { fontSize: 15, interval: 2 }
       },
       yAxis: {
-        axisLabel: { fontSize: 7, interval: 0 }
+        axisLabel: { fontSize: 12, interval: 0 }
       },
       series: {
         lineStyle: {
