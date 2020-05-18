@@ -54,6 +54,9 @@
     <p class="subtitle">Tracking every expenses you have and understand your spending pattern</p>
     <button class="login" @click="Login">Log In</button>
     <button class="signup" @click="SignUp">Sign Up</button>
+
+
+
   </div>
 </template>
 
@@ -70,8 +73,6 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 
 
 <style lang='scss' scoped>
@@ -276,4 +277,5 @@ export default {
   background-color: #ffffff;
   border-color: #0eb9ab;
 }
+
 </style>
