@@ -3,10 +3,11 @@
     <Header
       :title="'All Project'"
       :right="require('@/assets/image/Project/icon_edit.svg')"
-      @back="$router.go(-1)"
+      @back="toNew ? toNew = false : $router.go(-1)"
       @rightClick="editStart"
     ></Header>
-    <div class="project-container">
+    <NewProject v-if="toNew" :preProject="targetProject" @newProject="newProject"></NewProject>
+    <div v-else class="project-container">
       <ProjectItem
         v-for="index in projects.length"
         :key="index"
@@ -16,11 +17,11 @@
         @edit="editProject"
         @delete="deleteProject"
       ></ProjectItem>
-      <div @click="newProject" class="new">
+      <div @click="toNewFunc" class="new">
         <img src="@/assets/image/Project/Theme_new.svg" alt />
       </div>
     </div>
-    <Footer :active="2"></Footer>
+    <Footer v-if="!toNew" :active="2"></Footer>
   </div>
 </template>
 
@@ -28,12 +29,23 @@
 import Header from "@/components/common/Header.vue";
 import Footer from "@/components/common/Footer.vue";
 import ProjectItem from "@/components/Project/ProjectItem.vue";
+import NewProject from "@/components/Project/NewProject.vue";
 
 export default {
   name: "Project",
   data() {
     return {
       isEditing: false,
+      nullProject: {
+        id: 0,
+        title: "New Project",
+        theme: 6,
+        budget: 0,
+        expanse: 0,
+        income: 0
+      },
+      targetProject: null,
+      toNew: false,
       projects: [
         {
           id: 1,
@@ -81,20 +93,33 @@ export default {
   components: {
     Header,
     Footer,
-    ProjectItem
+    ProjectItem,
+    NewProject
   },
   methods: {
     editStart() {
       this.isEditing = !this.isEditing;
     },
-    newProject() {
-      this.$router.push({ name: "NewProject" });
+    toNewFunc() {
+      this.toNew = true;
+      this.targetProject = this.nullProject;
+    },
+    newProject(obj) {
+      obj.id = this.projects.length + 1;
+      obj.expanse = 0;
+      obj.income = 0;
+      obj.theme = 6;
+      this.projects.push(obj);
+      this.toNew = false;
+      this.enterProject(this.projects[this.projects.length - 1]);
     },
     editProject(project) {
-      this.$router.push({
-        name: "NewProject",
-        params: { preProject: project }
-      });
+      this.targetProject = project;
+      this.toNew = true;
+      // this.$router.push({
+      //   name: "NewProject",
+      //   params: { preProject: project }
+      // });
     },
     enterProject(project) {
       this.$router.push({

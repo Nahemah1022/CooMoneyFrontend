@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-    <Header :title="title" @back="$router.go(-1)"></Header>
     <div class="center">
       <ProjectItem
         class="theme"
@@ -25,56 +24,51 @@
         <p>Budget</p>
         <div class="budget">
           <span>$</span>
-          <input type="text" name="budget" />
+          <input type="text" name="budget" v-model="budget" />
           <img src="@/assets/image/Project/TWD.svg" alt />
         </div>
       </div>
 
-      <button @click="submit">Confirm</button>
+      <button @click="$emit('newProject', {title: projectName, budget: parseInt(budget)})">Confirm</button>
     </div>
   </div>
 </template>
 
 <script>
-import Header from "@/components/common/Header.vue";
 import ProjectItem from "@/components/Project/ProjectItem.vue";
 
 export default {
   name: "NewProject",
   data() {
     return {
-      id: undefined,
-      title: "",
-      theme: 6,
-      projectName: "",
+      id: this.preProject.id,
+      projectName:
+        this.preProject.title == undefined
+          ? "New Project"
+          : this.preProject.title,
+      theme: this.preProject.theme,
       partners: [],
-      coverCount: 5
+      coverCount: 5,
+      budget:
+        this.preProject.budget == undefined ? null : this.preProject.budget
     };
   },
   props: {
     preProject: Object
   },
   components: {
-    Header,
     ProjectItem
   },
-  beforeMount() {
-    if (this.preProject) {
-      this.id = this.preProject.id;
-      this.title = "Edit Project";
-      this.projectName = this.preProject.title;
-      this.theme = this.preProject.theme;
-      // TODO: get budget, partners from db
-    } else {
-      this.title = "New Project";
-    }
-  },
-  methods: {
-    submit() {
-      console.log(this.projectName);
-      // TODO: submit
-    }
-  }
+  // mount() {
+  //   if (this.preProject) {
+  //     this.id = this.preProject.id;
+  //     this.title = "Edit Project";
+  //     this.projectName = this.preProject.title;
+  //     this.theme = this.preProject.theme;
+  //     // TODO: get budget, partners from db
+  //   }
+  // },
+  methods: {}
 };
 </script>
 
@@ -88,6 +82,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  z-index: 9999;
   .theme {
     width: 25vh;
     height: 36vh;
