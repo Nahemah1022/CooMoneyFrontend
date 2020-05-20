@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <Confirm v-if="showConfirm"></Confirm>
     <div class="block">
       <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="$emit('collapse')" />
       <div class="upper">
@@ -115,6 +116,7 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import Datepicker from "vuejs-datepicker";
+import Confirm from "@/components/common/Confirm";
 
 export default {
   name: "CreateBill",
@@ -125,6 +127,7 @@ export default {
       title: "",
       date: "",
       description: "",
+      showConfirm: false,
       swiperOption: {
         effect: "coverflow",
         grabCursor: true,
@@ -158,7 +161,7 @@ export default {
     },
     accounts: Array
   },
-  components: { Swiper, SwiperSlide, Datepicker },
+  components: { Swiper, SwiperSlide, Datepicker, Confirm },
   methods: {
     costFormat(cost) {
       let str = cost.toString();
@@ -172,7 +175,7 @@ export default {
     },
     caculate(input) {
       if (input == -1) {
-        if(this.costBufferDisplay.length <= 1){
+        if (this.costBufferDisplay.length <= 1) {
           this.costBufferDisplay = "";
           this.money = 0;
           return;
@@ -230,6 +233,9 @@ export default {
       this.money = operand[0];
     },
     apply() {
+      if (this.date == "" || this.title == "" || this.money == 0) {
+        return;
+      }
       let days = [
         "Sunday",
         "Monday",
