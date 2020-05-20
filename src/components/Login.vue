@@ -22,8 +22,7 @@
         Don't have an account?
         <span @click="SignUp">Sign up</span>
       </p>
-          <!-- <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div> -->
-
+      <!-- <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div> -->
     </div>
   </div>
 </template>
@@ -49,6 +48,10 @@ export default {
       document.getElementById("dont").text = "ssergsergsergser";
     },
     Login() {
+      console.log({
+        username: this.username,
+        password: this.password
+      });
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/login", {
           username: this.username,

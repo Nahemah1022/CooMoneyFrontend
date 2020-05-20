@@ -14,14 +14,19 @@
           <br />
           <br />
           <input placeholder="   Password" type="password" v-model="password" />
+          <br />
+          <br />
+          <input placeholder="   nickname" type="text" v-model="nickname" />
         </div>
       </div>
-      <button @click="SignUp">Sign Up</button>
+      <button @click="signUp">Sign Up</button>
     </div>
   </div>
 </template>
 
 <script>
+
+import axios from 'axios'
 import Header from "@/components/common/Header.vue";
 
 export default {
@@ -29,13 +34,43 @@ export default {
   components: {
     Header
   },
+  data() {
+    return {
+      username: "",
+      password: "",
+      nickname: "",
+      userGender: 0
+    };
+  },
   methods: {
-    SignUp() {
-      // TODO: SignUp
+    error() {
+      document.getElementById("dont").text = "ssergsergsergser";
+    },
+    signUp() {
+      console.log(this.userGender)
+      axios
+        .post("https://coomoney.herokuapp.com/api/v1/user/signUp", {
+          username: this.username,
+          password: this.password,
+          nickname: this.nickname,
+          userGender: 1
+        })
+        .then(res => {
+          console.log(res);
+          localStorage.setItem("token", res.data.data.token);
+          this.$router.push("/Login");
+        })
+        .catch((err) => {
+          console.log(err);
+          this.error();
+        });
     }
   }
 };
 </script>
+
+
+
 
 <style lang='scss' scoped>
 .block {
