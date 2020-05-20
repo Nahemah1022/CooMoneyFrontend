@@ -18,7 +18,7 @@
         </div>
       </div>
       <button @click="Login">Log In</button>
-      <p class="dont">
+      <p class="dont" id="dont">
         Don't have an account?
         <span @click="SignUp">Sign up</span>
       </p>
@@ -45,20 +45,15 @@ export default {
   },
   methods: {
     error() {
-      document.getElementById("dont").text = "ssergsergsergser";
+      document.getElementById("dont").text = this.errorMsg;
     },
     Login() {
-      console.log({
-        username: this.username,
-        password: this.password
-      });
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/login", {
           username: this.username,
           password: this.password
         })
         .then(res => {
-          console.log(res);
           localStorage.setItem("token", res.data.data.token);
           this.$router.push("/Project");
         })

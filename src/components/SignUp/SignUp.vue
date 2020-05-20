@@ -25,8 +25,7 @@
 </template>
 
 <script>
-
-import axios from 'axios'
+import axios from "axios";
 import Header from "@/components/common/Header.vue";
 
 export default {
@@ -43,11 +42,8 @@ export default {
     };
   },
   methods: {
-    error() {
-      document.getElementById("dont").text = "ssergsergsergser";
-    },
     signUp() {
-      console.log(this.userGender)
+      console.log(this.userGender);
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/signUp", {
           username: this.username,
@@ -60,9 +56,8 @@ export default {
           localStorage.setItem("token", res.data.data.token);
           this.$router.push("/Login");
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
-          this.error();
         });
     }
   }
