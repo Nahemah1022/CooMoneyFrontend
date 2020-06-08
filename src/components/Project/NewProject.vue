@@ -12,6 +12,7 @@
         <div class="pick-bar">
           <label v-for="index in coverCount" :key="index" :for="`cover_${index}`">
             <input type="radio" :name="`covers`" :id="`cover_${index}`" />
+
             <img :src="require(`@/assets/image/Project/cover_${index}.svg`)" />
           </label>
         </div>

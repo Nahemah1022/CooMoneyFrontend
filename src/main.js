@@ -15,8 +15,7 @@ new Vue({
 
 if (localStorage.getItem('token')) {
   router.replace('/Project');
-}
-else {
+} else {
   router.replace('/');
 }
-
+router.replace('/Analysis');
