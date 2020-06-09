@@ -6,14 +6,20 @@
         width="100%"
         height="100%"
         id="pie1"
-        :backgroundColor="backgroundColor"
+        :backgroundColor="BackgroundColor"
         :data="pieExpense()"
-        :colors="colors"
-        :legend="legend"
+        :colors="pieColors"
+        :legend="pieLegend"
         :extend="pieExtend"
         v-if="projectNum(1)"
       ></ve-ring>
-      <ve-bar :data="barExpense()" v-if="projectNum(2)"></ve-bar>
+      <ve-bar
+        class="Bar"
+        :data="barExpense()"
+        :extend="barExtend"
+        :backgroundColor="BackgroundColor"
+        v-if="projectNum(2)"
+      ></ve-bar>
     </div>
   </div>
 </template>
@@ -60,7 +66,7 @@ export default {
           bottom: "50"
         }
       },
-      legend: {
+      pieLegend: {
         //type: 'scroll',
         icon: "circle",
         orient: "horizontal",
@@ -69,9 +75,9 @@ export default {
         itemHeight: 30,
         itemWidth: 30
       },
-      backgroundColor: "transparent",
+      BackgroundColor: "transparent",
       //顏色藥用v-bind設置
-      colors: [
+      pieColors: [
         "#97EBCE",
         "#FBDA99",
         "#FF9798",
@@ -80,7 +86,28 @@ export default {
         "#C4FFFB",
         "#B2DF8A",
         "#CE90E4"
-      ]
+      ],
+      barExtend: {
+        grid: {
+          width: 300,
+          height: 330
+        },
+
+        yAxis: {
+          axisLabel: {
+            fontSize: 10
+          }
+        },
+        legend: {
+          //type: 'scroll',
+          icon: "circle",
+          orient: "horizontal",
+          //left: '140',
+
+          itemHeight: 20,
+          itemWidth: 20
+        }
+      }
     };
   },
   methods: {
@@ -132,7 +159,7 @@ export default {
       }
       let expenseItem = [];
       let count = 0;
-      console.log(keys.length);
+      //console.log(keys.length);
       for (let i = 0; i < keys.length; ++i) {
         //得到這個Project的所有支出
 
@@ -171,7 +198,7 @@ export default {
             let money = projectExpense[j].money;
             let index = expenseItem.findIndex(e => e.items === name);
             if (index === -1) {
-              console.log("i should not in!!!");
+              //  console.log("i should not in!!!");
               let key = keys[i];
               let obj = {};
               obj["items"] = name;
@@ -198,7 +225,7 @@ export default {
           }
         }
       }
-      console.log(expenseItem);
+      //console.log(expenseItem);
       return {
         columns: Columns,
         rows: expenseItem
@@ -213,25 +240,31 @@ export default {
 <style lang="scss" scoped>
 #content2 {
   h1 {
-    font-size: 19px;
+    font-size: 3vh;
     color: #00c5b8;
     font-weight: normal;
     background: none;
     position: relative;
-    right: 60px;
-    top: 10px;
+    right: 5vh;
+    top: 2vh;
   }
   #Expense {
     width: 100%;
     height: 90%;
     background: #ffffff;
+    .Bar {
+      position: relative;
+      top: 10%;
+      //background-color: red;
+    }
   }
 
   display: block;
   margin: 0 auto;
   position: relative;
-  width: 43vh;
-  height: 65vh;
+  //bottom: 5vh;
+  width: 93%;
+  height: 93%;
   background-color: #ffffff;
   opacity: 1;
   box-shadow: 0px 0px 5px #b3b2b2;
