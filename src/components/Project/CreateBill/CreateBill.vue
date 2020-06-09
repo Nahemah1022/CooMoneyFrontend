@@ -13,22 +13,27 @@
             <input type="radio" name="btns" id="income" />
             <p :class="{selectedP: selectedIndex==2}" @click="selectedIndex=2">Income</p>
           </label>
-          <label for="transfer" :class="{selected: selectedIndex==3}" @click="selectedIndex=3">
+          <!-- <label for="transfer" :class="{selected: selectedIndex==3}" @click="selectedIndex=3">
             <input type="radio" name="btns" id="transfer" />
             <p :class="{selectedP: selectedIndex==3}" @click="selectedIndex=3">Transfer</p>
-          </label>
+          </label>-->
         </div>
         <div class="cost-block">
-          <div class="account">
-            <swiper class="swiper" :options="swiperOption">
-              <swiper-slide v-for="account in accounts" :key="account.id">
-                <div class="div-cont">
-                  <img :src="require(`@/assets/image/Project/${account.img}.svg`)" />
-                  <img class="space" src alt />
-                  {{account.name}}
-                </div>
-              </swiper-slide>
-            </swiper>
+          <div :class="{inputBlock: true, focus: focus}">
+            <input
+              v-model="title"
+              @focus="focus=true"
+              @blur="focus=false"
+              type="text"
+              placeholder="Title here"
+            />
+            <textarea
+              @focus="focus=true"
+              @blur="focus=false"
+              v-model="description"
+              :class="{desc: true, focus: focus}"
+              placeholder="brief description"
+            ></textarea>
           </div>
           <div class="money-block">
             <div v-if="costBufferDisplay" class="buffer">
@@ -41,9 +46,9 @@
             </div>
           </div>
         </div>
-        <hr />
+        <!-- <hr /> -->
         <div class="category-block">
-          <p>Category</p>
+          <!-- <p>Category</p> -->
           <div class="category-bar">
             <div
               v-for="category in categorys"
@@ -65,30 +70,42 @@
             </div>
           </div>
         </div>
-        <div :class="{inputBlock: true, focus: focus}">
-          <div class="description">
-            <datepicker
-              v-model="date"
-              :value="new Date(2016, 9, 16)"
-              :format="'yyyy-MM-dd'"
-              :placeholder="'pick a date'"
-            ></datepicker>
-            <img class="icon_calander" src="@/assets/image/Project/icon_calander.svg" alt />
-            <input
-              v-model="title"
-              @focus="focus=true"
-              @blur="focus=false"
-              type="text"
-              placeholder="Title here"
-            />
+        <div class="bottom">
+          <datepicker
+            v-model="date"
+            :value="new Date(2016, 9, 16)"
+            :format="'yyyy-MM-dd'"
+            :placeholder="'pick a date'"
+          ></datepicker>
+          <!-- <img class="icon_calander" src="@/assets/image/Project/icon_calander.svg" alt /> -->
+          <!-- <div class="account">
+            <swiper class="swiper" :options="swiperOption">
+              <swiper-slide v-for="account in accounts" :key="account.id">
+                <div class="div-cont">
+                  <img :src="require(`@/assets/image/Project/${account.img}.svg`)" />
+                  <img class="space" src alt />
+                  {{account.name}}
+                </div>
+              </swiper-slide>
+            </swiper>
+          </div>-->
+          <div
+            class="evid"
+            :style="{height: uploadedFiles.length===0 || !evidFocus ? '20px' : (20*(uploadedFiles.length) + 'px')}"
+            @click="evidFocus=!evidFocus"
+          >
+            <div class="items">
+              <div class="item" v-for="file in uploadedFiles" :key="file.name">{{file.name}}</div>
+            </div>
+            <label for="attach">
+              <input id="attach" type="file" @change="uploadFile" />
+              <img src="@/assets/image/Project/attach.svg" alt />
+            </label>
+            <label for="shot">
+              <input id="shot" type="file" @change="uploadFile" />
+              <img src="@/assets/image/Project/shot.svg" alt />
+            </label>
           </div>
-          <textarea
-            @focus="focus=true"
-            @blur="focus=false"
-            v-model="description"
-            :class="{desc: true, focus: focus}"
-            placeholder="brief description"
-          ></textarea>
         </div>
       </div>
       <div class="keyboard">
@@ -113,8 +130,8 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+// import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+// import "swiper/css/swiper.css";
 import Datepicker from "vuejs-datepicker";
 import Confirm from "@/components/common/Confirm";
 
@@ -128,20 +145,23 @@ export default {
       date: "",
       description: "",
       showConfirm: false,
-      swiperOption: {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        direction: "vertical",
-        height: 40,
-        coverflowEffect: {
-          rotate: 0,
-          stretch: -10,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false
-        }
-      },
+      uploadedFiles: [],
+      items: "",
+      evidFocus: false,
+      // swiperOption: {
+      //   effect: "coverflow",
+      //   grabCursor: true,
+      //   centeredSlides: true,
+      //   direction: "vertical",
+      //   height: 40,
+      //   coverflowEffect: {
+      //     rotate: 0,
+      //     stretch: -10,
+      //     depth: 100,
+      //     modifier: 1,
+      //     slideShadows: false
+      //   }
+      // },
       categorys: [
         { index: 1, type: "purchase" },
         { index: 2, type: "print" },
@@ -161,7 +181,12 @@ export default {
     },
     accounts: Array
   },
-  components: { Swiper, SwiperSlide, Datepicker, Confirm },
+  components: {
+    // Swiper,
+    // SwiperSlide,
+    Datepicker,
+    Confirm
+  },
   methods: {
     costFormat(cost) {
       let str = cost.toString();
@@ -173,8 +198,14 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
+    uploadFile(f) {
+      this.uploadedFiles.push(f.target.files[0]);
+      this.evidFocus = true;
+    },
     caculate(input) {
+      let revert = "";
       if (input == -1) {
+        //back button
         if (this.costBufferDisplay.length <= 1) {
           this.costBufferDisplay = "";
           this.money = 0;
@@ -182,6 +213,12 @@ export default {
         }
         this.costBufferDisplay = this.costBufferDisplay.slice(0, -1);
       } else {
+        if (
+          this.costBufferDisplay.length === 0 &&
+          (input == "+" || input == "x" || input == "-")
+        ) {
+          return;
+        }
         let last = this.costBufferDisplay[this.costBufferDisplay.length - 1];
         if (
           (last == "+" || last == "x" || last == "-") &&
@@ -189,6 +226,7 @@ export default {
         ) {
           this.costBufferDisplay = this.costBufferDisplay.slice(0, -1);
         }
+        revert = this.costBufferDisplay;
         this.costBufferDisplay += input;
       }
       let str = this.costBufferDisplay;
@@ -230,7 +268,11 @@ export default {
           index--;
         }
       }
-      this.money = operand[0];
+      if (this.money / 100000 > 1 && input != -1) {
+        this.costBufferDisplay = revert;
+      } else {
+        this.money = operand[0];
+      }
     },
     apply() {
       if (this.date == "" || this.title == "" || this.money == 0) {
@@ -314,24 +356,24 @@ $radius: 14px;
   border-top: #dfdfdf dashed 3px;
   background-color: #fff;
   width: 100%;
-  height: 73vh;
+  height: 158vw;
   position: relative;
   border-radius: 0 0 8% 8%;
   .upper {
-    height: 44vh;
+    height: 92vw;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     .type-picker {
       width: 80%;
-      margin: 2vh auto;
+      margin: 4vw auto;
       padding-right: 10vw;
       display: flex;
       justify-content: space-around;
       align-items: center;
       label {
-        width: 33%;
-        height: 3vh;
+        width: 50%;
+        height: 6vw;
         border: 1px solid #00c5b8;
         font-size: 18px;
         display: flex;
@@ -345,7 +387,7 @@ $radius: 14px;
         &:nth-child(1) {
           border-radius: $radius 0 0 $radius;
         }
-        &:nth-child(3) {
+        &:nth-child(2) {
           border-radius: 0 $radius $radius 0;
         }
         input[type="radio"] {
@@ -359,21 +401,18 @@ $radius: 14px;
     .cost-block {
       width: 90%;
       margin: 0 auto;
-      height: 6vh;
-      padding-top: 2vh;
+      height: 12vw;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      .account {
-        width: 50%;
-        height: 8vh;
-      }
+      align-items: flex-end;
       .money-block {
         position: relative;
+        width: 45%;
+        border-bottom: 1px solid #00c5b8;
         .buffer {
           position: absolute;
           width: 80vw;
-          top: -2vh;
+          top: -4vw;
           right: 0;
           display: flex;
           justify-content: flex-end;
@@ -382,72 +421,63 @@ $radius: 14px;
         .cost {
           display: flex;
           justify-content: space-between;
-          font-size: 40px;
-          margin-bottom: 3vh;
+          font-size: 30px;
         }
       }
-    }
-    .inputBlock {
-      width: 80vw;
-      margin: 2vh auto;
-      padding: 0 3px;
-      position: relative;
-      box-sizing: border-box;
-      border: 0px #00c5b8 solid;
-      transition: 0.3s;
-      &.focus {
-        border: 2px #00c5b8 solid;
-        border-radius: 16px 16px 0 0;
-      }
-      .description {
-        display: flex;
-        justify-content: space-between;
-        .icon_calander {
-          position: absolute;
-          left: 30%;
-          top: 5px;
+      .inputBlock {
+        width: 40vw;
+        position: relative;
+        box-sizing: border-box;
+        transition: 0.3s;
+        border: 1px #00c5b8 solid;
+        border-radius: 16px 16px 16px 16px;
+        &.focus {
+          border-radius: 16px 16px 0 0;
         }
         input {
+          width: 40vw;
           color: #5d5d5d;
-          width: auto;
-          line-height: 24px;
-          padding: 0 14px;
+          font-size: 24px;
+          line-height: 32px;
           box-sizing: border-box;
           border: 0;
-          border-bottom: 1px solid;
+          border-bottom: 0px solid;
           text-align: center;
+          &::placeholder {
+            color: #00c5b8;
+          }
         }
-      }
-      .desc {
-        color: #5d5d5d;
-        width: 80vw;
-        position: absolute;
-        top: 3vh;
-        left: -2px;
-        z-index: 10;
-        height: 0vh;
-        border: 0px #00c5b8 solid;
-        border-radius: 0;
-        background-color: #fff;
-        transition: 0.3s;
-        box-sizing: border-box;
-        &.focus {
-          height: 16vh;
-          padding: 5px 10px;
-          border: 2px #00c5b8 solid;
-          border-radius: 0 0 16px 16px;
+        .desc {
+          color: #5d5d5d;
+          width: 80vw;
+          position: absolute;
+          top: 32px;
+          left: -2px;
+          z-index: 10;
+          height: 0vw;
+          border: 0px #00c5b8 solid;
+          border-radius: 0;
+          background-color: #fff;
+          transition: 0.3s;
+          box-sizing: border-box;
+          &.focus {
+            height: 36vw;
+            padding: 5px 10px;
+            border: 2px #00c5b8 solid;
+            border-radius: 0 16px 16px 16px;
+          }
         }
       }
     }
     .category-block {
       width: 90%;
-      margin: 1vh auto;
+      margin: 2vw auto;
       p {
-        margin: 1vh 0;
+        margin: 2vw 0;
       }
       .category-bar {
         width: 90%;
-        margin: 1vh auto;
+        margin: 2vw auto;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -469,6 +499,49 @@ $radius: 14px;
         }
       }
     }
+    .bottom {
+      width: 80vw;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      // .icon_calander {
+      //   position: absolute;
+      //   left: 26vw;
+      // }
+      // .account {
+      //   width: 60%;
+      // }
+      .evid {
+        width: 60%;
+        height: 20px;
+        border: 1px solid #00c5b8;
+        padding: 0 5px;
+        border-radius: 16px;
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+        justify-content: space-around;
+        transition: 0.2s;
+        .items {
+          width: 70%;
+          height: 100%;
+          .item {
+            height: 20px;
+            overflow: hidden;
+            display: block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        input {
+          display: none;
+        }
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
   .collapse {
     position: absolute;
@@ -482,8 +555,7 @@ $radius: 14px;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 26vh;
-    padding-bottom: 1vh;
+    height: 60vw;
     border-radius: 0 0 30px 30px;
     .apply {
       grid-column-start: 3;
