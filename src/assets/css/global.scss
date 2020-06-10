@@ -1,3 +1,5 @@
+$color1: #00c5b8;
+
 * {
     margin: 0;
     padding: 0;
@@ -7,18 +9,31 @@
 .vdp-datepicker {
     position: relative;
     width: 30vw;
-    input{
-        width: 100%;
-        padding: 0 13px;
-        border-radius: 10px;
-        border: 1px solid #00c5b8;
+    display: inline-flex;
+    align-items: center;
+    div{
+        display: inline-flex;
+        align-items: center;
+        input{
+            width: 100%;
+            border: 0;
+            background-color: transparent;
+        }
     }
 }
 
-.vdp-datepicker__calendar span.cell {
-    border-radius: 10px;
-    &.selected{
-        background-color: #00c5b8;    
-        color: #fff;
+.vdp-datepicker__calendar {
+    border-radius: 0 16px 16px 16px;
+    span.cell {
+        border-radius: 10px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        &.selected{
+            background-color: #00c5b8;
+            color: #fff;
+        }
+    
     }
 }
