@@ -22,10 +22,10 @@ let FontLibary = [
 library.add(FontLibary)
 
 let IconLibary = [
-    { font: faWrench, type: "repair" },
-    { font: faMoneyCheckAlt, type: "purchase" },
-    { font: faPrint, type: "print" },
-    { font: faBusAlt, type: "traffic" }
+    { index: 1, font: faWrench, type: "repair" },
+    { index: 2, font: faMoneyCheckAlt, type: "purchase" },
+    { index: 3, font: faPrint, type: "print" },
+    { index: 4, font: faBusAlt, type: "traffic" }
 ]
 
 export { FontAwesomeIcon, FontLibary, IconLibary }

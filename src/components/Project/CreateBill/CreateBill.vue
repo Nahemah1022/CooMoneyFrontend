@@ -68,7 +68,7 @@
               <!-- <img
                 @click="categoryIndex=category.index"
                 :src="require(`@/assets/image/Project/${category.type}.svg`)"
-              />-->
+              /> -->
               <p>{{category.type}}</p>
             </div>
             <div for="more">
@@ -210,6 +210,9 @@ export default {
     },
     newCategory() {
       console.log("here");
+    },
+    test(s){
+      console.log(s);
     },
     caculate(input) {
       let revert = "";
@@ -525,9 +528,9 @@ $radius: 14px;
           justify-content: center;
           align-items: center;
           .icon {
-            min-width: 34px;
-            max-width: 34px;
-            height: 34px;
+            min-width: 36px;
+            max-width: 36px;
+            height: 36px;
             background-color: #dbdbdb;
             color: #fff;
             border-radius: 50%;
@@ -538,7 +541,7 @@ $radius: 14px;
             &:checked ~ .icon {
               // border: 2px red solid;
               background-color: #00c5b8;
-              padding: 1px;
+              padding: 3px;
             }
           }
         }
