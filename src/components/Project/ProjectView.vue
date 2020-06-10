@@ -40,6 +40,7 @@ export default {
           depth: 0,
           modifier: 1
         },
+        noSwiping: true,
         initialSlide: this.default
       }
     };

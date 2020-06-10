@@ -49,7 +49,7 @@
         <!-- <hr /> -->
         <div class="category-block">
           <!-- <p>Category</p> -->
-          <div class="category-bar">
+          <div class="category-bar swiper-no-swiping">
             <div
               v-for="category in categorys"
               :key="category.index"
@@ -62,22 +62,27 @@
                 :checked="categoryIndex==category.index?'checked':''"
                 :id="`category_${category.index}`"
               />
-              <img
+              <div class="icon" @click="categoryIndex=category.index">
+                <font-awesome-icon :icon="category.font.iconName" size="lg" style="color: white" />
+              </div>
+              <!-- <img
                 @click="categoryIndex=category.index"
                 :src="require(`@/assets/image/Project/${category.type}.svg`)"
-              />
+              />-->
               <p>{{category.type}}</p>
+            </div>
+            <div for="more">
+              <input type="radio" name="categorys" value="0" id="more" />
+              <img @click="newCategory" :src="require(`@/assets/image/Project/more.svg`)" />
+              <p>more</p>
             </div>
           </div>
         </div>
         <div class="bottom">
-          <datepicker
-            v-model="date"
-            :value="new Date(2016, 9, 16)"
-            :format="'yyyy-MM-dd'"
-            :placeholder="'pick a date'"
-          ></datepicker>
-          <!-- <img class="icon_calander" src="@/assets/image/Project/icon_calander.svg" alt /> -->
+          <label class="date_block">
+            <datepicker v-model="date" :format="'yyyy-MM-dd'"></datepicker>
+            <font-awesome-icon icon="calendar-day" size="sm" style="color: #00c5b8" />
+          </label>
           <!-- <div class="account">
             <swiper class="swiper" :options="swiperOption">
               <swiper-slide v-for="account in accounts" :key="account.id">
@@ -95,15 +100,20 @@
             @click="evidFocus=!evidFocus"
           >
             <div class="items">
-              <div class="item" v-for="file in uploadedFiles" :key="file.name">{{file.name}}</div>
+              <div class="item" v-for="file in uploadedFiles" :key="file.name">
+                <img :class="{focus: evidFocus}" src="@/assets/image/Project/cross.svg" alt />
+                {{file.name}}
+              </div>
             </div>
             <label for="attach">
               <input id="attach" type="file" @change="uploadFile" />
-              <img src="@/assets/image/Project/attach.svg" alt />
+              <font-awesome-icon icon="paperclip" size="sm" style="color: #00c5b8" />
+              <!-- <img src="@/assets/image/Project/attach.svg" alt /> -->
             </label>
             <label for="shot">
               <input id="shot" type="file" @change="uploadFile" />
-              <img src="@/assets/image/Project/shot.svg" alt />
+              <font-awesome-icon icon="camera" size="sm" style="color: #00c5b8" />
+              <!-- <img src="@/assets/image/Project/shot.svg" alt /> -->
             </label>
           </div>
         </div>
@@ -134,6 +144,7 @@
 // import "swiper/css/swiper.css";
 import Datepicker from "vuejs-datepicker";
 import Confirm from "@/components/common/Confirm";
+import { IconLibary } from "@/assets/js/fontawesome.js";
 
 export default {
   name: "CreateBill",
@@ -142,7 +153,7 @@ export default {
       selectedIndex: 1,
       money: 0,
       title: "",
-      date: "",
+      date: new Date(),
       description: "",
       showConfirm: false,
       uploadedFiles: [],
@@ -162,12 +173,7 @@ export default {
       //     slideShadows: false
       //   }
       // },
-      categorys: [
-        { index: 1, type: "purchase" },
-        { index: 2, type: "print" },
-        { index: 3, type: "repair" },
-        { index: 4, type: "more" }
-      ],
+      categorys: IconLibary,
       categoryIndex: 0,
       focus: false,
       costBufferDisplay: "",
@@ -201,6 +207,9 @@ export default {
     uploadFile(f) {
       this.uploadedFiles.push(f.target.files[0]);
       this.evidFocus = true;
+    },
+    newCategory() {
+      console.log("here");
     },
     caculate(input) {
       let revert = "";
@@ -318,38 +327,37 @@ export default {
 $transition: 0.5s;
 $radius: 14px;
 * {
-  color: #00c5b8;
   background-color: transparent;
 }
 
-.swiper {
-  height: 6vh;
-  width: 90%;
-  background-color: white;
-  box-shadow: 0 0 10px #ececec;
-  border-radius: 14px;
-  .swiper-slide {
-    top: 5px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 90%;
-    height: 6vh;
-    font-size: 20px;
-    .div-cont {
-      min-width: 64%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      img {
-        zoom: 2;
-        &.space {
-          width: 10%;
-        }
-      }
-    }
-  }
-}
+// .swiper {
+//   height: 6vh;
+//   width: 90%;
+//   background-color: white;
+//   box-shadow: 0 0 10px #ececec;
+//   border-radius: 14px;
+//   .swiper-slide {
+//     top: 5px;
+//     display: flex;
+//     justify-content: space-around;
+//     align-items: center;
+//     width: 90%;
+//     height: 6vh;
+//     font-size: 20px;
+//     .div-cont {
+//       min-width: 64%;
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+//       img {
+//         zoom: 2;
+//         &.space {
+//           width: 10%;
+//         }
+//       }
+//     }
+//   }
+// }
 .block {
   box-sizing: border-box;
   padding-top: 1px;
@@ -358,6 +366,9 @@ $radius: 14px;
   width: 100%;
   height: 158vw;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-radius: 0 0 8% 8%;
   .upper {
     height: 92vw;
@@ -366,7 +377,7 @@ $radius: 14px;
     justify-content: space-around;
     .type-picker {
       width: 80%;
-      margin: 4vw auto;
+      margin: 4vw auto -2vw auto;
       padding-right: 10vw;
       display: flex;
       justify-content: space-around;
@@ -380,6 +391,8 @@ $radius: 14px;
         justify-content: center;
         p {
           background-color: transparent;
+          display: inline-flex;
+          align-items: center;
           &.selectedP {
             color: #fff;
           }
@@ -422,6 +435,7 @@ $radius: 14px;
           display: flex;
           justify-content: space-between;
           font-size: 30px;
+          color: #00c5b8;
         }
       }
       .inputBlock {
@@ -472,29 +486,60 @@ $radius: 14px;
     .category-block {
       width: 90%;
       margin: 2vw auto;
+      // border: 2px dotted #00c5b8;
+      border-radius: 16px;
+      // border-radius: 4px;
+      // box-shadow: 15px 0 10px -15px inset;
       p {
-        margin: 2vw 0;
+        padding: 2vw;
       }
       .category-bar {
-        width: 90%;
-        margin: 2vw auto;
+        width: 100%;
+        padding-top: 2vw;
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
         align-items: center;
+        overflow: scroll;
+        // box-shadow: -15px 0 10px -15px inset;
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 7px;
+        }
+        &::-webkit-scrollbar:vertical {
+          width: 0px;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          border: 2px solid white; /* should match background, can't be transparent */
+          background-color: #e6e6e6;
+        }
+        // box-shadow: 0 4px 4px -2px #b3b2b2;
         div {
-          width: 25%;
+          max-width: 22%;
+          min-width: 22%;
           display: flex;
           flex-direction: column;
+          justify-content: center;
           align-items: center;
+          .icon {
+            min-width: 34px;
+            max-width: 34px;
+            height: 34px;
+            background-color: #dbdbdb;
+            color: #fff;
+            border-radius: 50%;
+            border: 0;
+          }
           input[type="radio"] {
             display: none;
-            &:checked ~ img {
-              border: 2px #00c5b8 solid;
+            &:checked ~ .icon {
+              // border: 2px red solid;
+              background-color: #00c5b8;
+              padding: 1px;
             }
-          }
-          img {
-            border-radius: 50%;
-            width: 50%;
           }
         }
       }
@@ -505,15 +550,21 @@ $radius: 14px;
       display: flex;
       align-items: center;
       justify-content: space-around;
-      // .icon_calander {
-      //   position: absolute;
-      //   left: 26vw;
-      // }
       // .account {
       //   width: 60%;
       // }
+      .date_block {
+        width: 30%;
+        height: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        border-radius: 16px;
+        border: 1px solid #00c5b8;
+      }
       .evid {
-        width: 60%;
+        width: 50%;
         height: 20px;
         border: 1px solid #00c5b8;
         padding: 0 5px;
@@ -532,6 +583,15 @@ $radius: 14px;
             display: block;
             white-space: nowrap;
             text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            img {
+              width: 0px;
+              transition: 0.2s;
+              &.focus {
+                width: 14px;
+              }
+            }
           }
         }
         input {
@@ -552,8 +612,6 @@ $radius: 14px;
   .keyboard {
     display: grid;
     grid-template-columns: 26% 26% 26% 22%;
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: 60vw;
     border-radius: 0 0 30px 30px;
