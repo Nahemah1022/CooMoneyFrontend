@@ -51,24 +51,24 @@
           <!-- <p>Category</p> -->
           <div class="category-bar swiper-no-swiping">
             <div
-              v-for="category in categorys"
-              :key="category.index"
+              v-for="(category, index) in categorys"
+              :key="index"
               :for="`category_${category.index}`"
             >
               <input
                 type="radio"
                 name="categorys"
-                :value="category.index"
-                :checked="categoryIndex==category.index?'checked':''"
-                :id="`category_${category.index}`"
+                :value="index"
+                :checked="categoryIndex==index?'checked':''"
+                :id="`category_${index}`"
               />
-              <div class="icon" @click="categoryIndex=category.index">
+              <div class="icon" @click="categoryIndex=index">
                 <font-awesome-icon :icon="category.font.iconName" size="lg" style="color: white" />
               </div>
               <!-- <img
                 @click="categoryIndex=category.index"
                 :src="require(`@/assets/image/Project/${category.type}.svg`)"
-              /> -->
+              />-->
               <p>{{category.type}}</p>
             </div>
             <div for="more">
@@ -211,7 +211,7 @@ export default {
     newCategory() {
       console.log("here");
     },
-    test(s){
+    test(s) {
       console.log(s);
     },
     caculate(input) {

@@ -5,9 +5,13 @@ import {
     faCalendarDay,
     faPaperclip,
     faCamera,
-    faMoneyCheckAlt,
+    faMoneyBillAlt,
     faPrint,
-    faBusAlt
+    faTaxi,
+    faBriefcaseMedical,
+    faUtensils,
+    faServer,
+    faTruckLoading
 } from '@fortawesome/free-solid-svg-icons'
 
 let FontLibary = [
@@ -15,17 +19,25 @@ let FontLibary = [
     faPaperclip,
     faCamera,
     faWrench,
-    faMoneyCheckAlt,
+    faMoneyBillAlt,
     faPrint,
-    faBusAlt
+    faTaxi,
+    faBriefcaseMedical,
+    faUtensils,
+    faServer,
+    faTruckLoading
 ];
 library.add(FontLibary)
 
 let IconLibary = [
-    { index: 1, font: faWrench, type: "repair" },
-    { index: 2, font: faMoneyCheckAlt, type: "purchase" },
-    { index: 3, font: faPrint, type: "print" },
-    { index: 4, font: faBusAlt, type: "traffic" }
+    { font: faUtensils, type: "meal" },
+    { font: faTaxi, type: "traffic" },
+    { font: faServer, type: "device" },
+    { font: faBriefcaseMedical, type: "medical" },
+    { font: faWrench, type: "repair" },
+    { font: faPrint, type: "print" },
+    { font: faMoneyBillAlt, type: "purchase" },
+    { font: faTruckLoading, type: "rent" },
 ]
 
 export { FontAwesomeIcon, FontLibary, IconLibary }
