@@ -85,9 +85,9 @@ export default {
       bills: [
         {
           id: 1,
-          title: "Equipment Purchase",
+          title: "Celebration feast",
           cost: 6092,
-          categoty: "repair",
+          categoty: "meal",
           status: "approved",
           date: "2020-04-30 Thursday",
           description: "sample description"
@@ -105,16 +105,16 @@ export default {
           id: 3,
           title: "Equipment Rental",
           cost: 3000,
-          categoty: "repair",
+          categoty: "rent",
           status: "pending",
           date: "2020-04-27 Monday",
           description: "sample description"
         },
         {
           id: 4,
-          title: "Equipment Repair",
+          title: "New Computer",
           cost: 1020,
-          categoty: "repair",
+          categoty: "device",
           status: "pending",
           date: "2020-04-27 Monday",
           description: "sample description"
@@ -130,9 +130,9 @@ export default {
         },
         {
           id: 6,
-          title: "Equipment Repair",
-          cost: 4241,
-          categoty: "repair",
+          title: "Seek medical advice",
+          cost: 420,
+          categoty: "medical",
           status: "approved",
           date: "2020-04-25 Saturday",
           description: "sample description"

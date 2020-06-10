@@ -1,7 +1,14 @@
 <template>
   <div class="main">
     <Confirm v-if="showConfirm"></Confirm>
+    <NewCategory
+      v-if="newingCategory"
+      :show="newingCategory"
+      @hide="newingCategory=!newingCategory"
+      @addCategory="addCategory"
+    ></NewCategory>
     <div class="block">
+      <div :class="{mask: true, showMask: newingCategory}" />
       <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="$emit('collapse')" />
       <div class="upper">
         <div class="type-picker">
@@ -73,7 +80,10 @@
             </div>
             <div for="more">
               <input type="radio" name="categorys" value="0" id="more" />
-              <img @click="newCategory" :src="require(`@/assets/image/Project/more.svg`)" />
+              <img
+                @click="newingCategory=!newingCategory"
+                :src="require(`@/assets/image/Project/more.svg`)"
+              />
               <p>more</p>
             </div>
           </div>
@@ -144,6 +154,7 @@
 // import "swiper/css/swiper.css";
 import Datepicker from "vuejs-datepicker";
 import Confirm from "@/components/common/Confirm";
+import NewCategory from "@/components/Project/CreateBill/NewCategory.vue";
 import { IconLibary } from "@/assets/js/fontawesome.js";
 
 export default {
@@ -175,6 +186,7 @@ export default {
       // },
       categorys: IconLibary,
       categoryIndex: 0,
+      newingCategory: false,
       focus: false,
       costBufferDisplay: "",
       operation: ""
@@ -191,7 +203,8 @@ export default {
     // Swiper,
     // SwiperSlide,
     Datepicker,
-    Confirm
+    Confirm,
+    NewCategory
   },
   methods: {
     costFormat(cost) {
@@ -208,11 +221,9 @@ export default {
       this.uploadedFiles.push(f.target.files[0]);
       this.evidFocus = true;
     },
-    newCategory() {
-      console.log("here");
-    },
-    test(s) {
-      console.log(s);
+    addCategory(icon) {
+      this.categorys.push(icon);
+      this.newingCategory = !this.newingCategory;
     },
     caculate(input) {
       let revert = "";
@@ -373,6 +384,20 @@ $radius: 14px;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 0 0 8% 8%;
+  .mask {
+    position: absolute;
+    background-color: gray;
+    width: 100%;
+    height: 0;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 0 0 8% 8%;
+    &.showMask {
+      height: 100%;
+      opacity: 0.5;
+      z-index: 8;
+    }
+  }
   .upper {
     height: 92vw;
     display: flex;

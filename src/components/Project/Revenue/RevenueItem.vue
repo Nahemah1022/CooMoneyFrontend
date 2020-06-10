@@ -5,7 +5,14 @@
   >
     <div class="block">
       <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
-        <img :src="require(`@/assets/image/Project/${category}.svg`)" />
+        <!-- <img :src="require(`@/assets/image/Project/${category}.svg`)" /> -->
+        <div class="icon">
+          <font-awesome-icon
+            :icon="getIcon(category)"
+            :size="expand ? '2x' : 'sm'"
+            style="color: #fff"
+          />
+        </div>
         <img class="space" src alt />
         <div>{{costTitle}}</div>
       </div>
@@ -27,11 +34,14 @@
 </template>
 
 <script>
+import { IconLibary } from "@/assets/js/fontawesome.js";
+
 export default {
   name: "",
   data() {
     return {
-      expand: false
+      expand: false,
+      IconLibary: IconLibary
     };
   },
   props: {
@@ -41,6 +51,11 @@ export default {
     status: String,
     description: String,
     fullRevenue: Boolean
+  },
+  methods: {
+    getIcon(type) {
+      return IconLibary.filter(icon => icon.type === type)[0].font.iconName;
+    }
   }
 };
 </script>
@@ -92,6 +107,16 @@ $transition: 0.3s;
         width: 5vw;
         transition: $transition;
       }
+      .icon {
+        width: 6vw;
+        height: 6vw;
+        background-color: #00c5b8;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: 0.3s;
+      }
       &.titleExpand {
         width: 100%;
         height: auto;
@@ -101,6 +126,10 @@ $transition: 0.3s;
           &:not(.space) {
             width: 16vw;
           }
+        }
+        .icon {
+          width: 16vw;
+          height: 16vw;
         }
       }
     }
