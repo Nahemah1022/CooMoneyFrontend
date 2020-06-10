@@ -12,8 +12,6 @@ $color1: #00c5b8;
     display: inline-flex;
     align-items: center;
     div{
-        display: inline-flex;
-        align-items: center;
         input{
             width: 100%;
             border: 0;
@@ -23,7 +21,7 @@ $color1: #00c5b8;
 }
 
 .vdp-datepicker__calendar {
-    border-radius: 0 16px 16px 16px;
+    border-radius: 16px;
     span.cell {
         border-radius: 10px;
         height: 30px;

@@ -314,7 +314,7 @@ export default {
       this.$emit("newRevenue", {
         title: this.title,
         cost: this.money,
-        categoty: this.categorys[this.categoryIndex - 1].type,
+        categoty: this.categorys[this.categoryIndex].type,
         status: "pending",
         date:
           new Date(d).getFullYear() +
