@@ -19,7 +19,12 @@
         </div>
         <hr />
         <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
-        <Judgement :show="fullRevenue&&expand&&judgementShow" :status="status" @toggle="toggle" @judge="judge"></Judgement>
+        <Judgement
+          :show="fullRevenue&&expand&&judgementShow"
+          :status="status"
+          @toggle="toggle"
+          @judge="judge"
+        ></Judgement>
       </div>
       <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
         <div>
@@ -72,7 +77,7 @@ export default {
       }
     },
     judge(result) {
-      this.$emit('judge', result);
+      this.$emit("judge", result);
     }
   }
 };

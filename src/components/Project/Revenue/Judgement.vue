@@ -1,10 +1,17 @@
 <template>
   <div :class="{main: true, show: show}">
     <!-- <p>Judge comment</p> -->
-    <textarea :class="{disable: status==='rejected' || status==='approved'}" :placeholder="placeholderMsg"></textarea>
+    <textarea
+      :class="{disable: status==='rejected' || status==='approved'}"
+      :placeholder="placeholderMsg"
+    ></textarea>
     <div v-if="status==='pending'" class="btns">
-      <div class="approve" @click.stop="judge(true)"><font-awesome-icon icon="check" size="lg" />Approve</div>
-      <div class="reject" @click.stop="judge(false)"><font-awesome-icon icon="times" size="lg" />Reject</div>
+      <div class="approve" @click.stop="judge(true)">
+        <font-awesome-icon icon="check" size="lg" />Approve
+      </div>
+      <div class="reject" @click.stop="judge(false)">
+        <font-awesome-icon icon="times" size="lg" />Reject
+      </div>
     </div>
   </div>
 </template>
@@ -14,7 +21,7 @@ export default {
   name: "Judgement",
   data() {
     return {
-      placeholderMsg: ''
+      placeholderMsg: ""
     };
   },
   props: {
@@ -29,7 +36,12 @@ export default {
     }
   },
   mounted() {
-    this.placeholderMsg = this.status==='pending' ? 'Write your comment here' : (this.comment === undefined ? 'No comment' : this.comment);
+    this.placeholderMsg =
+      this.status === "pending"
+        ? "Write your comment here"
+        : this.comment === undefined
+        ? "No comment"
+        : this.comment;
   }
 };
 </script>
@@ -38,7 +50,7 @@ export default {
 <style lang='scss' scoped>
 .main {
   width: 100%;
-  height: 0vw;
+  max-height: 0vw;
   // border: 2px solid #000;
   border-radius: 16px;
   // box-shadow: 0 0 6px #cccccc;
@@ -51,7 +63,7 @@ export default {
   transition: 0.3s;
   &.show {
     margin: 10vw 0 0 0;
-    height: 30vw;
+    max-height: 30vw;
     border: 1px solid gray;
     background-color: #fff;
   }
@@ -60,25 +72,25 @@ export default {
     height: 20%;
     display: flex;
     align-items: center;
-    .approve{
+    .approve {
       width: 50%;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #fff;
-      background-color: #57F2CD;
+      background-color: #57f2cd;
     }
-    .reject{
+    .reject {
       width: 50%;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #fff;
-      background-color: #F25757;
+      background-color: #f25757;
     }
-    svg{
+    svg {
       margin-right: 10px;
     }
   }
@@ -91,15 +103,16 @@ export default {
     padding: 10px 15px;
     height: 80%;
     font-size: 18px;
-    &::placeholder{
+    &::placeholder {
       color: #dbdada;
     }
-    &.disable{
+    &.disable {
       pointer-events: none;
       font-size: 20px;
       border: 0;
+      height: auto;
       background-color: transparent;
-      &::placeholder{
+      &::placeholder {
         color: gray;
       }
     }

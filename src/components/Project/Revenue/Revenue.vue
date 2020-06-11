@@ -34,7 +34,6 @@
             :status="bill.status"
             :description="bill.description"
             :fullRevenue="full"
-            @judge="judge"
           ></RevenueItem>
         </div>
       </div>
