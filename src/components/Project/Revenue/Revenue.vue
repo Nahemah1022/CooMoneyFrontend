@@ -1,6 +1,6 @@
 <template>
   <div class="submain">
-    <BlurMask :show="judgementShow"></BlurMask>
+    <!-- <BlurMask :show="judgementShow"></BlurMask> -->
     <div :class="{block: true, fullBlock: full}">
       <div :class="{header: true, fullHeader: full}">
         <span>Bills</span>
@@ -34,7 +34,6 @@
             :status="bill.status"
             :description="bill.description"
             :fullRevenue="full"
-            @toggle="judgementShow=!judgementShow"
           ></RevenueItem>
         </div>
       </div>
@@ -44,20 +43,19 @@
 
 <script>
 import RevenueItem from "@/components/Project/Revenue/RevenueItem.vue";
-import BlurMask from "@/components/common/BlurMask";
+//import BlurMask from "@/components/common/BlurMask";
 
 export default {
   name: "",
   data() {
     return {
       dates: {},
-      detailedBills: {},
-      judgementShow: false
+      detailedBills: {}
     };
   },
   components: {
-    RevenueItem,
-    BlurMask
+    RevenueItem
+    //BlurMask
   },
   props: {
     projectId: Number,

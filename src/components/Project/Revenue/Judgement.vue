@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div :class="{main: true, show: show}">
     <div class="btns">
       <img
         :src="require(`@/assets/image/Project/Revenue/approved_expand.svg`)"
@@ -19,6 +19,12 @@
 <script>
 export default {
   name: "Judgement",
+  data() {
+    return {};
+  },
+  props: {
+    show: Boolean
+  },
   methods: {
     judge(result) {
       console.log(result);
@@ -31,32 +37,38 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
 .main {
-  width: 88vw;
-  height: 100px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: 10px;
-  //   border: 2px solid #000;
+  width: 100%;
+  height: 0vw;
+  // border: 2px solid #000;
+  border-radius: 16px;
+  box-shadow: 0 0 6px #cccccc;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 2000;
+  padding: 0;
+  overflow: hidden;
+  transition: 0.3s;
+  &.show {
+    margin: 10vw 0 0 0;
+    height: 25vw;
+    padding: 10px;
+  }
   .btns {
     width: 100%;
-    height: 20%;
+    height: 30%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     img {
-      width: 35%;
+      width: 30%;
     }
   }
   textarea {
     width: 90%;
     margin: 10px 0 0 0;
     padding: 2px 5px;
-    height: 70%;
+    height: 60%;
     border-radius: 10px;
   }
 }

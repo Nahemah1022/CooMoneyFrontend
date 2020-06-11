@@ -1,38 +1,38 @@
 <template>
-  <div
-    :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand}"
-    @click="fullRevenue && !judgementShow && (expand = !expand)"
-  >
-    <div class="block">
-      <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
-        <!-- <img :src="require(`@/assets/image/Project/${category}.svg`)" /> -->
-        <div class="icon">
-          <font-awesome-icon
-            :icon="getIcon(category)"
-            :size="expand ? '2x' : 'sm'"
-            style="color: #fff"
-          />
+  <div class="main">
+    <div
+      :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand, judgement: fullRevenue&&expand&&status==='pending'&&judgementShow}"
+      @click="fullRevenue && !judgementShow && (expand = !expand)"
+    >
+      <div class="block">
+        <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
+          <!-- <img :src="require(`@/assets/image/Project/${category}.svg`)" /> -->
+          <div class="icon">
+            <font-awesome-icon
+              :icon="getIcon(category)"
+              :size="expand ? '2x' : 'sm'"
+              style="color: #fff"
+            />
+          </div>
+          <img class="space" src alt />
+          <div class="title">{{costTitle}}</div>
         </div>
-        <img class="space" src alt />
-        <div>{{costTitle}}</div>
+        <hr />
+        <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
+        <Judgement v-if="status==='pending'" :show="judgementShow" @toggle="toggle"></Judgement>
       </div>
-      <hr />
-      <div v-if="fullRevenue&&expand" class="desc">
-        {{description}}
-        <Judgement v-if="judgementShow" @toggle="toggle"></Judgement>
+      <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
+        <div>
+          <span>$</span>
+          {{cost}}
+        </div>
+        <span>&nbsp;</span>
+        <img
+          :class="{fullImg: fullRevenue, imgRxpand: fullRevenue&&expand}"
+          :src="require(`@/assets/image/Project/Revenue/${status}${fullRevenue&&expand ? '_expand' : ''}.svg`)"
+          @click.stop="toggle"
+        />
       </div>
-    </div>
-    <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
-      <div>
-        <span>$</span>
-        {{cost}}
-      </div>
-      <span>&nbsp;</span>
-      <img
-        :class="{fullImg: fullRevenue, imgRxpand: fullRevenue&&expand}"
-        :src="require(`@/assets/image/Project/Revenue/${status}${fullRevenue&&expand ? '_expand' : ''}.svg`)"
-        @click.stop="toggle"
-      />
     </div>
   </div>
 </template>
@@ -66,8 +66,10 @@ export default {
       return IconLibary.filter(icon => icon.type === type)[0].font.iconName;
     },
     toggle() {
-      this.judgementShow = !this.judgementShow;
-      this.$emit("toggle");
+      if (this.status === "pending") {
+        this.judgementShow = !this.judgementShow;
+        // this.$emit("toggle");
+      }
     }
   }
 };
@@ -82,7 +84,7 @@ $transition: 0.3s;
 .bill {
   position: relative;
   display: flex;
-  height: 3vh;
+  max-height: 3vh;
   width: 90%;
   margin: 16px auto;
   padding: 0px;
@@ -93,11 +95,14 @@ $transition: 0.3s;
   &.fullBill {
     padding: 4px;
     &.expand {
-      height: 20vh;
+      max-height: 50vh;
       width: 88vw;
-      background-color: #f1f1f1;
+      background-color: #f5f5f5;
       padding: 12px;
       border-radius: 16px;
+      // &.judgement {
+      //   height: 30vh;
+      // }
     }
   }
   .block {
@@ -106,7 +111,11 @@ $transition: 0.3s;
       margin: 1vh auto;
     }
     .desc {
+      padding: 0 10px;
       font-size: 18px;
+      height: auto;
+      word-wrap: break-word;
+      overflow-y: scroll;
     }
     .titleBlock {
       width: 70%;
@@ -116,6 +125,12 @@ $transition: 0.3s;
       height: 3vh;
       font-size: 16px;
       transition: $transition;
+      .title {
+        width: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
       img {
         width: 5vw;
         transition: $transition;
@@ -131,7 +146,7 @@ $transition: 0.3s;
         transition: 0.3s;
       }
       &.titleExpand {
-        width: 100%;
+        width: auto;
         height: auto;
         font-size: 20px;
         img {
@@ -149,7 +164,7 @@ $transition: 0.3s;
   }
   .right {
     position: absolute;
-    width: 16vw;
+    width: auto;
     height: 2.5vh;
     overflow: hidden;
     background-color: transparent;
@@ -161,7 +176,7 @@ $transition: 0.3s;
     transition: $transition;
     &.fullRight {
       position: absolute;
-      width: 27vw;
+      width: 30vw;
       &.expandRight {
         height: 7vh;
         width: 64vw;

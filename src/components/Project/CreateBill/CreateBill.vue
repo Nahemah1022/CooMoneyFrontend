@@ -303,15 +303,7 @@ export default {
       if (this.date == "" || this.title == "" || this.money == 0) {
         return;
       }
-      let days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ];
+      let days = ["(日)", "(一)", "(二)", "(三)", "(四)", "(五)", "(六)"];
       let d = new Date(this.date);
       this.$emit("newRevenue", {
         title: this.title,

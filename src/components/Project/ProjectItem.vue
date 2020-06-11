@@ -54,7 +54,7 @@ export default {
     z-index: 2;
     background-color: transparent;
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
     &.large {
       font-size: x-large;
     }
