@@ -250,7 +250,7 @@ export default {
   #Income {
     width: 100%;
     height: 90%;
-    background: #ffffff;
+    background: transparent;
     .Bar {
       position: relative;
       top: 10%;
@@ -263,7 +263,7 @@ export default {
   position: relative;
   width: 93%;
   height: 93%;
-  background-color: #ffffff;
+  background-color: transparent;
   opacity: 1;
   box-shadow: 0px 0px 5px #b3b2b2;
   border-radius: 22px 22px;

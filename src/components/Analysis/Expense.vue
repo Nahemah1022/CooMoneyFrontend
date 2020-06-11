@@ -251,7 +251,7 @@ export default {
   #Expense {
     width: 100%;
     height: 90%;
-    background: #ffffff;
+    background: transparent;
     .Bar {
       position: relative;
       top: 10%;

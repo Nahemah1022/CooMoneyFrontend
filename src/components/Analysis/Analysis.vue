@@ -1024,6 +1024,12 @@ export default {
           case "Project 5":
             incomeData["project5"] = inProject5;
             break;
+          case "Project 6":
+            incomeData["project6"] = inProject5;
+            break;
+          case "Project 7":
+            incomeData["project7"] = inProject5;
+            break;
         }
       }
 
