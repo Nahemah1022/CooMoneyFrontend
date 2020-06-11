@@ -34,6 +34,7 @@
             :status="bill.status"
             :description="bill.description"
             :fullRevenue="full"
+            :comment="bill.comment"
           ></RevenueItem>
         </div>
       </div>

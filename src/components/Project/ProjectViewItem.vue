@@ -92,7 +92,7 @@ export default {
           date: "2020-04-30 (四)",
           description:
             "慶功宴地點: 碳佐麻里\n實到人數32人\n單價499+10%，自付金額100元",
-            comment: ""
+          comment: ""
         },
         {
           id: 2,
@@ -103,7 +103,7 @@ export default {
           date: "2020-04-27 (一)",
           description:
             "需求: 後製活動期間照片\n購買軟體: Adobe Photoshop\n使用期限: 1年，2021-04-27到期",
-          comment: ""
+          comment: "經費不足，故駁回"
         },
         {
           id: 3,

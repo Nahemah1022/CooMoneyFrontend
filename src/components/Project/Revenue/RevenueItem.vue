@@ -22,6 +22,7 @@
         <Judgement
           :show="fullRevenue&&expand&&judgementShow"
           :status="status"
+          :comment="comment"
           @toggle="toggle"
           @judge="judge"
         ></Judgement>
@@ -61,7 +62,8 @@ export default {
     cost: String,
     status: String,
     description: String,
-    fullRevenue: Boolean
+    fullRevenue: Boolean,
+    comment: String
   },
   components: {
     Judgement

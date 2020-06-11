@@ -39,7 +39,7 @@ export default {
     this.placeholderMsg =
       this.status === "pending"
         ? "Write your comment here"
-        : this.comment === undefined
+        : this.comment === ""
         ? "No comment"
         : this.comment;
   }
