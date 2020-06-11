@@ -91,7 +91,8 @@ export default {
           status: "approved",
           date: "2020-04-30 (四)",
           description:
-            "慶功宴地點: 碳佐麻里\n實到人數32人\n單價499+10%，自付金額100元"
+            "慶功宴地點: 碳佐麻里\n實到人數32人\n單價499+10%，自付金額100元",
+            comment: ""
         },
         {
           id: 2,
@@ -101,7 +102,8 @@ export default {
           status: "rejected",
           date: "2020-04-27 (一)",
           description:
-            "需求: 後製活動期間照片\n購買軟體: Adobe Photoshop\n使用期限: 1年，2021-04-27到期"
+            "需求: 後製活動期間照片\n購買軟體: Adobe Photoshop\n使用期限: 1年，2021-04-27到期",
+          comment: ""
         },
         {
           id: 3,
@@ -110,7 +112,8 @@ export default {
           categoty: "rent",
           status: "pending",
           date: "2020-04-27 (一)",
-          description: "場地: 成大一活第一演講廳\n使用時間: 2020-05-06下午3點"
+          description: "場地: 成大一活第一演講廳\n使用時間: 2020-05-06下午3點",
+          comment: ""
         },
         {
           id: 4,
@@ -120,7 +123,8 @@ export default {
           status: "pending",
           date: "2020-04-27 (一)",
           description:
-            "需求: 前任相機年久失修，多處功能故障\n購買Sony A7R3，保固1年"
+            "需求: 前任相機年久失修，多處功能故障\n購買Sony A7R3，保固1年",
+          comment: ""
         },
         {
           id: 5,
@@ -129,7 +133,8 @@ export default {
           categoty: "repair",
           status: "approved",
           date: "2020-04-25 (六)",
-          description: "社團用音響定期保養，預計2020-04-27到店取回"
+          description: "社團用音響定期保養，預計2020-04-27到店取回",
+          comment: ""
         },
         {
           id: 6,
@@ -138,7 +143,8 @@ export default {
           categoty: "medical",
           status: "approved",
           date: "2020-04-25 (六)",
-          description: "保險人: 全體工作人員"
+          description: "保險人: 全體工作人員",
+          comment: ""
         }
       ]
     };

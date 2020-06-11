@@ -1,18 +1,11 @@
 <template>
   <div :class="{main: true, show: show}">
-    <div class="btns">
-      <img
-        :src="require(`@/assets/image/Project/Revenue/approved_expand.svg`)"
-        @click.stop="judge(true)"
-        alt
-      />
-      <img
-        :src="require(`@/assets/image/Project/Revenue/rejected_expand.svg`)"
-        @click.stop="judge(false)"
-        alt
-      />
+    <!-- <p>Judge comment</p> -->
+    <textarea :class="{disable: status==='rejected' || status==='approved'}" :placeholder="placeholderMsg"></textarea>
+    <div v-if="status==='pending'" class="btns">
+      <div class="approve" @click.stop="judge(true)"><font-awesome-icon icon="check" size="lg" />Approve</div>
+      <div class="reject" @click.stop="judge(false)"><font-awesome-icon icon="times" size="lg" />Reject</div>
     </div>
-    <textarea placeholder="Write your comment here"></textarea>
   </div>
 </template>
 
@@ -20,16 +13,23 @@
 export default {
   name: "Judgement",
   data() {
-    return {};
+    return {
+      placeholderMsg: ''
+    };
   },
   props: {
-    show: Boolean
+    show: Boolean,
+    status: String,
+    comment: String
   },
   methods: {
     judge(result) {
-      console.log(result);
+      this.$emit("judge", result);
       this.$emit("toggle");
     }
+  },
+  mounted() {
+    this.placeholderMsg = this.status==='pending' ? 'Write your comment here' : (this.comment === undefined ? 'No comment' : this.comment);
   }
 };
 </script>
@@ -41,7 +41,7 @@ export default {
   height: 0vw;
   // border: 2px solid #000;
   border-radius: 16px;
-  box-shadow: 0 0 6px #cccccc;
+  // box-shadow: 0 0 6px #cccccc;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -51,25 +51,58 @@ export default {
   transition: 0.3s;
   &.show {
     margin: 10vw 0 0 0;
-    height: 25vw;
-    padding: 10px;
+    height: 30vw;
+    border: 1px solid gray;
+    background-color: #fff;
   }
   .btns {
     width: 100%;
-    height: 30%;
+    height: 20%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    img {
-      width: 30%;
+    .approve{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      background-color: #57F2CD;
+    }
+    .reject{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      background-color: #F25757;
+    }
+    svg{
+      margin-right: 10px;
     }
   }
   textarea {
-    width: 90%;
-    margin: 10px 0 0 0;
-    padding: 2px 5px;
-    height: 60%;
-    border-radius: 10px;
+    width: 100%;
+    // margin: 0 0 10px 0;
+    border: 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid gray;
+    padding: 10px 15px;
+    height: 80%;
+    font-size: 18px;
+    &::placeholder{
+      color: #dbdada;
+    }
+    &.disable{
+      pointer-events: none;
+      font-size: 20px;
+      border: 0;
+      background-color: transparent;
+      &::placeholder{
+        color: gray;
+      }
+    }
   }
 }
 </style>

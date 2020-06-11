@@ -9,7 +9,7 @@
     ></NewCategory>
     <div class="block">
       <BlurMask :show="newingCategory"></BlurMask>
-      <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="$emit('collapse')" />
+      <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="collapse" />
       <div class="upper">
         <div class="type-picker">
           <label for="expense" :class="{selected: selectedIndex==1}" @click="selectedIndex=1">
@@ -226,6 +226,9 @@ export default {
     addCategory(icon) {
       this.categorys.push(icon);
       this.newingCategory = !this.newingCategory;
+    },
+    collapse() {
+      this.$emit('collapse');
     },
     caculate(input) {
       let revert = "";

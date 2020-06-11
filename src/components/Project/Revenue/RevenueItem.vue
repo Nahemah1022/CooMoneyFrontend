@@ -10,7 +10,7 @@
           <div class="icon">
             <font-awesome-icon
               :icon="getIcon(category)"
-              :size="expand ? '2x' : 'sm'"
+              :size="fullRevenue&&expand ? '2x' : 'sm'"
               style="color: #fff"
             />
           </div>
@@ -19,7 +19,7 @@
         </div>
         <hr />
         <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
-        <Judgement v-if="status==='pending'" :show="judgementShow" @toggle="toggle"></Judgement>
+        <Judgement :show="fullRevenue&&expand&&judgementShow" :status="status" @toggle="toggle" @judge="judge"></Judgement>
       </div>
       <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
         <div>
@@ -66,10 +66,13 @@ export default {
       return IconLibary.filter(icon => icon.type === type)[0].font.iconName;
     },
     toggle() {
-      if (this.status === "pending") {
+      if (this.expand) {
         this.judgementShow = !this.judgementShow;
         // this.$emit("toggle");
       }
+    },
+    judge(result) {
+      this.$emit('judge', result);
     }
   }
 };
@@ -113,6 +116,10 @@ $transition: 0.3s;
     .desc {
       padding: 0 10px;
       font-size: 18px;
+      // border: 1px solid gray;
+      // background-color: #fff;
+      // box-shadow: 0 0 6px #cccccc;
+      border-radius: 16px;
       height: auto;
       word-wrap: break-word;
       overflow-y: scroll;

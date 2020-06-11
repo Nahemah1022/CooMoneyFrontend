@@ -57,7 +57,7 @@ export default {
   position: absolute;
   width: 80vw;
   height: 0vw;
-  top: 30%;
+  top: 20%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -67,7 +67,7 @@ export default {
   transition: 0.3s;
   border-radius: 16px;
   &.show {
-    height: 60vw;
+    height: 70vw;
     border: 2px solid #00c5b8;
   }
   .check {
@@ -93,7 +93,8 @@ export default {
       color: #00c5b8;
       text-align: center;
       border: 0;
-      border-bottom: 2px solid #00c5b8;
+      border: 2px solid #c6c6c6;
+      border-radius: 16px;
       &::placeholder {
         color: #00c5b8;
       }

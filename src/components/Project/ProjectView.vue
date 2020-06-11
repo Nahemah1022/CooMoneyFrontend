@@ -34,10 +34,12 @@ export default {
         direction: "horizontal",
         effect: "coverflow",
         centeredSlides: true,
+        spaceBetween:0,
         coverflowEffect: {
-          rotate: 50,
-          stretch: 0,
-          depth: 0,
+          rotate: 30,
+          slideShadows:false,
+          stretch: 20,
+          depth: 100,
           modifier: 1
         },
         noSwiping: true,
