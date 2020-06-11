@@ -8,7 +8,7 @@
       @addCategory="addCategory"
     ></NewCategory>
     <div class="block">
-      <div :class="{mask: true, showMask: newingCategory}" />
+      <BlurMask :show="newingCategory"></BlurMask>
       <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="$emit('collapse')" />
       <div class="upper">
         <div class="type-picker">
@@ -154,6 +154,7 @@
 // import "swiper/css/swiper.css";
 import Datepicker from "vuejs-datepicker";
 import Confirm from "@/components/common/Confirm";
+import BlurMask from "@/components/common/BlurMask";
 import NewCategory from "@/components/Project/CreateBill/NewCategory.vue";
 import { IconLibary } from "@/assets/js/fontawesome.js";
 
@@ -204,6 +205,7 @@ export default {
     // SwiperSlide,
     Datepicker,
     Confirm,
+    BlurMask,
     NewCategory
   },
   methods: {
@@ -384,20 +386,6 @@ $radius: 14px;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 0 0 8% 8%;
-  .mask {
-    position: absolute;
-    background-color: gray;
-    width: 100%;
-    height: 0;
-    opacity: 0;
-    transition: 0.3s;
-    border-radius: 0 0 8% 8%;
-    &.showMask {
-      height: 100%;
-      opacity: 0.5;
-      z-index: 8;
-    }
-  }
   .upper {
     height: 92vw;
     display: flex;

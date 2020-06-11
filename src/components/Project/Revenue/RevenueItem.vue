@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand}"
-    @click="fullRevenue && (expand=!expand)"
+    @click="fullRevenue && !judgementShow && (expand = !expand)"
   >
     <div class="block">
       <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
@@ -17,7 +17,10 @@
         <div>{{costTitle}}</div>
       </div>
       <hr />
-      <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
+      <div v-if="fullRevenue&&expand" class="desc">
+        {{description}}
+        <Judgement v-if="judgementShow" @toggle="toggle"></Judgement>
+      </div>
     </div>
     <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
       <div>
@@ -28,6 +31,7 @@
       <img
         :class="{fullImg: fullRevenue, imgRxpand: fullRevenue&&expand}"
         :src="require(`@/assets/image/Project/Revenue/${status}${fullRevenue&&expand ? '_expand' : ''}.svg`)"
+        @click.stop="toggle"
       />
     </div>
   </div>
@@ -35,12 +39,14 @@
 
 <script>
 import { IconLibary } from "@/assets/js/fontawesome.js";
+import Judgement from "@/components/Project/Revenue/Judgement.vue";
 
 export default {
   name: "",
   data() {
     return {
       expand: false,
+      judgementShow: false,
       IconLibary: IconLibary
     };
   },
@@ -52,9 +58,16 @@ export default {
     description: String,
     fullRevenue: Boolean
   },
+  components: {
+    Judgement
+  },
   methods: {
     getIcon(type) {
       return IconLibary.filter(icon => icon.type === type)[0].font.iconName;
+    },
+    toggle() {
+      this.judgementShow = !this.judgementShow;
+      this.$emit("toggle");
     }
   }
 };
@@ -81,7 +94,7 @@ $transition: 0.3s;
     padding: 4px;
     &.expand {
       height: 20vh;
-      width: 88%;
+      width: 88vw;
       background-color: #f1f1f1;
       padding: 12px;
       border-radius: 16px;
@@ -108,8 +121,8 @@ $transition: 0.3s;
         transition: $transition;
       }
       .icon {
-        width: 6vw;
-        height: 6vw;
+        width: 7vw;
+        height: 7vw;
         background-color: #00c5b8;
         display: inline-flex;
         align-items: center;
@@ -128,8 +141,8 @@ $transition: 0.3s;
           }
         }
         .icon {
-          width: 16vw;
-          height: 16vw;
+          width: 18vw;
+          height: 18vw;
         }
       }
     }

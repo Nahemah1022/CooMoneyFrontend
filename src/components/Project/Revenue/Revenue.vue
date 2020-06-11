@@ -1,5 +1,6 @@
 <template>
   <div class="submain">
+    <BlurMask :show="judgementShow"></BlurMask>
     <div :class="{block: true, fullBlock: full}">
       <div :class="{header: true, fullHeader: full}">
         <span>Bills</span>
@@ -33,6 +34,7 @@
             :status="bill.status"
             :description="bill.description"
             :fullRevenue="full"
+            @toggle="judgementShow=!judgementShow"
           ></RevenueItem>
         </div>
       </div>
@@ -42,17 +44,20 @@
 
 <script>
 import RevenueItem from "@/components/Project/Revenue/RevenueItem.vue";
+import BlurMask from "@/components/common/BlurMask";
 
 export default {
   name: "",
   data() {
     return {
       dates: {},
-      detailedBills: {}
+      detailedBills: {},
+      judgementShow: false
     };
   },
   components: {
-    RevenueItem
+    RevenueItem,
+    BlurMask
   },
   props: {
     projectId: Number,
@@ -108,6 +113,20 @@ $transition: 0.5s;
 }
 .submain {
   width: 100%;
+  .mask {
+    position: absolute;
+    background-color: gray;
+    width: 100%;
+    height: 0;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 0 0 8% 8%;
+    &.showMask {
+      height: 100%;
+      opacity: 0.5;
+      z-index: 8;
+    }
+  }
   .block {
     width: 90%;
     margin: 15px auto;
