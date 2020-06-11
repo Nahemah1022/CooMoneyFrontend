@@ -1,46 +1,58 @@
 <template>
-  <div
-    :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand}"
-    @click="fullRevenue && (expand=!expand)"
-  >
-    <div class="block">
-      <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
-        <!-- <img :src="require(`@/assets/image/Project/${category}.svg`)" /> -->
-        <div class="icon">
-          <font-awesome-icon
-            :icon="getIcon(category)"
-            :size="expand ? '2x' : 'sm'"
-            style="color: #fff"
-          />
+  <div class="main">
+    <div
+      :class="{bill: true, fullBill: fullRevenue, expand: fullRevenue&&expand, judgement: fullRevenue&&expand&&status==='pending'&&judgementShow}"
+      @click="fullRevenue && !judgementShow && (expand = !expand)"
+    >
+      <div class="block">
+        <div :class="{titleBlock: true, titleExpand: fullRevenue&&expand}">
+          <!-- <img :src="require(`@/assets/image/Project/${category}.svg`)" /> -->
+          <div class="icon">
+            <font-awesome-icon
+              :icon="getIcon(category)"
+              :size="fullRevenue&&expand ? '2x' : 'sm'"
+              style="color: #fff"
+            />
+          </div>
+          <img class="space" src alt />
+          <div class="title">{{costTitle}}</div>
         </div>
-        <img class="space" src alt />
-        <div>{{costTitle}}</div>
+        <hr />
+        <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
+        <Judgement
+          :show="fullRevenue&&expand&&judgementShow"
+          :status="status"
+          :comment="comment"
+          @toggle="toggle"
+          @judge="judge"
+        ></Judgement>
       </div>
-      <hr />
-      <div v-if="fullRevenue&&expand" class="desc">{{description}}</div>
-    </div>
-    <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
-      <div>
-        <span>$</span>
-        {{cost}}
+      <div :class="{right: true, fullRight: fullRevenue, expandRight: fullRevenue&&expand}">
+        <div>
+          <span>$</span>
+          {{cost}}
+        </div>
+        <span>&nbsp;</span>
+        <img
+          :class="{fullImg: fullRevenue, imgRxpand: fullRevenue&&expand}"
+          :src="require(`@/assets/image/Project/Revenue/${status}${fullRevenue&&expand ? '_expand' : ''}.svg`)"
+          @click.stop="toggle"
+        />
       </div>
-      <span>&nbsp;</span>
-      <img
-        :class="{fullImg: fullRevenue, imgRxpand: fullRevenue&&expand}"
-        :src="require(`@/assets/image/Project/Revenue/${status}${fullRevenue&&expand ? '_expand' : ''}.svg`)"
-      />
     </div>
   </div>
 </template>
 
 <script>
 import { IconLibary } from "@/assets/js/fontawesome.js";
+import Judgement from "@/components/Project/Revenue/Judgement.vue";
 
 export default {
   name: "",
   data() {
     return {
       expand: false,
+      judgementShow: false,
       IconLibary: IconLibary
     };
   },
@@ -50,11 +62,24 @@ export default {
     cost: String,
     status: String,
     description: String,
-    fullRevenue: Boolean
+    fullRevenue: Boolean,
+    comment: String
+  },
+  components: {
+    Judgement
   },
   methods: {
     getIcon(type) {
       return IconLibary.filter(icon => icon.type === type)[0].font.iconName;
+    },
+    toggle() {
+      if (this.expand) {
+        this.judgementShow = !this.judgementShow;
+        // this.$emit("toggle");
+      }
+    },
+    judge(result) {
+      this.$emit("judge", result);
     }
   }
 };
@@ -69,7 +94,7 @@ $transition: 0.3s;
 .bill {
   position: relative;
   display: flex;
-  height: 3vh;
+  max-height: 3vh;
   width: 90%;
   margin: 16px auto;
   padding: 0px;
@@ -80,11 +105,14 @@ $transition: 0.3s;
   &.fullBill {
     padding: 4px;
     &.expand {
-      height: 20vh;
-      width: 88%;
-      background-color: #f1f1f1;
+      max-height: 50vh;
+      width: 88vw;
+      background-color: #f5f5f5;
       padding: 12px;
       border-radius: 16px;
+      // &.judgement {
+      //   height: 30vh;
+      // }
     }
   }
   .block {
@@ -93,7 +121,15 @@ $transition: 0.3s;
       margin: 1vh auto;
     }
     .desc {
+      padding: 0 10px;
       font-size: 18px;
+      // border: 1px solid gray;
+      // background-color: #fff;
+      // box-shadow: 0 0 6px #cccccc;
+      border-radius: 16px;
+      height: auto;
+      word-wrap: break-word;
+      overflow-y: scroll;
     }
     .titleBlock {
       width: 70%;
@@ -103,13 +139,19 @@ $transition: 0.3s;
       height: 3vh;
       font-size: 16px;
       transition: $transition;
+      .title {
+        width: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
       img {
         width: 5vw;
         transition: $transition;
       }
       .icon {
-        width: 6vw;
-        height: 6vw;
+        width: 7vw;
+        height: 7vw;
         background-color: #00c5b8;
         display: inline-flex;
         align-items: center;
@@ -118,7 +160,7 @@ $transition: 0.3s;
         transition: 0.3s;
       }
       &.titleExpand {
-        width: 100%;
+        width: auto;
         height: auto;
         font-size: 20px;
         img {
@@ -128,15 +170,15 @@ $transition: 0.3s;
           }
         }
         .icon {
-          width: 16vw;
-          height: 16vw;
+          width: 18vw;
+          height: 18vw;
         }
       }
     }
   }
   .right {
     position: absolute;
-    width: 16vw;
+    width: auto;
     height: 2.5vh;
     overflow: hidden;
     background-color: transparent;
@@ -148,7 +190,7 @@ $transition: 0.3s;
     transition: $transition;
     &.fullRight {
       position: absolute;
-      width: 27vw;
+      width: 30vw;
       &.expandRight {
         height: 7vh;
         width: 64vw;

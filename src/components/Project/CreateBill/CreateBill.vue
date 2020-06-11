@@ -8,8 +8,8 @@
       @addCategory="addCategory"
     ></NewCategory>
     <div class="block">
-      <div :class="{mask: true, showMask: newingCategory}" />
-      <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="$emit('collapse')" />
+      <BlurMask :show="newingCategory"></BlurMask>
+      <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="collapse" />
       <div class="upper">
         <div class="type-picker">
           <label for="expense" :class="{selected: selectedIndex==1}" @click="selectedIndex=1">
@@ -154,6 +154,7 @@
 // import "swiper/css/swiper.css";
 import Datepicker from "vuejs-datepicker";
 import Confirm from "@/components/common/Confirm";
+import BlurMask from "@/components/common/BlurMask";
 import NewCategory from "@/components/Project/CreateBill/NewCategory.vue";
 import { IconLibary } from "@/assets/js/fontawesome.js";
 
@@ -204,6 +205,7 @@ export default {
     // SwiperSlide,
     Datepicker,
     Confirm,
+    BlurMask,
     NewCategory
   },
   methods: {
@@ -224,6 +226,9 @@ export default {
     addCategory(icon) {
       this.categorys.push(icon);
       this.newingCategory = !this.newingCategory;
+    },
+    collapse() {
+      this.$emit('collapse');
     },
     caculate(input) {
       let revert = "";
@@ -301,15 +306,7 @@ export default {
       if (this.date == "" || this.title == "" || this.money == 0) {
         return;
       }
-      let days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ];
+      let days = ["(日)", "(一)", "(二)", "(三)", "(四)", "(五)", "(六)"];
       let d = new Date(this.date);
       this.$emit("newRevenue", {
         title: this.title,
@@ -384,20 +381,6 @@ $radius: 14px;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 0 0 8% 8%;
-  .mask {
-    position: absolute;
-    background-color: gray;
-    width: 100%;
-    height: 0;
-    opacity: 0;
-    transition: 0.3s;
-    border-radius: 0 0 8% 8%;
-    &.showMask {
-      height: 100%;
-      opacity: 0.5;
-      z-index: 8;
-    }
-  }
   .upper {
     height: 92vw;
     display: flex;
