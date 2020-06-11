@@ -111,7 +111,6 @@ $transition: 0.5s;
   background-color: transparent;
 }
 .submain {
-  width: 100%;
   .mask {
     position: absolute;
     background-color: gray;
@@ -128,20 +127,20 @@ $transition: 0.5s;
   }
   .block {
     width: 90%;
-    margin: 15px auto;
+    height: 90%;
+    margin: 3% auto;
     box-shadow: 0 0 12px #e6e6e6;
     background-color: #fff;
     border-radius: 16px;
-    padding: 10px 0;
     transition: $transition;
-    height: 27vh;
+    overflow: hidden;
     &.fullBlock {
       height: 90vh;
     }
     .header {
       display: flex;
       justify-content: space-between;
-      margin: 0 0 2vh 0;
+      margin: 2vh 0 0 0;
       padding: 0 4vw;
       font-size: 16px;
       transition: $transition;
@@ -150,7 +149,7 @@ $transition: 0.5s;
       }
     }
     .bills {
-      height: 22vh;
+      height: 83%;
       width: 100%;
       overflow: scroll;
       transition: $transition;
