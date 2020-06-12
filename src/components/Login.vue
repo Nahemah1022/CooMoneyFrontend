@@ -13,7 +13,7 @@
           <input placeholder="   Your Email" type="email" v-model="username" />
           <br />
           <br />
-          <input placeholder="   Password" type="password" v-model="password" />
+          <input placeholder="Password" type="password" v-model="password" />
           <p class="p2" v-show="showForgot">Forgot your password?</p>
         </div>
       </div>
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     getProp(data) {
-      //console.log(data);
+      console.log(data);
       this.name = data.name;
       this.email = data.email;
       this.personalID = data.id;
@@ -68,10 +68,9 @@ export default {
       this.password = data.id;
 
       this.otherSource = true;
-
-      this.Login();
     },
     Login() {
+      //console.log(this.username);
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/login", {
           username: this.username,
@@ -82,11 +81,13 @@ export default {
           this.$router.push("/Project");
         })
         .catch(() => {
+          // console.log(this.username);
           this.error();
         });
     },
     error() {
-      //console.log("hey  ");
+      //console.log(this.username);
+      //if not enroll by fb before enroll automatic,else login in directly
 
       this.showForgot = true;
       document.getElementById("dont").text = this.errorMsg;
