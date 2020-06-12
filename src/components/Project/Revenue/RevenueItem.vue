@@ -150,8 +150,8 @@ $transition: 0.3s;
         transition: $transition;
       }
       .icon {
-        width: 3.5vh;
-        height: 3.5vh;
+        width: 3vh;
+        height: 3vh;
         background-color: #00c5b8;
         display: inline-flex;
         align-items: center;

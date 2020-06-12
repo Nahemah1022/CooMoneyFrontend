@@ -6,8 +6,10 @@
         <div class="first">
           <div class="money">
             <p class="text">Remaining budget</p>
-            <span>$</span>
-            {{costFormat(this.budget)}}
+            <div>
+              <span>$</span>
+              {{costFormat(this.budget)}}
+            </div>
           </div>
           <img :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt />
         </div>
@@ -24,23 +26,34 @@
           </div>
         </div>
       </div>
-      <div class="account-block">
-        <div class="header">
-          <p>Accounts</p>
-          <img src="@/assets/image/Project/option.svg" alt />
-        </div>
-        <div v-for="account in accounts" :key="account.id" class="account">
-          <div>
-            <img :src="require(`@/assets/image/Project/${account.img}.svg`)" />
-            {{account.name}}
+      <hr />
+      <div class="account_cont">
+        <Account
+          :class="{accounts: true, fullAccount: fullAccount}"
+          :full="fullAccount"
+          :projectId="projectId"
+          :accounts="accounts"
+          @toggleAccount="fullAccount=!fullAccount"
+        ></Account>
+        <!-- <div class="account">
+          <div class="left">
+            <div class="icon">
+              <font-awesome-icon
+                :icon="accounts[0].iconName"
+                :size="fullAccount ? '2x' : 'sm'"
+                style="color: #fff"
+              />
+            </div>
+            <img class="space" src alt />
+            <div class="title">{{accounts[0].name}}</div>
           </div>
-          <p>
+          <div class="cost">
             <span>$</span>
-            {{costFormat(account.remain)}}
-          </p>
-        </div>
+            {{costFormat(accounts[0].remain)}}
+          </div>
+        </div>-->
       </div>
-      <div class="cont">
+      <div class="revenue_cont">
         <Revenue
           :class="{revenue: true, full: fullRevenue}"
           :projectId="projectId"
@@ -65,22 +78,42 @@
 
 <script>
 import Revenue from "@/components/Project/Revenue/Revenue.vue";
+import Account from "@/components/Project/Account/Account.vue";
 import CreateBill from "@/components/Project/CreateBill/CreateBill.vue";
 
 export default {
   name: "ProjectViewItem",
   components: {
     Revenue,
+    Account,
     CreateBill
   },
   data() {
     return {
       isAdding: false,
       fullRevenue: false,
+      fullAccount: false,
       notificationCount: 3,
       accounts: [
-        { id: 1, name: "現金", remain: 2092, img: "cash" },
-        { id: 2, name: "永豐銀行", remain: 36000, img: "bank" }
+        {
+          id: 1,
+          name: "現金",
+          iconName: "piggy-bank",
+          remain: 2092
+        },
+        {
+          id: 2,
+          name: "永豐銀行",
+          iconName: "university",
+          remain: 36000
+        },
+        {
+          id: 3,
+          name: "國泰世華",
+          iconName: "money-check-alt",
+          remain: 36000,
+          img: "bank"
+        }
       ],
       bills: [
         {
@@ -225,10 +258,17 @@ $transition: 0.5s;
         justify-content: space-between;
         width: 100%;
         height: 15vh;
+        @media (max-height: 650px) {
+          height: 100%;
+        }
         .money {
           width: 70%;
-          font-size: 5.5vh;
+          height: 80%;
+          font-size: calc(4vw + 3vh);
           text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           p {
             font-size: 24px;
             text-align: left;
@@ -240,34 +280,47 @@ $transition: 0.5s;
       }
       .second {
         display: flex;
+        @media (max-height: 650px) {
+          display: none;
+        }
         justify-content: space-between;
         .momny {
           width: 45%;
         }
       }
     }
-    .account-block {
-      width: 80%;
-      height: 16%;
-      margin: 15px auto;
-      box-shadow: 0 0 12px #e6e6e6;
-      border-radius: 16px;
-      padding: 10px 5vw;
-      .header {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 0 2vh 0;
+    hr {
+      @media (max-height: 650px) {
+        display: none;
       }
-      .account {
-        display: flex;
-        margin: 10px auto;
-        justify-content: space-between;
-        align-items: center;
+      width: 100%;
+      margin: 2vh auto;
+      border: 0px dashed #00c5b8;
+    }
+    .account_cont {
+      position: relative;
+      height: 15%;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      .accounts {
+        width: 90vw;
+        height: 100%;
+        position: absolute;
+        top: 0vh;
+        left: 0;
+        transition: 0.5s;
+        &.fullAccount {
+          z-index: 2000;
+          width: 110vw;
+          left: -10vw;
+          height: 90vh;
+        }
       }
     }
-    .cont {
+    .revenue_cont {
       position: relative;
-      height: 45%;
+      height: 50%;
       .revenue {
         width: 90vw;
         height: 100%;
