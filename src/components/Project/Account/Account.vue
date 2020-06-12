@@ -18,25 +18,12 @@
             @end="isDragging = false"
           >
             <transition-group type="transition" name="flip-list">
-              <div class="account full" v-for="(account, index) in localAccounts" :key="account.id">
-                <div class="left">
-                  <!-- <font-awesome-icon icon="bars" size="sm" style="color: gray" /> -->
-                  <span class="pirority">{{(index+1)+". "}}</span>
-                  <div class="icon">
-                    <font-awesome-icon
-                      :icon="account.iconName"
-                      :size="full ? 'sm' : 'sm'"
-                      style="color: #fff"
-                    />
-                  </div>
-                  <img class="space" src alt />
-                  <div class="title">{{account.name}}</div>
-                </div>
-                <div class="cost">
-                  <span>$</span>
-                  {{costFormat(account.remain)}}
-                </div>
-              </div>
+              <AccountItem
+                v-for="(account, index) in localAccounts"
+                :key="account.id"
+                :index="index"
+                :account="account"
+              ></AccountItem>
             </transition-group>
           </Draggable>
           <p>Order thier priority by dragging</p>
@@ -67,6 +54,7 @@
 <script>
 // import BlurMask from "@/components/common/BlurMask";
 import Draggable from "vuedraggable";
+import AccountItem from "@/components/Project/Account/AccountItem.vue";
 
 export default {
   name: "",
@@ -77,7 +65,8 @@ export default {
     };
   },
   components: {
-    Draggable
+    Draggable,
+    AccountItem
     // BlurMask
   },
   props: {
@@ -161,6 +150,7 @@ $transition: 0.5s;
         transition: 0.5s;
         &.full {
           box-shadow: 0 0 10px #dadada;
+          border-radius: 10px;
           padding: 8px 10px;
         }
         .left {
@@ -190,6 +180,12 @@ $transition: 0.5s;
             border-radius: 50%;
             transition: 0.3s;
           }
+        }
+        .right {
+          width: 30%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
       }
     }
