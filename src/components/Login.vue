@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     getProp(data) {
-      console.log(data);
+      //console.log(data);
       this.name = data.name;
       this.email = data.email;
       this.personalID = data.id;
