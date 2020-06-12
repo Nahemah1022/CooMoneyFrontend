@@ -202,17 +202,17 @@ $transition: 0.5s;
     margin: 0 auto;
     background-color: #fff;
     border: #fff 1px solid;
-    border-radius: 22px;
+    border-radius: 30px;
     box-shadow: 0 0 12px #c8c8c8;
     color: #8d8d8d;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     .title {
-      margin: 5% auto;
+      margin: 5vw auto;
       font-size: 26px;
       width: 80%;
-      height: 5%;
+      height: 10vw;
       color: #00c5b8;
     }
     .money-block {
@@ -304,12 +304,17 @@ $transition: 0.5s;
     .create {
       position: absolute;
       width: 100%;
-      height: 80vh;
+      height: 90%;
       left: 0;
-      top: 110vh;
+      bottom: -220vw;
       transition: $transition;
       &.show {
-        top: 8vh;
+        bottom: 0vw;
+      }
+      @media (max-height: 500px) {
+        &.show {
+          bottom: -5vw;
+        }
       }
     }
   }

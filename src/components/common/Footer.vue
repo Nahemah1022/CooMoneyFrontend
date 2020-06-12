@@ -33,7 +33,7 @@ export default {
 <style lang='scss' scoped>
 .main {
   width: 100%;
-  height: 7vh;
+  height: 15vw;
   position: fixed;
   z-index: 1000;
   display: flex;
