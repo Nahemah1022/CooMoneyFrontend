@@ -194,7 +194,7 @@ $transition: 0.5s;
 }
 .main {
   width: 90%;
-  height: 100%;
+  height: 90vh;
   margin: 0 auto;
   .block {
     height: 80vh;
@@ -202,18 +202,22 @@ $transition: 0.5s;
     margin: 0 auto;
     background-color: #fff;
     border: #fff 1px solid;
-    border-radius: 22px;
+    border-radius: 30px;
     box-shadow: 0 0 12px #c8c8c8;
     color: #8d8d8d;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .title {
-      margin: 5% auto;
+      margin: 5vw auto;
       font-size: 26px;
       width: 80%;
+      height: 10vw;
       color: #00c5b8;
     }
     .money-block {
       width: 85%;
-      height: 22vh;
+      height: 25%;
       margin: 0 auto;
       .first {
         display: flex;
@@ -223,7 +227,7 @@ $transition: 0.5s;
         height: 15vh;
         .money {
           width: 70%;
-          font-size: 42px;
+          font-size: 5.5vh;
           text-align: center;
           p {
             font-size: 24px;
@@ -231,7 +235,7 @@ $transition: 0.5s;
           }
         }
         img {
-          width: 24%;
+          height: 80%;
         }
       }
       .second {
@@ -244,6 +248,7 @@ $transition: 0.5s;
     }
     .account-block {
       width: 80%;
+      height: 16%;
       margin: 15px auto;
       box-shadow: 0 0 12px #e6e6e6;
       border-radius: 16px;
@@ -262,16 +267,17 @@ $transition: 0.5s;
     }
     .cont {
       position: relative;
-      height: 50vh;
+      height: 45%;
       .revenue {
         width: 90vw;
+        height: 100%;
         position: absolute;
-        top: -2vh;
+        top: 0vh;
         left: 0;
         transition: $transition;
         &.full {
           width: 110vw;
-          top: -50vh;
+          top: -40vh;
           left: -10vw;
           height: 100vh;
         }
@@ -298,12 +304,17 @@ $transition: 0.5s;
     .create {
       position: absolute;
       width: 100%;
-      height: 80vh;
+      height: 90%;
       left: 0;
-      top: 110vh;
+      bottom: -220vw;
       transition: $transition;
       &.show {
-        top: 8vh;
+        bottom: 0vw;
+      }
+      @media (max-height: 500px) {
+        &.show {
+          bottom: -5vw;
+        }
       }
     }
   }

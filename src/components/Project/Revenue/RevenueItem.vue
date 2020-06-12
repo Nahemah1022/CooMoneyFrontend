@@ -150,8 +150,8 @@ $transition: 0.3s;
         transition: $transition;
       }
       .icon {
-        width: 7vw;
-        height: 7vw;
+        width: 3.5vh;
+        height: 3.5vh;
         background-color: #00c5b8;
         display: inline-flex;
         align-items: center;
@@ -179,7 +179,7 @@ $transition: 0.3s;
   .right {
     position: absolute;
     width: auto;
-    height: 2.5vh;
+    height: 3vh;
     overflow: hidden;
     background-color: transparent;
     right: 2vw;
