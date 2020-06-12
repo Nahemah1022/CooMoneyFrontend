@@ -129,6 +129,8 @@ $transition: 0.5s;
     width: 90%;
     height: 90%;
     margin: 3% auto;
+    box-sizing: border-box;
+    padding: 0 0 2% 0;
     box-shadow: 0 0 12px #e6e6e6;
     background-color: #fff;
     border-radius: 16px;

@@ -194,7 +194,7 @@ $transition: 0.5s;
 }
 .main {
   width: 90%;
-  height: 100%;
+  height: 90vh;
   margin: 0 auto;
   .block {
     height: 80vh;
@@ -235,7 +235,7 @@ $transition: 0.5s;
           }
         }
         img {
-          width: 24%;
+          height: 80%;
         }
       }
       .second {
