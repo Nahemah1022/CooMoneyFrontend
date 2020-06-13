@@ -12,6 +12,7 @@
           <swiper-slide>
             <Expense
               v-bind:sendExpense="expenseSelect()"
+              :sendIncome="incomeSelect()"
               @Type="isDisplay"
             ></Expense>
           </swiper-slide>
@@ -41,31 +42,31 @@ let outproject2 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: "Transportation",
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: "Transportation",
     //Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/3",
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: "Transportation",
     //Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/5",
+    month: "2018/05",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: "Transportation",
     //Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/7",
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: "Transportation",
     //Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/9",
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
@@ -77,24 +78,24 @@ let outproject2 = [
     money: Math.floor(Math.random() * 1000) + 100,
     //Classification: item1[Math.floor(Math.random() * item1.length)],
     Classification: "Transportation",
-    month: "2018/2",
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     //Classification: item1[Math.floor(Math.random() * item1.length)],
     Classification: "Transportation",
-    month: "2018/4",
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     //Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/6",
+    month: "2018/06",
     Classification: "Transportation",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     //Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/8",
+    month: "2018/08",
     Classification: "Transportation",
   },
   {
@@ -163,6 +164,36 @@ let outproject2 = [
     month: "2019/8",
     Classification: "Transportation",
   },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2019/10",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2019/12",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2020/2",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2020/4",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2020/8",
+    Classification: "Transportation",
+  },
 ];
 
 //2018
@@ -170,47 +201,47 @@ let outproject1 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/2",
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/3",
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/4",
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/5",
+    month: "2018/05",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/6",
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/7",
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/8",
+    month: "2018/08",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/9",
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
@@ -230,17 +261,17 @@ let outproject1 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/2",
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/5",
+    month: "2018/05",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/9",
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
@@ -248,127 +279,100 @@ let outproject1 = [
     month: "2018/12",
   },
 ];
-
 //2018 1~4
 let outProject3 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/14",
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/2",
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/14",
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/2",
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/3",
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/1",
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/4",
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/2",
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/3",
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/2",
+    month: "2018/02",
   },
 ];
-
 //2018 6~10
 let outProject4 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/7",
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/6",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/10",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/8",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/9",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/9",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/6",
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
@@ -378,32 +382,22 @@ let outProject4 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/6",
+    month: "2018/08",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/7",
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/6",
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/8",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/9",
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/7",
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
@@ -413,16 +407,50 @@ let outProject4 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/8",
+    month: "2018/06",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/07",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/06",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/08",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/09",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/07",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/10",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/08",
   },
 ];
-
 //only 2018 12 to 2019 1
 let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
@@ -432,7 +460,7 @@ let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
@@ -442,7 +470,7 @@ let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
@@ -452,22 +480,12 @@ let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
-  },
-  {
-    money: Math.floor(Math.random() * 5000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2018/12",
-  },
-  {
-    money: Math.floor(Math.random() * 5000) + 100,
-    Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
@@ -477,7 +495,7 @@ let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
@@ -487,7 +505,7 @@ let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
@@ -497,417 +515,508 @@ let outProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item1[Math.floor(Math.random() * item1.length)],
-    month: "2019/1",
+    month: "2019/01",
+  },
+  {
+    money: Math.floor(Math.random() * 5000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2018/12",
+  },
+  {
+    money: Math.floor(Math.random() * 5000) + 100,
+    Classification: item1[Math.floor(Math.random() * item1.length)],
+    month: "2019/01",
   },
 ];
+
+//2018-2019
+let inProject2 = [
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: "Transportation",
+    month: "2018/01",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: "Transportation",
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/03",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: "Transportation",
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/05",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: "Transportation",
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/07",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: "Transportation",
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/09",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    Classification: "Transportation",
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/11",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    Classification: "Transportation",
+    month: "2018/02",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    Classification: "Transportation",
+    month: "2018/04",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/06",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/08",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2018/10",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/1",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/3",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/5",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/7",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/9",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/11",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/2",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/4",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/6",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/8",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/10",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2019/12",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2020/2",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2020/4",
+    Classification: "Transportation",
+  },
+  {
+    money: Math.floor(Math.random() * 1000) + 100,
+    //Classification: item2[Math.floor(Math.random() * item2.length)],
+    month: "2020/8",
+    Classification: "Transportation",
+  },
+];
+//2018
 let inProject1 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 1,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 2,
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 3,
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 4,
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 5,
+    month: "2018/05",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 6,
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 7,
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 8,
+    month: "2018/08",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 9,
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 10,
+    month: "2018/10",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 11,
+    month: "2018/11",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 12,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 13,
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 14,
+    month: "2018/05",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 15,
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 16,
+    month: "2018/12",
   },
 ];
-let inProject2 = [
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 1,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 2,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 3,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 4,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 5,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 6,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 7,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 8,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 9,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 10,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 11,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 12,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 13,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 14,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 15,
-  },
-  {
-    money: Math.floor(Math.random() * 1000) + 100,
-    Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 16,
-  },
-];
+//2018 1~4
 let inProject3 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 1,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 2,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 3,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 4,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 5,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 6,
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 7,
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 8,
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 9,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 10,
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 11,
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 12,
+    month: "2018/01",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 13,
+    month: "2018/04",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 14,
+    month: "2018/02",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 15,
+    month: "2018/03",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 16,
+    month: "2018/02",
   },
 ];
+//2018 6~10
 let inProject4 = [
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 1,
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 2,
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 3,
+    month: "2018/10",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 4,
+    month: "2018/08",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 5,
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 6,
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 7,
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 8,
+    month: "2018/10",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 9,
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 10,
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 11,
+    month: "2018/06",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 12,
+    month: "2018/08",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 13,
+    month: "2018/09",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 14,
+    month: "2018/07",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 15,
+    month: "2018/10",
   },
   {
     money: Math.floor(Math.random() * 1000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 16,
+    month: "2018/08",
   },
 ];
+//only 2018 12 to 2019 1
 let inProject5 = [
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 1,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 2,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 3,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 4,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 5,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 6,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 7,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 8,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 9,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 10,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 11,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 12,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 13,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 14,
+    month: "2019/01",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 15,
+    month: "2018/12",
   },
   {
     money: Math.floor(Math.random() * 5000) + 100,
     Classification: item2[Math.floor(Math.random() * item2.length)],
-    month: 16,
+    month: "2019/01",
   },
 ];
 export default {
@@ -984,6 +1093,7 @@ export default {
         "Energy",
         "Freshment",
         "General",
+        "Highschool",
       ],
       receiveProject: [],
       displayIncome: true,
@@ -1040,7 +1150,7 @@ export default {
           case "Audit":
             incomeData["Audit"] = inProject1;
             break;
-          case "Bananaa":
+          case "Banana":
             incomeData["Banana"] = inProject2;
             break;
           case "Creat":
@@ -1058,10 +1168,13 @@ export default {
           case "General":
             incomeData["General"] = inProject5;
             break;
+          case "Highschool":
+            incomeData["Highschool"] = inProject5;
+            break;
         }
       }
 
-      //console.log(expenseData);
+      //console.log(incomeData);
       return incomeData;
     },
   },

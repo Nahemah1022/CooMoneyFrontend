@@ -28,9 +28,6 @@
           />
         </label>
       </swiper-slide>
-
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
   </div>
 </template>
@@ -52,19 +49,12 @@ export default {
     return {
       swiperOption: {
         slidesPerView: 5,
-        spaceBetween: 0,
-        direction: "horizontal",
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-          hideOnClick: true,
-        },
-        on: {
-          /*resize: () => {
-            this.$refs.swiper.$swiper.changeDirection(
-              window.innerWidth <= 960 ? "vertical" : "horizontal"
-            );
-          }*/
+        centeredSlides: false,
+        spaceBetween: 40,
+        grabCursor: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
         },
       },
       checkProject: [],
