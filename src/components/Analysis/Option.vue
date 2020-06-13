@@ -1,10 +1,31 @@
 <template>
   <div id="content1">
     <swiper class="swiper" ref="swiper" :options="swiperOption">
-      <swiper-slide class="swiper-slide" v-for="project in allProjectName" :key="project">
+      <swiper-slide
+        class="swiper-slide"
+        v-for="project in allProjectName"
+        :key="project"
+      >
         <label class="layout">
-          <h1>{{project}}</h1>
-          <input type="checkbox" :value="project" v-model="checkProject" @change="getProjectName" />
+          <div id="container">
+            <avatar
+              :backgroundColor="chooseBackGround(project)"
+              :username="proejctIsCheck(project)"
+              :size="60"
+              color="#fff"
+            >
+            </avatar>
+            <div id="H1wrap">
+              <h1>{{ project }}</h1>
+            </div>
+          </div>
+
+          <input
+            type="checkbox"
+            :value="project"
+            v-model="checkProject"
+            @change="getProjectName()"
+          />
         </label>
       </swiper-slide>
 
@@ -17,24 +38,26 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import Avatar from "vue-avatar";
 export default {
   props: {
-    allProjectName: Array
+    allProjectName: Array,
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    Avatar,
   },
   data() {
     return {
       swiperOption: {
-        slidesPerView: 3,
-        spaceBetween: 10,
+        slidesPerView: 5,
+        spaceBetween: 0,
         direction: "horizontal",
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
-          hideOnClick: true
+          hideOnClick: true,
         },
         on: {
           /*resize: () => {
@@ -42,17 +65,67 @@ export default {
               window.innerWidth <= 960 ? "vertical" : "horizontal"
             );
           }*/
-        }
+        },
       },
-      checkProject: []
+      checkProject: [],
+      isCheck: [],
+      backGround: {
+        A: "#91F1EA",
+        B: "#F9C2FF",
+        C: "#F1CE91",
+        D: "#FFB7CA",
+        E: "#91C1F1",
+        F: "#91F1EA",
+        G: "#F9C2FF",
+        tick: "#4EF559",
+      },
     };
   },
+  beforeMount() {
+    this.initOne();
+  },
   methods: {
+    //the option
+    chooseBackGround(project) {
+      //如果已經勾選就變成打勾的顏色
+      if (this.checkProject.findIndex((i) => i === project) === -1) {
+        switch (project.charAt((c) => c === 0)) {
+          case "A":
+            return this.backGround.A;
+          case "B":
+            return this.backGround.B;
+          case "C":
+            return this.backGround.C;
+          case "D":
+            return this.backGround.D;
+          case "E":
+            return this.backGround.E;
+          case "F":
+            return this.backGround.F;
+          case "G":
+            return this.backGround.G;
+        }
+      } else return this.backGround.tick;
+    },
+    proejctIsCheck(project) {
+      if (this.checkProject.findIndex((i) => i === project) === -1)
+        return project;
+      else return "✔";
+    },
+
     getProjectName() {
-      //console.log(this.checkProject);
+      if (this.checkProject.length === 0) {
+        alert("Please choose at least 1!!");
+      } else this.$emit("projectSubmit", this.checkProject);
+    },
+
+    //must not zero project when enter analysis
+    initOne() {
+      this.checkProject[0] = this.allProjectName[0];
+      // console.log(this.checkProject);
       this.$emit("projectSubmit", this.checkProject);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -86,17 +159,40 @@ export default {
   }
   .swiper {
     //background-color: red;
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .swiper-slide {
+      width: 100%;
+      height: 100%;
       //background-color: yellow;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .layout {
-        background-color: aqua;
+        input {
+          display: none;
+        }
+        #container {
+          display: inline-block;
+        }
+        // background-color: aqua;
+        //border-radius: 999em;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 100%;
-        h1 {
-          font-size: 1vh;
+
+        #H1wrap {
+          display: flex;
+          justify-content: center;
+          h1 {
+            //background-color: red;
+            font-size: 2vw;
+          }
         }
       }
     }
