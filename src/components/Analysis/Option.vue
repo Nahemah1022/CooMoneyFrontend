@@ -1,11 +1,7 @@
 <template>
   <div id="content1">
     <swiper class="swiper" ref="swiper" :options="swiperOption">
-      <swiper-slide
-        class="swiper-slide"
-        v-for="project in allProjectName"
-        :key="project"
-      >
+      <swiper-slide class="swiper-slide" v-for="project in allProjectName" :key="project">
         <label class="layout">
           <div id="container">
             <avatar
@@ -19,12 +15,7 @@
             </div>
           </div>
 
-          <input
-            type="checkbox"
-            :value="project"
-            v-model="checkProject"
-            @change="getProjectName()"
-          />
+          <input type="checkbox" :value="project" v-model="checkProject" @change="getProjectName()" />
         </label>
       </swiper-slide>
     </swiper>
@@ -37,12 +28,12 @@ import "swiper/css/swiper.css";
 import Avatar from "vue-avatar";
 export default {
   props: {
-    allProjectName: Array,
+    allProjectName: Array
   },
   components: {
     Swiper,
     SwiperSlide,
-    Avatar,
+    Avatar
   },
   data() {
     return {
@@ -53,8 +44,8 @@ export default {
         grabCursor: true,
         pagination: {
           el: ".swiper-pagination",
-          clickable: true,
-        },
+          clickable: true
+        }
       },
       checkProject: [],
       isCheck: [],
@@ -66,8 +57,8 @@ export default {
         E: "#91C1F1",
         F: "#91F1EA",
         G: "#F9C2FF",
-        tick: "#4EF559",
-      },
+        tick: "#4EF559"
+      }
     };
   },
   beforeMount() {
@@ -77,8 +68,8 @@ export default {
     //the option
     chooseBackGround(project) {
       //如果已經勾選就變成打勾的顏色
-      if (this.checkProject.findIndex((i) => i === project) === -1) {
-        switch (project.charAt((c) => c === 0)) {
+      if (this.checkProject.findIndex(i => i === project) === -1) {
+        switch (project.charAt(c => c === 0)) {
           case "A":
             return this.backGround.A;
           case "B":
@@ -97,7 +88,7 @@ export default {
       } else return this.backGround.tick;
     },
     proejctIsCheck(project) {
-      if (this.checkProject.findIndex((i) => i === project) === -1)
+      if (this.checkProject.findIndex(i => i === project) === -1)
         return project;
       else return "✔";
     },
@@ -113,8 +104,8 @@ export default {
       this.checkProject[0] = this.allProjectName[0];
       // console.log(this.checkProject);
       this.$emit("projectSubmit", this.checkProject);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -125,7 +116,7 @@ export default {
   margin: 0 auto;
   position: relative;
   top: 10vh;
-  width: 90%;
+  width: 93%;
   height: 15vh;
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
@@ -180,7 +171,12 @@ export default {
           justify-content: center;
           h1 {
             //background-color: red;
+            width: 90%;
             font-size: 2vw;
+            overflow: hidden;
+            display: block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
         }
       }
