@@ -1,213 +1,185 @@
 <template>
   <div id="content1">
-    <toggle-button
-      id="setButton"
-      :width="76.5"
-      :height="30.96"
-      :speed="1000"
-      :value="value"
-      :sync="false"
-      :color="color"
-      :font-size="fontSize"
-      @change="onChangeEventHandler"
-    />
-    <div id="choose">
-      <h1 style="font-size:17px; top:10px">ALL</h1>
-      <h2 style="font-size:17px; top:40px">Project</h2>
-    </div>
-    <div class="split"></div>
+    <swiper class="swiper" ref="swiper" :options="swiperOption">
+      <swiper-slide class="swiper-slide" v-for="project in allProjectName" :key="project">
+        <label class="layout">
+          <div id="container">
+            <avatar
+              :backgroundColor="chooseBackGround(project)"
+              :username="proejctIsCheck(project)"
+              :size="60"
+              color="#fff"
+            ></avatar>
+            <div id="H1wrap">
+              <h1>{{ project }}</h1>
+            </div>
+          </div>
 
-    <div id="projectView">
-      <div class="example-3d">
-        <swiper
-          ref="mySwiper"
-          class="swiper"
-          :options="swiperOption"
-          @slideChange="onSwiperSlideChange"
-        >
-          <SwiperSlide v-for="project in allProjectName" :key="project">
-            {{
-            project
-            }}
-          </SwiperSlide>
-        </swiper>
-      </div>
-    </div>
+          <input type="checkbox" :value="project" v-model="checkProject" @change="getProjectName()" />
+        </label>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
 <script>
-//toggleButton
-import Vue from "vue";
-import ToggleButton from "vue-js-toggle-button";
-
-//slide project
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-
-Vue.use(ToggleButton);
-
-//啊在data就改變不了阿
-let projectName = "";
+import Avatar from "vue-avatar";
 export default {
-  name: "Option",
   props: {
     allProjectName: Array
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    Avatar
   },
   data() {
     return {
-      //swiper
       swiperOption: {
-        effect: "coverflow",
+        slidesPerView: 5,
+        centeredSlides: false,
+        spaceBetween: 0,
         grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        loop: true,
-        direction: "vertical",
-        coverflowEffect: {
-          rotate: 30,
-          stretch: 75, //彼此swiper的距離
-          depth: 0, //swiper離z軸的距離
-          modifier: 1,
-          slideShadows: false
-        },
         pagination: {
-          el: ".swiper-pagination"
-        },
-        on: {
-          slideChange: function() {
-            projectName = this.slides[this.activeIndex].textContent;
-            // console.log(this.projectName);
-          }
+          el: ".swiper-pagination",
+          clickable: true
         }
       },
-
-      //button
-
-      value: false,
-      color: { checked: "#E3EDF7", unchecked: "#A6F3F3" },
-      fontSize: 20
+      checkProject: [],
+      isCheck: [],
+      backGround: {
+        A: "#91F1EA",
+        B: "#F9C2FF",
+        C: "#F1CE91",
+        D: "#FFB7CA",
+        E: "#91C1F1",
+        F: "#91F1EA",
+        G: "#F9C2FF",
+        tick: "#4EF559"
+      }
     };
   },
+  beforeMount() {
+    this.initOne();
+  },
   methods: {
-    onChangeEventHandler() {
-      //false=>all true=>project
-      //console.log(this.value);
-      //all
-      if (this.value) {
-        document.querySelector("h1").style.color = "#02AA9E";
-        document.querySelector("h2").style.color = "#DBDBDB";
-        this.value = false;
-        this.$emit("buttonSubmit", this.value);
-      }
-      //project
-      else {
-        document.querySelector("h2").style.color = "#02AA9E";
-        document.querySelector("h1").style.color = "#DBDBDB";
-
-        this.value = true;
-
-        this.$emit("buttonSubmit", this.value);
-      }
+    //the option
+    chooseBackGround(project) {
+      //如果已經勾選就變成打勾的顏色
+      if (this.checkProject.findIndex(i => i === project) === -1) {
+        switch (project.charAt(c => c === 0)) {
+          case "A":
+            return this.backGround.A;
+          case "B":
+            return this.backGround.B;
+          case "C":
+            return this.backGround.C;
+          case "D":
+            return this.backGround.D;
+          case "E":
+            return this.backGround.E;
+          case "F":
+            return this.backGround.F;
+          case "G":
+            return this.backGround.G;
+        }
+      } else return this.backGround.tick;
     },
-    onSwiperSlideChange() {
-      this.$emit("swiperSubmit", projectName);
+    proejctIsCheck(project) {
+      if (this.checkProject.findIndex(i => i === project) === -1)
+        return project;
+      else return "✔";
+    },
+
+    getProjectName() {
+      if (this.checkProject.length === 0) {
+        alert("Please choose at least 1!!");
+      } else this.$emit("projectSubmit", this.checkProject);
+    },
+
+    //must not zero project when enter analysis
+    initOne() {
+      this.checkProject[0] = this.allProjectName[0];
+      // console.log(this.checkProject);
+      this.$emit("projectSubmit", this.checkProject);
     }
   }
-
-  //swiper請這樣使用function
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h1,
-h2 {
-  position: relative;
-  transition: 1s;
-  color: #dbdbdb;
-  background-color: white;
-  right: 20px;
-  font-weight: normal;
-  font-size: 20px;
-}
-
 #content1 {
   display: flex;
   margin: 0 auto;
   position: relative;
-  top: 80px;
-  width: 90%;
-  height: 101px;
+  top: 10vh;
+  width: 93%;
+  height: 15vh;
   background-color: white;
   box-shadow: 0px 0px 9px #b3b2b2;
   border-radius: 22px 22px;
-}
-#choose {
-  position: relative;
 
-  height: 100%;
-  background-color: transparent;
-}
-.split {
-  position: relative;
-  top: 10px;
-  width: 2px;
-  height: 72px;
-  background-color: #dbdbdb;
-}
-#setButton {
-  position: relative;
-  right: 40px;
-  background-color: transparent;
-  transform: rotate(90deg);
-}
-#projectView {
-  position: relative;
+  .swiper-button-next {
+    //transform: rotate(90deg);
+    right: -0.5vh;
+    &:after {
+      font-size: 3vh;
+    }
+  }
 
-  width: 100%;
-  height: 100%;
-  border-radius: 22px 22px;
-  background: inherit;
-}
-.example-3d {
-  width: 95%;
-  height: 100%;
-  background: inherit;
-  overflow: hidden;
-  background-color: transparent;
-}
-.swiper {
-  width: 163px;
-  height: 142px;
-  background-color: transparent;
+  .swiper-button-prev {
+    //transform: rotate(90deg);
+    left: -0.5vh;
+    &:after {
+      font-size: 3vh;
+    }
+  }
+  .swiper {
+    //background-color: red;
 
-  .swiper-slide {
-    //border: 2px solid yellow;
-    position: relative;
-    bottom: 50px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    height: 90%;
-    text-align: center;
-    font-weight: 200px;
-    font-size: 26px;
+    .swiper-slide {
+      width: 100%;
+      height: 100%;
+      //background-color: yellow;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .layout {
+        input {
+          display: none;
+        }
+        #container {
+          display: inline-block;
+        }
+        // background-color: aqua;
+        //border-radius: 999em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
 
-    background-color: transparent;
-
-    background-position: center;
-    background-size: cover;
-    color: #02aa9e;
-  }
-  .swiper-pagination {
-    /deep/ .swiper-pagination-bullet.swiper-pagination-bullet-active {
-      background-color: transparent;
+        #H1wrap {
+          display: flex;
+          justify-content: center;
+          h1 {
+            //background-color: red;
+            width: 90%;
+            font-size: 2vw;
+            overflow: hidden;
+            display: block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
     }
   }
 }

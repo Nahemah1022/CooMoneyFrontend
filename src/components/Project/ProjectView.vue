@@ -34,15 +34,14 @@ export default {
         direction: "horizontal",
         effect: "coverflow",
         centeredSlides: true,
-        spaceBetween:0,
+        spaceBetween: 0,
         coverflowEffect: {
           rotate: 30,
-          slideShadows:false,
+          slideShadows: false,
           stretch: 20,
           depth: 100,
           modifier: 1
         },
-        noSwiping: true,
         initialSlide: this.default
       }
     };
@@ -62,7 +61,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
   .outer {
     height: 100vh;
