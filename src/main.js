@@ -14,7 +14,8 @@ new Vue({
 }).$mount('#app')
 
 if (localStorage.getItem('token')) {
-  router.replace('/Project');
+  // router.replace('/Project');
+  router.replace('/Home');
 } else {
   router.replace('/');
 }
