@@ -2,7 +2,8 @@
   <div class="main">
     <img src="@/assets/image/Header/arrow.svg" @click="$emit('back')" />
     <div class="title">{{ title }}</div>
-    <img src alt />
+    <img v-if="right" :src="right" @click="$emit('rightClick')" />
+    <img v-else src />
   </div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
     title: {
       type: String,
       required: true
-    }
+    },
+    right: {}
   }
 };
 </script>
@@ -23,8 +25,9 @@ export default {
 @import "@/assets/css/global.scss";
 
 .main {
+  position: fixed;
   background-color: #fff;
-  z-index: 9999;
+  z-index: 1000;
   display: flex;
   justify-content: space-evenly;
   width: 100%;
@@ -35,13 +38,13 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    width: 30%;
+    width: 50%;
     color: #00c5b8;
     font-size: 24px;
   }
   img {
     background-color: #fff;
-    width: 10%;
+    width: 6%;
     margin: 5vw 8vw;
   }
 }
