@@ -18,4 +18,3 @@ if (localStorage.getItem('token')) {
 } else {
   router.replace('/');
 }
-router.replace('/Analysis');
