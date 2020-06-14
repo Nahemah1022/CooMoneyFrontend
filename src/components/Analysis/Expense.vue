@@ -21,12 +21,7 @@
         :color="Colors"
         v-if="chartType(2)"
       ></ve-bar>
-      <ve-line
-        class="Line"
-        :data="lineExpense()"
-        :extend="lineExtend"
-        v-if="chartType(3)"
-      ></ve-line>
+      <ve-line class="Line" :data="lineExpense()" :extend="lineExtend" v-if="chartType(3)"></ve-line>
       <!-- for toggle button -->
       <div class="container">
         <h2>{{ changeText() }}</h2>
@@ -49,7 +44,7 @@ export default {
   props: {
     //傳進來的project
     sendExpense: Object,
-    sendIncome: Object,
+    sendIncome: Object
   },
   components: {},
   data() {
@@ -63,23 +58,23 @@ export default {
           x2: 10,
           y2: 10,
           top: 20,
-          width: "95%",
+          width: "95%"
         },
         xAxis: {
           type: "category",
           splitNumber: 3,
-          axisLabel: { fontSize: 15, interval: 3 }, //隔一個顯示一格
+          axisLabel: { fontSize: 15, interval: 3 } //隔一個顯示一格
         },
         yAxis: {
-          axisLabel: { fontSize: 12, interval: 0 },
+          axisLabel: { fontSize: 12, interval: 0 }
         },
         series: {
           lineStyle: {
             type: "solid",
-            width: 1,
+            width: 1
           },
           symbol: "circle",
-          smooth: 0,
+          smooth: 0
         },
 
         //can slide when overflow
@@ -89,11 +84,11 @@ export default {
             show: true,
             start: 0,
             end: 100,
-            maxSpan: 60,
-          },
-        ],
+            maxSpan: 60
+          }
+        ]
 
-        color: ["#61dddd", "#b3b2b2"],
+        //color: ["#61dddd", "#b3b2b2"]
       },
       pieExtend: {
         series: {
@@ -102,26 +97,26 @@ export default {
           cursor: "pointer",
           itemStyle: {
             shadowColor: "rgba(0, 0, 0, 0.3)",
-            shadowBlur: 5,
+            shadowBlur: 5
           },
           //圖示
 
           label: {
             show: false,
-            position: "center",
+            position: "center"
           },
           emphasis: {
             label: {
               show: true,
 
               fontSize: "20",
-              fontWeight: "bold",
-            },
+              fontWeight: "bold"
+            }
           },
           radius: [40, 130],
           //right: '145',
-          bottom: "50",
-        },
+          bottom: "50"
+        }
       },
       pieLegend: {
         //type: 'scroll',
@@ -130,7 +125,7 @@ export default {
         //left: '140',
         top: "350",
         itemHeight: 30,
-        itemWidth: 30,
+        itemWidth: 30
       },
       BackgroundColor: "transparent",
       //顏色藥用v-bind設置
@@ -142,18 +137,18 @@ export default {
         "#A6CEE3",
         "#C4FFFB",
         "#B2DF8A",
-        "#CE90E4",
+        "#CE90E4"
       ],
       barExtend: {
         grid: {
           width: 300,
-          height: 330,
+          height: 330
         },
 
         yAxis: {
           axisLabel: {
-            fontSize: 10,
-          },
+            fontSize: 10
+          }
         },
         legend: {
           //type: 'scroll',
@@ -162,13 +157,13 @@ export default {
           //left: 140,
 
           itemHeight: 20,
-          itemWidth: 20,
-        },
+          itemWidth: 20
+        }
       },
 
       //for month or item
       ischecked: false,
-      h1Text: "Category comparison",
+      h1Text: "Category comparison"
     };
   },
   methods: {
@@ -217,7 +212,7 @@ export default {
       for (let i = 0; i < projectExpense.length; ++i) {
         let name = projectExpense[i].Classification;
         let money = projectExpense[i].money;
-        let index = expenseItem.findIndex((e) => e.name === name);
+        let index = expenseItem.findIndex(e => e.name === name);
         //沒有這個項目
         if (index === -1) {
           expenseItem.push({ name: name, money: money });
@@ -230,7 +225,7 @@ export default {
       //console.log(expenseItem);
       return {
         columns: ["name", "money"],
-        rows: expenseItem,
+        rows: expenseItem
       };
     },
     barExpense() {
@@ -253,7 +248,7 @@ export default {
           //console.log(projectExpense.length);
           let name = projectExpense[j].Classification;
           let money = projectExpense[j].money;
-          let index = expenseItem.findIndex((e) => e.items === name);
+          let index = expenseItem.findIndex(e => e.items === name);
           //沒有這個項目
           if (index === -1) {
             let key = keys[i]; //project name
@@ -281,7 +276,7 @@ export default {
       //console.log(expenseItem);
       return {
         columns: Columns,
-        rows: expenseItem,
+        rows: expenseItem
       };
     },
     lineExpense() {
@@ -304,7 +299,7 @@ export default {
         for (let j = 0; j < project.length; ++j) {
           let date = project[j].month;
 
-          let index = M_Statistic.findIndex((d) => d.month === date);
+          let index = M_Statistic.findIndex(d => d.month === date);
           let money = -project[j].money;
           //還沒有這個Month建立一個
           if (index === -1) {
@@ -362,7 +357,7 @@ export default {
         for (let j = 0; j < project.length; ++j) {
           let date = project[j].month;
 
-          let index = R.findIndex((d) => d.month === date);
+          let index = R.findIndex(d => d.month === date);
           let money = project[j].money;
           //還沒有這個Month建立一個
           if (index === -1) {
@@ -388,11 +383,11 @@ export default {
       //console.log(R);
       return {
         columns: C,
-        rows: R,
+        rows: R
       };
-    },
+    }
   },
-  computed: {},
+  computed: {}
 };
 </script>
 

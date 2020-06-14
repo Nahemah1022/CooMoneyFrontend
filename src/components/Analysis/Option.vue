@@ -13,8 +13,7 @@
               :username="proejctIsCheck(project)"
               :size="60"
               color="#fff"
-            >
-            </avatar>
+            ></avatar>
             <div id="H1wrap">
               <h1>{{ project }}</h1>
             </div>
@@ -50,7 +49,7 @@ export default {
       swiperOption: {
         slidesPerView: 5,
         centeredSlides: false,
-        spaceBetween: 40,
+        spaceBetween: 0,
         grabCursor: true,
         pagination: {
           el: ".swiper-pagination",

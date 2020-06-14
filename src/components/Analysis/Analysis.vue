@@ -1086,14 +1086,14 @@ export default {
         },
       },
       allProject: [
-        "Audit",
-        "Banana",
-        "Creat",
-        "Description",
-        "Energy",
-        "Freshment",
-        "General",
-        "Highschool",
+        "資 營2018",
+        "資 營2019",
+        "資 營2020",
+        "迎 新2019",
+        "資 周2020",
+        "系 學會2019",
+        "系 學會2020",
+        "系 學會2018",
       ],
       receiveProject: [],
       displayIncome: true,
@@ -1116,26 +1116,26 @@ export default {
       let expenseData = {};
       for (let i = 0; i < this.receiveProject.length; ++i) {
         switch (this.receiveProject[i]) {
-          case "Audit":
-            expenseData["Audit"] = outproject1;
+          case "資 營2018":
+            expenseData["資 營2018"] = outproject1;
             break;
-          case "Banana":
-            expenseData["Banana"] = outproject2;
+          case "資 營2019":
+            expenseData["資 營2019"] = outproject2;
             break;
-          case "Creat":
-            expenseData["Creat"] = outProject3;
+          case "資 營2020":
+            expenseData["資 營2020"] = outProject3;
             break;
-          case "Description":
-            expenseData["Description"] = outProject4;
+          case "迎 新2019":
+            expenseData["迎 新2019"] = outProject4;
             break;
-          case "Energy":
-            expenseData["Energy"] = outProject5;
+          case "資 周2020":
+            expenseData["資 周2020"] = outProject5;
             break;
-          case "Freshment":
-            expenseData["Freshment"] = outProject5;
+          case "系 學會2019":
+            expenseData["系 學會2019"] = outProject5;
             break;
-          case "General":
-            expenseData["General"] = outProject5;
+          case "系 學會2020":
+            expenseData["系 學會2020"] = outProject5;
             break;
         }
       }
@@ -1147,29 +1147,29 @@ export default {
       let incomeData = {};
       for (let i = 0; i < this.receiveProject.length; ++i) {
         switch (this.receiveProject[i]) {
-          case "Audit":
-            incomeData["Audit"] = inProject1;
+          case "資 營2018":
+            incomeData["資 營2018"] = inProject1;
             break;
-          case "Banana":
-            incomeData["Banana"] = inProject2;
+          case "資 營2019":
+            incomeData["資 營2019"] = inProject2;
             break;
-          case "Creat":
-            incomeData["Creat"] = inProject3;
+          case "資 營2020":
+            incomeData["資 營2020"] = inProject3;
             break;
-          case "Description":
-            incomeData["Description"] = inProject4;
+          case "迎 新2019":
+            incomeData["迎 新2019"] = inProject4;
             break;
-          case "Energy":
-            incomeData["Energy"] = inProject5;
+          case "資 周2020":
+            incomeData["資 周2020"] = inProject5;
             break;
-          case "Freshment":
-            incomeData["Freshment"] = inProject5;
+          case "系 學會2018":
+            incomeData["系 學會2018"] = inProject5;
             break;
-          case "General":
-            incomeData["General"] = inProject5;
+          case "系 學會2019":
+            incomeData["系 學會2019"] = inProject5;
             break;
-          case "Highschool":
-            incomeData["Highschool"] = inProject5;
+          case "系 學會2020":
+            incomeData["系 學會2020"] = inProject5;
             break;
         }
       }
