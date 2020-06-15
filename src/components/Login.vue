@@ -5,7 +5,7 @@
       <h1 class="title">Log In</h1>
       <div class="buttons">
         <FB @getFbProp="getProp"></FB>
-        <Google @getGoogleProp="getProp"> </Google>
+        <Google @getGoogleProp="getProp"></Google>
       </div>
       <div>
         <p class="p1">or login with email.</p>
@@ -14,12 +14,8 @@
           <br />
           <br />
           <input placeholder="Password" type="password" v-model="password" />
-          <p class="p2" v-if="showForgot" @click="sendInfor">
-            Forgot your password?
-          </p>
-          <p :class="textAni()" v-if="showError">
-            incorrect account or password!
-          </p>
+          <p class="p2" v-if="showForgot" @click="sendInfor">Forgot your password?</p>
+          <p :class="textAni()" v-if="showError">incorrect account or password!</p>
         </div>
       </div>
 
@@ -44,7 +40,7 @@ export default {
   components: {
     Header,
     FB,
-    Google,
+    Google
   },
   data() {
     return {
@@ -61,7 +57,7 @@ export default {
       showError: false,
       showAni: false,
       otherSource: false,
-      time: null,
+      time: null
     };
   },
   methods: {
@@ -73,7 +69,8 @@ export default {
       this.picture = data.pic;
 
       this.nickname = data.name;
-      this.username = data.name;
+      // this.nickname = data.email;
+      this.username = data.email;
       this.password = data.id;
 
       this.otherSource = true;
@@ -83,9 +80,9 @@ export default {
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/login", {
           username: this.username,
-          password: this.password,
+          password: this.password
         })
-        .then((res) => {
+        .then(res => {
           localStorage.setItem("token", res.data.data.token);
           this.$router.push("/Project");
         })
@@ -119,8 +116,8 @@ export default {
     },
     sendInfor() {
       alert("你以為我會寄密碼給你嗎?並沒有，我只是想讓你點進來而已");
-    },
-  },
+    }
+  }
 };
 </script>
 
