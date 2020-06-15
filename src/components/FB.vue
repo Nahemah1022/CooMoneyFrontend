@@ -48,11 +48,12 @@ export default {
         { fields: "id,name,email,picture" },
         userInformation => {
           this.personalID = userInformation.id;
-          //this.email = userInformation.email;
+          this.email = userInformation.email;
 
           this.name = userInformation.name;
           //console.log(this.name);
           this.picture = userInformation.picture.data.url;
+          this.$store.commit("setHeadshot", this.picture);
         }
       );
       //console.log(this.email);

@@ -10,10 +10,10 @@
       <div>
         <p class="p1">or login with email.</p>
         <div class="input-block">
-          <input placeholder="   Your Email" type="email" v-model="username" />
+          <input placeholder="Your Email" type="email" v-model="username" />
           <br />
           <br />
-          <input placeholder="Password" type="password" v-model="password" />
+          <input placeholder="Your Password" type="password" v-model="password" />
           <p class="p2" v-if="showForgot" @click="sendInfor">Forgot your password?</p>
           <p :class="textAni()" v-if="showError">incorrect account or password!</p>
         </div>
