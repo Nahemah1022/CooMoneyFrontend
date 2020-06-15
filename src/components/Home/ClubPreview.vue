@@ -2,7 +2,7 @@
   <div
     :class="{main: true, list: list}"
     v-bind:style="{ backgroundImage: 'url(' + require('../../assets/image/Home/clubs/' + club.name.split(' ').join('_') + '.png') + ')' }"
-    @click="$router.push('/Project')"
+    @click="$router.push('Club')"
   >
     <div class="content">
       <img

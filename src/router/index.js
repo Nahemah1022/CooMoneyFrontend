@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const Home = () => import("@/components/Home/Home");
+const Club = () => import("@/components/Club/Club");
 const ProjectView = () => import("@/components/Project/ProjectView");
 const Project = () => import("@/components/Project/Project");
 const Login = () => import("@/components/Login");
@@ -47,7 +48,12 @@ export default new VueRouter({
         {
             path: "/Home",
             name: "Home",
-            component: Home,
+            component: Home
+        },
+        {
+            path: "/Club",
+            name: "Club",
+            component: Club,
             props: true
         }
     ]
