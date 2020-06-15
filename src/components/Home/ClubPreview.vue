@@ -39,7 +39,7 @@ export default {
   box-shadow: 0 0 12px #797878;
   background-size: cover;
   background-position: bottom;
-  opacity: 0.9;
+  opacity: 0.7;
   transition: 0.3s;
   &.list {
     height: 10vh;
@@ -48,7 +48,8 @@ export default {
   .content {
     width: 100%;
     height: 42px;
-    background-color: #e8f0fe;
+    // background-color: #e8f0fe;
+    background-color: transparent;
     border-radius: 0 0 8px 8px;
     box-sizing: border-box;
     position: absolute;
@@ -58,17 +59,30 @@ export default {
     align-items: center;
     .title {
       width: 60%;
-      font-size: 24px;
-      color: rgb(56, 56, 56);
-      font-weight: 600;
+      font-size: 28px;
+      // color: rgb(56, 56, 56);
+      color: #fff;
+      // -webkit-text-stroke: 1px black;
+        text-shadow:
+          -1px -1px 0 #000,  
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
+      font-weight: bolder;
     }
     .right {
       width: 36%;
       display: flex;
+      color: #fff;
       flex-direction: column;
       align-items: flex-end;
       justify-content: flex-end;
-      font-weight: 600;
+      // font-weight: 600;
+      text-shadow:
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
       .member {
         font-size: 12px;
       }
@@ -76,7 +90,7 @@ export default {
   }
   .avatar {
     position: absolute;
-    width: 50px;
+    width: 40px;
     left: 10px;
     bottom: 5px;
     border-radius: 50%;
