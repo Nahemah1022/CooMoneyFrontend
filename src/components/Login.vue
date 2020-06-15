@@ -14,9 +14,12 @@
           <br />
           <br />
           <input placeholder="Password" type="password" v-model="password" />
-          <p class="p2" v-show="showForgot">Forgot your password?</p>
+          <p :class="textAni()" v-if="showForgot" @click="sendInfor">
+            Forgot your password?
+          </p>
         </div>
       </div>
+      <p class="p2" v-if="showError">incorrect account or password!</p>
       <button @click="Login">Log In</button>
       <p class="dont" id="dont">
         Don't have an account?
@@ -52,7 +55,10 @@ export default {
       picture: "",
 
       showForgot: false,
+      showError: false,
+      showAni: false,
       otherSource: false,
+      time: null,
     };
   },
   methods: {
@@ -82,18 +88,34 @@ export default {
         })
         .catch(() => {
           // console.log(this.username);
+          //
           this.error();
         });
     },
     error() {
       //console.log(this.username);
       //if not enroll by fb before enroll automatic,else login in directly
-
+      this.showError = true;
       this.showForgot = true;
-      document.getElementById("dont").text = this.errorMsg;
+      this.showAni = true;
+      this.timer();
+    },
+    timer() {
+      //let my = this;
+      this.time = setTimeout(() => {
+        // do something...
+        this.showAni = false;
+      }, 500);
+    },
+    textAni() {
+      if (this.showAni) return "p2";
+      else return "p2Shake";
     },
     SignUp() {
       this.$router.push("/SignUp");
+    },
+    sendInfor() {
+      alert("你以為我會寄密碼給你嗎?並沒有，我只是想讓你點進來而已");
     },
   },
 };
@@ -128,6 +150,14 @@ export default {
       color: #8d8d8d;
       text-align: right;
       margin-top: 1vh;
+      animation: shake 0.5s;
+      animation-iteration-count: infinite;
+    }
+    .p2Shake {
+      color: #8d8d8d;
+      text-align: right;
+      margin-top: 1vh;
+      //animation: shake 1s;
     }
   }
   .p1 {
@@ -153,14 +183,39 @@ export default {
     text-align: center;
   }
 }
-// .fb-login-button {
-//   position: absolute;
-//   border-radius: 5vw;
-//   width: 50vw;
-//   height: 10vw;
-//   top: 80vh;
-//   left: 25vw;
-//   padding: 0;
-//   background-color: #ffffff;
-// }
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
 </style>
