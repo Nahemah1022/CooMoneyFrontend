@@ -14,12 +14,15 @@
           <br />
           <br />
           <input placeholder="Password" type="password" v-model="password" />
-          <p :class="textAni()" v-if="showForgot" @click="sendInfor">
+          <p class="p2" v-if="showForgot" @click="sendInfor">
             Forgot your password?
+          </p>
+          <p :class="textAni()" v-if="showError">
+            incorrect account or password!
           </p>
         </div>
       </div>
-      <p class="p2" v-if="showError">incorrect account or password!</p>
+
       <button @click="Login">Log In</button>
       <p class="dont" id="dont">
         Don't have an account?
@@ -108,8 +111,8 @@ export default {
       }, 500);
     },
     textAni() {
-      if (this.showAni) return "p2";
-      else return "p2Shake";
+      if (!this.showAni) return "p3";
+      else return "p3Shake";
     },
     SignUp() {
       this.$router.push("/SignUp");
@@ -150,12 +153,18 @@ export default {
       color: #8d8d8d;
       text-align: right;
       margin-top: 1vh;
+    }
+    .p3Shake {
+      color: red;
+      //text-align: right;
+      margin-top: 1vh;
       animation: shake 0.5s;
       animation-iteration-count: infinite;
     }
-    .p2Shake {
-      color: #8d8d8d;
-      text-align: right;
+    .p3 {
+      color: red;
+      //@extendtext-align: right;
+
       margin-top: 1vh;
       //animation: shake 1s;
     }
