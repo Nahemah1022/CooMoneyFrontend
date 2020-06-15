@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      clubLayout: false,
+      clubLayout: true,
       joinedClubs: [
         {
           name: "成大資訊營",
