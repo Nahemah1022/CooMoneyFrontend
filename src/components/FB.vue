@@ -4,7 +4,7 @@
       <img class="google" src="@/assets/image/Login/fb_icon.svg" alt />
       <facebook-login
         v-show="false"
-        appId="2673605606300139"
+        appId="632957427307793"
         @login="onLogin"
         @logout="onLogout"
         @sdk-loaded="sdkLoaded"
@@ -28,7 +28,7 @@ export default {
       email: "",
       personalID: "",
       picture: "",
-      FB: undefined,
+      FB: undefined
     };
   },
   methods: {
@@ -37,7 +37,7 @@ export default {
         id: this.personalID,
         email: this.email,
         name: this.name,
-        pic: this.picture,
+        pic: this.picture
       });
     },
     //FB function
@@ -46,7 +46,7 @@ export default {
         "/me",
         "GET",
         { fields: "id,name,email,picture" },
-        (userInformation) => {
+        userInformation => {
           this.personalID = userInformation.id;
           //this.email = userInformation.email;
 
@@ -68,8 +68,8 @@ export default {
     },
     onLogout() {
       this.isConnected = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
