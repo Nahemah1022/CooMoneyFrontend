@@ -3,25 +3,28 @@
     <Header :title="'CooMoney'" @back="$router.push('/')"></Header>
     <div class="block">
       <h1 class="title">Log In</h1>
+      <div class="buttons">
+        <FB @getFbProp="getProp"></FB>
+        <Google @getGoogleProp="getProp"></Google>
+      </div>
       <div>
-        <div class="buttons">
-          <img class="fb" src="@/assets/image/Login/fb_icon.svg" alt />
-          <img class="google" src="@/assets/image/Login/google_icon.svg" alt />
-        </div>
         <p class="p1">or login with email.</p>
         <div class="input-block">
-          <input placeholder="   Your Email" type="email" v-model="username" />
+          <input placeholder="Your Email" type="email" v-model="username" />
           <br />
           <br />
-          <input placeholder="   Password" type="password" v-model="password" />
-          <p class="p2">Forgot your password?</p>
+          <input placeholder="Your Password" type="password" v-model="password" />
+          <p class="p2" v-if="showForgot" @click="sendInfor">Forgot your password?</p>
+          <p :class="textAni()" v-if="showError">incorrect account or password!</p>
         </div>
       </div>
+
       <button @click="Login">Log In</button>
       <p class="dont" id="dont">
         Don't have an account?
         <span @click="SignUp">Sign up</span>
       </p>
+
       <!-- <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div> -->
     </div>
   </div>
@@ -30,24 +33,50 @@
 <script>
 import axios from "axios";
 import Header from "@/components/common/Header.vue";
-
+import FB from "@/components/FB.vue";
+import Google from "@/components/Google.vue";
 export default {
   name: "Login",
   components: {
-    Header
+    Header,
+    FB,
+    Google
   },
   data() {
     return {
       username: "",
       password: "",
-      errorMsg: "incorrect account or password!"
+      errorMsg: "incorrect account or password!",
+
+      name: "",
+      email: "",
+      personalID: "",
+      picture: "",
+
+      showForgot: false,
+      showError: false,
+      showAni: false,
+      otherSource: false,
+      time: null
     };
   },
   methods: {
-    error() {
-      document.getElementById("dont").text = this.errorMsg;
+    getProp(data) {
+      //console.log(data);
+      this.name = data.name;
+      this.email = data.email;
+      this.personalID = data.id;
+      this.picture = data.pic;
+
+      this.nickname = data.name;
+      // this.nickname = data.email;
+      this.username = data.email;
+      this.password = data.id;
+
+      this.otherSource = true;
     },
     Login() {
+      //console.log(this.username);
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/login", {
           username: this.username,
@@ -58,17 +87,41 @@ export default {
           this.$router.push("/Project");
         })
         .catch(() => {
+          // console.log(this.username);
+          //
           this.error();
         });
     },
+    error() {
+      //console.log(this.username);
+      //if not enroll by fb before enroll automatic,else login in directly
+      this.showError = true;
+      this.showForgot = true;
+      this.showAni = true;
+      this.timer();
+    },
+    timer() {
+      //let my = this;
+      this.time = setTimeout(() => {
+        // do something...
+        this.showAni = false;
+      }, 500);
+    },
+    textAni() {
+      if (!this.showAni) return "p3";
+      else return "p3Shake";
+    },
     SignUp() {
       this.$router.push("/SignUp");
+    },
+    sendInfor() {
+      alert("你以為我會寄密碼給你嗎?並沒有，我只是想讓你點進來而已");
     }
   }
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .block {
   width: 85%;
   height: 90vh;
@@ -98,6 +151,20 @@ export default {
       text-align: right;
       margin-top: 1vh;
     }
+    .p3Shake {
+      color: red;
+      //text-align: right;
+      margin-top: 1vh;
+      animation: shake 0.5s;
+      animation-iteration-count: infinite;
+    }
+    .p3 {
+      color: red;
+      //@extendtext-align: right;
+
+      margin-top: 1vh;
+      //animation: shake 1s;
+    }
   }
   .p1 {
     color: #8d8d8d;
@@ -122,14 +189,39 @@ export default {
     text-align: center;
   }
 }
-// .fb-login-button {
-//   position: absolute;
-//   border-radius: 5vw;
-//   width: 50vw;
-//   height: 10vw;
-//   top: 80vh;
-//   left: 25vw;
-//   padding: 0;
-//   background-color: #ffffff;
-// }
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
 </style>
