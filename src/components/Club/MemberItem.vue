@@ -9,7 +9,7 @@
       <div class="email">{{ user.email }}</div>
     </div>
     <div class="right">
-      <div v-if="user.auth===1" class="auth">管理員</div>
+      <div v-if="user.auth===1" class="auth">管睆員</div>
       <div class="date">{{ user.date }}</div>
     </div>
   </div>
@@ -44,8 +44,9 @@ export default {
       text-align: right;
     }
     img {
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
     }
   }
   .center {

@@ -34,6 +34,9 @@
         <div class="title">社群簡介</div>
         <div class="content">{{ club.intro }}</div>
       </div>
+      <div v-if="tabIndex===1" class="announce">
+        <AnnounceItem v-for="(announce, index) in announces" :key="index" :announce="announce"></AnnounceItem>
+      </div>
       <div v-if="tabIndex===2" class="member">
         <div class="header">
           <span>成員總數</span>
@@ -52,13 +55,15 @@
 import Header from "@/components/common/Header.vue";
 import Footer from "@/components/common/Footer.vue";
 import MemberItem from "@/components/Club/MemberItem.vue";
+import AnnounceItem from "@/components/Club/AnnounceItem.vue";
 
 export default {
   name: "Club",
   components: {
     Header,
     Footer,
-    MemberItem
+    MemberItem,
+    AnnounceItem
   },
   data() {
     return {
@@ -74,75 +79,119 @@ export default {
       members: [
         { 
           username: "陳尹曈", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "a122774007@gmail.com", 
           date: "2019/07/15", 
           auth: 1
         },
         { 
           username: "倪皓城", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "zzzzzz@gmail.com", 
           date: "2019/12/15", 
           auth: 0
         },
         { 
           username: "辛普森", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "hinpson@gmail.com", 
           date: "2019/11/16", 
           auth: 1
         },
         { 
           username: "陳力聖", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "shang@gmail.com", 
           date: "2019/10/26", 
           auth: 0
         },
         { 
           username: "陳明心", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "travix@gmail.com", 
           date: "2019/08/13", 
           auth: 0
         },
         {
           username: "阿拉哩", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "alale@gmail.com", 
           date: "2019/09/15", 
           auth: 0
         },
         {
           username: "阿拉哩", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "alale@gmail.com", 
           date: "2019/09/15", 
           auth: 0
         },
         {
           username: "阿拉哩", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "alale@gmail.com", 
           date: "2019/09/15", 
           auth: 0
         },
         {
           username: "阿拉哩", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "alale@gmail.com", 
           date: "2019/09/15", 
           auth: 0
         },
         {
           username: "阿拉哩", 
-          headshot: "https://cdn.icon-icons.com/icons2/1488/PNG/512/5347-github_102542.png", 
+          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
           email: "alale@gmail.com", 
           date: "2019/09/15", 
           auth: 0
         },
 
+      ],
+      announces: [
+        { 
+          author: "陳尹曈", 
+          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
+          title: "2020期初社費", 
+          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna",
+          date: "2020/06/28"
+        },
+        { 
+          author: "陳尹曈", 
+          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
+          title: "2020期初社費", 
+          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+          date: "2020/06/28"
+        },
+        { 
+          author: "陳尹曈", 
+          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
+          title: "2020期初社費", 
+          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+          date: "2020/06/28"
+        },
+        { 
+          author: "陳尹曈", 
+          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
+          title: "2020期初社費", 
+          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+          date: "2020/06/28"
+        },
+        { 
+          author: "陳尹曈", 
+          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
+          title: "2020期初社費", 
+          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+          date: "2020/06/28"
+        },
+        { 
+          author: "陳尹曈", 
+          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
+          title: "2020期初社費", 
+          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+          date: "2020/06/28"
+        }
       ],
       tabs: [{ name: "簡介" }, { name: "公告" }, { name: "成員" }],
       tabIndex: 0
@@ -197,6 +246,8 @@ $tabHeight: 36px;
     box-shadow: 0px 0px 10px #ccc;
     width: 95%;
     margin: 3.5vh auto;
+    padding: 5px;
+    box-sizing: border-box;
     min-height: 70vh;
     .tabs {
       position: absolute;
@@ -245,6 +296,10 @@ $tabHeight: 36px;
         white-space: pre-wrap;
         font-size: 14px;
       }
+    }
+    .announce {
+      height: 70vh;
+      overflow: scroll;
     }
     .member {
       height: 70vh;
