@@ -1,11 +1,13 @@
 <template>
   <div class="main">
+    <NewClub v-if="createNewClub" @cancel="createNewClub=false"></NewClub>
+    <BlurMask :show="createNewClub" />
     <div class="profileBlock">
       <Profile></Profile>
     </div>
     <div class="block">
       <div class="serachBarBlock">
-        <SearchBar></SearchBar>
+        <SearchBar @newClub="createNewClub=true"></SearchBar>
       </div>
       <div class="space" />
       <div class="clubsBlock">
@@ -34,17 +36,22 @@
 import Profile from "@/components/Home/Profile";
 import SearchBar from "@/components/Home/SearchBar";
 import ClubPreview from "@/components/Home/ClubPreview";
+import NewClub from "@/components/Home/NewClub";
+import BlurMask from "@/components/common/BlurMask";
 
 export default {
   name: "Home",
   components: {
     Profile,
     SearchBar,
-    ClubPreview
+    ClubPreview,
+    NewClub,
+    BlurMask
   },
   data() {
     return {
       clubLayout: true,
+      createNewClub: false,
       joinedClubs: [
         {
           name: "成大資訊營",
