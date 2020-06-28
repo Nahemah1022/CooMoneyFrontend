@@ -10,13 +10,13 @@
         </div>
         <br />
         <div class="input-block">
-          <input placeholder="   Your Email" type="email" v-model="username" />
+          <input placeholder="   Your Email" type="email" v-model="email" />
           <br />
           <br />
           <input placeholder="   Password" type="password" v-model="password" />
           <br />
           <br />
-          <input placeholder="   nickname" type="text" v-model="nickname" />
+          <input placeholder="   Username" type="text" v-model="username" />
         </div>
       </div>
       <button @click="signUp">Sign Up</button>
@@ -35,25 +35,25 @@ export default {
   },
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
-      nickname: "",
-      userGender: 0
+      username: "",
+      userGender: "MALE"
     };
   },
   methods: {
     signUp() {
-      console.log(this.userGender);
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/signUp", {
           username: this.username,
           password: this.password,
-          nickname: this.nickname,
-          userGender: 1
+          email: this.email,
+          userPhoto: "",
+          userGender: this.userGender,
+          userBirth: "2020-06-28"
         })
         .then(res => {
           console.log(res);
-          localStorage.setItem("token", res.data.data.token);
           this.$router.push("/Login");
         })
         .catch(err => {
