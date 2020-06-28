@@ -20,7 +20,6 @@ export default {
   height: 0;
   opacity: 0;
   transition: 0.3s;
-  border-radius: 0 0 8% 8%;
   &.show {
     height: 100%;
     opacity: 0.5;

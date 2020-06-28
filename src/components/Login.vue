@@ -80,6 +80,7 @@ export default {
         .then(res => {
           this.$cookies.set("token", res.data.data.token, "1d");
           this.$router.push("/Home");
+          this.$store.commit("setUsername", this.username);
         })
         .catch(() => {
           this.error();

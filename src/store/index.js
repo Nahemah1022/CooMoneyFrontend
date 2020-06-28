@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    headshot: ""
+    headshot: "",
+    username: ""
   },
   mutations: {
     setHeadshot(state, pic) {
       state.headshot = pic;
+    },
+    setUsername(state, name) {
+      state.username = name;
     }
   },
   actions: {
