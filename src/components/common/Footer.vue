@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <img
-      @click="$router.push('/Analysis')"
-      :src="require(`@/assets/image/Footer/icon_analysis${(active==1) ? '_active' : ''}.svg`)"
+      @click="$router.push('/Club')"
+      :src="require(`@/assets/image/Footer/icon_chat${(active==3) ? '_active' : ''}.svg`)"
       alt
     />
     <img
@@ -11,8 +11,8 @@
       alt
     />
     <img
-      @click="$router.push('/')"
-      :src="require(`@/assets/image/Footer/icon_chat${(active==3) ? '_active' : ''}.svg`)"
+      @click="$router.push('/Analysis')"
+      :src="require(`@/assets/image/Footer/icon_analysis${(active==1) ? '_active' : ''}.svg`)"
       alt
     />
   </div>
@@ -32,6 +32,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
 .main {
+  overflow-x: hidden;
   width: 100%;
   height: 7vh;
   position: fixed;

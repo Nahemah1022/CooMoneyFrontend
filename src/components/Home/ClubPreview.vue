@@ -1,14 +1,18 @@
 <template>
   <div
     :class="{main: true, list: list}"
-    v-bind:style="{ backgroundImage: 'url(' + require('../../assets/image/Home/clubs/' + club.name.split(' ').join('_') + '.png') + ')' }"
-    @click="$router.push('/Project')"
+    :style="{ backgroundImage: 'url(' + require('../../assets/image/Home/clubs/' + club.name.split(' ').join('_') + '.png') + ')' }"
+    @click="$router.push('Club')"
   >
     <div class="content">
       <img
         class="avatar"
         :src="require('@/assets/image/Home/avatar_' + (club.auth===0 ? 'member' : 'owner') + '.svg')"
       />
+      <!-- <img
+        class="avatar"
+        :src="require('@/assets/image/Home/clubs/' + club.name.split(' ').join('_') + 'LOGO.png')"
+      />-->
       <p class="title">{{club.name}}</p>
       <div class="right">
         <p class="date">{{club.createDate}}</p>
@@ -63,11 +67,8 @@ export default {
       // color: rgb(56, 56, 56);
       color: #fff;
       // -webkit-text-stroke: 1px black;
-        text-shadow:
-          -1px -1px 0 #000,  
-          1px -1px 0 #000,
-          -1px 1px 0 #000,
-          1px 1px 0 #000;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;
       font-weight: bolder;
     }
     .right {
@@ -78,10 +79,7 @@ export default {
       align-items: flex-end;
       justify-content: flex-end;
       // font-weight: 600;
-      text-shadow:
-        -1px -1px 0 #000,  
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
         1px 1px 0 #000;
       .member {
         font-size: 12px;

@@ -1,6 +1,6 @@
 <template>
-  <div class="main">
-    <img src="@/assets/image/Header/arrow.svg" @click="$emit('back')" />
+  <div class="main" :style="{ backgroundColor: bg === undefined ? '#fff' : 'bg' }">
+    <img class="back" src="@/assets/image/Header/arrow.svg" @click="$emit('back')" />
     <div class="title">{{ title }}</div>
     <img v-if="right" :src="right" @click="$emit('rightClick')" />
     <img v-else src />
@@ -15,7 +15,8 @@ export default {
       type: String,
       required: true
     },
-    right: {}
+    right: {},
+    bg: String
   }
 };
 </script>
@@ -25,15 +26,15 @@ export default {
 @import "@/assets/css/global.scss";
 
 .main {
+  overflow-x: hidden;
   position: fixed;
-  background-color: #fff;
   z-index: 1000;
   display: flex;
   justify-content: space-evenly;
   width: 100%;
   height: 8vh;
   .title {
-    background-color: #fff;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,9 +44,12 @@ export default {
     font-size: 24px;
   }
   img {
-    background-color: #fff;
-    width: 6%;
+    background-color: transparent;
+    width: 8%;
     margin: 5vw 8vw;
+    &.back {
+      width: 6%;
+    }
   }
 }
 </style>
