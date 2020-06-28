@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import './registerServiceWorker'
+import store from './store';
+import './registerServiceWorker';
+import VueCookies from 'vue-cookies';
+import { FontAwesomeIcon } from '@/assets/js/fontawesome.js';
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.use(VueCookies);
+Vue.$cookies.config('30s');
 
-import { FontAwesomeIcon } from '@/assets/js/fontawesome.js'
-import store from './store'
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
@@ -15,8 +17,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-if (localStorage.getItem('token')) {
-  // router.replace('/Project');
+if (Vue.$cookies.get('token')) {
   router.replace('/Home');
 } else {
   router.replace('/');

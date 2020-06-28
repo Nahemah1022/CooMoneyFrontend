@@ -10,7 +10,7 @@
       <div>
         <p class="p1">or login with email.</p>
         <div class="input-block">
-          <input placeholder="Your Email" type="email" v-model="username" />
+          <input placeholder="Your Email" type="email" v-model="email" />
           <br />
           <br />
           <input placeholder="Your Password" type="password" v-model="password" />
@@ -62,33 +62,26 @@ export default {
   },
   methods: {
     getProp(data) {
-      //console.log(data);
       this.name = data.name;
       this.email = data.email;
       this.personalID = data.id;
       this.picture = data.pic;
-
       this.nickname = data.name;
-      // this.nickname = data.email;
       this.username = data.email;
       this.password = data.id;
-
       this.otherSource = true;
     },
     Login() {
-      //console.log(this.username);
       axios
         .post("https://coomoney.herokuapp.com/api/v1/user/login", {
-          username: this.username,
+          email: this.email,
           password: this.password
         })
         .then(res => {
-          localStorage.setItem("token", res.data.data.token);
-          this.$router.push("/Project");
+          this.$cookies.set("token", res.data.data.token, "1d");
+          this.$router.push("/Home");
         })
         .catch(() => {
-          // console.log(this.username);
-          //
           this.error();
         });
     },
