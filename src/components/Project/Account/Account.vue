@@ -2,11 +2,15 @@
   <div class="submain">
     <!-- <BlurMask :show="judgementShow"></BlurMask> -->
     <div class="block">
-      <div :class="{header: true, fullHeader: full}">
+      <div :class="{ header: true, fullHeader: full }">
         <span>Primary account</span>
         <img
           @click="$emit('toggleAccount')"
-          :src="require('@/assets/image/Project/Revenue/'+ (full ? 'up' : 'option') +'.svg')"
+          :src="
+            require('@/assets/image/Project/Revenue/' +
+              (full ? 'up' : 'option') +
+              '.svg')
+          "
         />
       </div>
       <div class="accounts">
@@ -27,6 +31,8 @@
             </transition-group>
           </Draggable>
           <p>Order thier priority by dragging</p>
+          <br />
+          <p>Or <span @click="newAccount">click here</span> to create</p>
         </div>
 
         <div v-else class="account">
@@ -39,11 +45,11 @@
               />
             </div>
             <img class="space" src alt />
-            <div class="title">{{localAccounts[0].name}}</div>
+            <div class="title">{{ localAccounts[0].name }}</div>
           </div>
           <div class="cost">
             <span>$</span>
-            {{costFormat(localAccounts[0].remain)}}
+            {{ costFormat(localAccounts[0].remain) }}
           </div>
         </div>
       </div>
@@ -61,18 +67,18 @@ export default {
   data() {
     return {
       isDragging: false,
-      localAccounts: []
+      localAccounts: [],
     };
   },
   components: {
     Draggable,
-    AccountItem
+    AccountItem,
     // BlurMask
   },
   props: {
     full: Boolean,
     projectId: Number,
-    accounts: Array
+    accounts: Array,
   },
   computed: {
     dragOptions() {
@@ -80,9 +86,9 @@ export default {
         animation: 0,
         group: "description",
         disabled: false,
-        ghostClass: "ghost"
+        ghostClass: "ghost",
       };
-    }
+    },
   },
   methods: {
     costFormat(cost) {
@@ -94,16 +100,26 @@ export default {
       }
       rtn = rtn.slice(0, -2);
       return rtn;
-    }
+    },
+    newAccount() {
+      let a = {
+        id: this.localAccounts.length + 1,
+        name: "",
+        iconName: "money-check-alt",
+        remain: 0,
+        isEditing: true,
+      };
+      this.localAccounts.push(a);
+    },
   },
   beforeMount() {
     this.localAccounts = this.accounts;
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 $transition: 0.5s;
 * {
   background-color: transparent;

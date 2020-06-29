@@ -2,28 +2,36 @@
   <div class="account full">
     <div class="left">
       <!-- <font-awesome-icon icon="bars" size="sm" style="color: gray" /> -->
-      <span class="pirority">{{(index+1)+". "}}</span>
+      <span class="pirority">{{ index + 1 + ". " }}</span>
       <div class="icon">
-        <font-awesome-icon :icon="account.iconName" size="sm" style="color: #fff" />
+        <font-awesome-icon
+          :icon="account.iconName"
+          size="sm"
+          style="color: #fff"
+        />
       </div>
       <img class="space" src alt />
       <div class="title">
-        <input v-if="isEditing" type="text" v-model="account.name" />
-        <div v-else>{{account.name}}</div>
+        <input v-if="account.isEditing" type="text" v-model="account.name" />
+        <div v-else>{{ account.name }}</div>
       </div>
     </div>
     <div class="right">
       <div class="cost">
         <span>$</span>
-        <input v-if="isEditing" type="text" v-model="account.remain" />
-        <div v-else>{{costFormat(account.remain)}}</div>
+        <input
+          v-if="account.isEditing"
+          type="number"
+          v-model="account.remain"
+        />
+        <div v-else>{{ costFormat(account.remain) }}</div>
         <!-- {{costFormat(account.remain)}} -->
       </div>
       <font-awesome-icon
-        :icon="isEditing ? 'check' : 'edit'"
+        :icon="account.isEditing ? 'check' : 'edit'"
         size="sm"
         style="color: #00c5b8"
-        @click="isEditing=!isEditing"
+        @click="account.isEditing = !account.isEditing"
       />
     </div>
   </div>
@@ -33,13 +41,11 @@
 export default {
   name: "AccountItem",
   data() {
-    return {
-      isEditing: false
-    };
+    return {};
   },
   props: {
     index: Number,
-    account: Object
+    account: Object,
   },
   methods: {
     costFormat(cost) {
@@ -51,13 +57,13 @@ export default {
       }
       rtn = rtn.slice(0, -2);
       return rtn;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .account {
   width: 90%;
   margin: 0 auto 2vh auto;
