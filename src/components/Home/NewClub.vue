@@ -1,6 +1,9 @@
 <template>
   <div class="main_c">
-    <img :src="require('@/assets/image/Project/cross.svg')" @click="$emit('cancel')" />
+    <img
+      :src="require('@/assets/image/Project/cross.svg')"
+      @click="$emit('cancel')"
+    />
     <div class="title">建立你的社群</div>
     <div class="block">
       <div class="pair">
@@ -32,29 +35,28 @@ export default {
       clubName: "",
       clubImage: "",
       clubMembers: "",
-      uploadedFile: ""
+      uploadedFile: "",
     };
   },
   methods: {
     create() {
       this.$emit("cancel");
       console.log(this.$store.username);
-      //   var bodyFormData = new FormData();
-      //   bodyFormData.append("image", this.uploadedFile);
-      //   axios.post("https://coomoney.herokuapp.com/api/v1/club/createClub", {
-      //     clubName: this.clubName,
-      //     clubImage: bodyFormData
-      //   });
+      var bodyFormData = new FormData();
+      bodyFormData.append("clubImage", this.uploadedFile);
+      bodyFormData.set("clubName", this.clubName);
+      bodyFormData.set("clubMembers", this.clubMembers);
+      this.$store.dispatch("createClub", bodyFormData);
     },
     uploadFile(f) {
       this.uploadedFile = f.target.files[0];
-    }
-  }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main_c {
   position: absolute;
   width: 70vw;
