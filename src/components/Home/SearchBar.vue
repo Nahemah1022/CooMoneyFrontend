@@ -1,10 +1,21 @@
 <template>
   <div class="main">
     <div class="bar">
-      <input type="text" placeholder="尋找在CooMoney中的社群" @focus="isFocus=true" @blur="isFocus=false" />
-      <img src="@/assets/image/Home/icon_search.svg" alt />
+      <font-awesome-icon
+        icon="bars"
+        size="lg"
+        style="color: #9e9e9e"
+        @click="$emit('toggleList')"
+      ></font-awesome-icon>
+      <input
+        type="text"
+        placeholder="尋找在CooMoney中的社群"
+        @focus="isFocus = true"
+        @blur="isFocus = false"
+      />
+      <img :src="require('@/assets/image/Home/avatar_empty.svg')" alt="" />
     </div>
-    <div :class="{block: true, focus: isFocus}">
+    <div :class="{ block: true, focus: isFocus }">
       <div class="result">...沒有符合條件的社群</div>
       <div class="new" @click="$emit('newClub')">
         <img class="add" :src="require('@/assets/image/Home/add.png')" alt />
@@ -22,23 +33,24 @@ export default {
   name: "",
   data() {
     return {
-      isFocus: false
+      isFocus: false,
     };
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
   position: relative;
+  height: 100%;
   .bar {
     position: relative;
     z-index: 10;
     width: 100%;
     height: 100%;
-    border-radius: 24px;
-    border: 1px solid #00c5b8;
+    border-radius: 12px;
+    border: 1px solid #9e9e9e;
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -47,8 +59,9 @@ export default {
     padding: 0 10px;
     input {
       width: 82%;
-      line-height: 26px;
-      font-size: 16px;
+      line-height: 36px;
+      padding: 0 14px;
+      font-size: 20px;
       box-sizing: border-box;
       border: 0;
       &::placeholder {

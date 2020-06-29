@@ -1,22 +1,29 @@
 <template>
   <div
-    :class="{main: true, list: list}"
-    :style="{ backgroundImage: 'url(' + require('../../assets/image/Home/clubs/' + club.name.split(' ').join('_') + '.png') + ')' }"
-    @click="$router.push('Club')"
+    :class="{ main: true, list: list }"
+    :style="{
+      backgroundImage:
+        'url(' +
+        require('../../assets/image/Home/clubs/' +
+          club.name.split(' ').join('_') +
+          '.png') +
+        ')',
+    }"
+    @click="enter"
   >
     <div class="content">
-      <img
+      <!-- <img
         class="avatar"
         :src="require('@/assets/image/Home/avatar_' + (club.auth===0 ? 'member' : 'owner') + '.svg')"
-      />
+      /> -->
       <!-- <img
         class="avatar"
         :src="require('@/assets/image/Home/clubs/' + club.name.split(' ').join('_') + 'LOGO.png')"
       />-->
-      <p class="title">{{club.name}}</p>
+      <p class="title">{{ club.name }}</p>
       <div class="right">
-        <p class="date">{{club.createDate}}</p>
-        <p class="member">{{club.memberCount+'位成員'}}</p>
+        <p class="date">{{ club.createDate }}</p>
+        <p class="member">{{ club.memberCount + "位成員" }}</p>
       </div>
     </div>
   </div>
@@ -27,13 +34,22 @@ export default {
   name: "ClubPreview",
   props: {
     club: Object,
-    list: Boolean
-  }
+    list: Boolean,
+    disable: Boolean,
+  },
+  methods: {
+    enter() {
+      if (!this.disable) {
+        console.log(this.disable);
+        this.$router.push("Club");
+      }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
   position: relative;
   width: 92%;
@@ -57,7 +73,7 @@ export default {
     border-radius: 0 0 8px 8px;
     box-sizing: border-box;
     position: absolute;
-    padding-left: 70px;
+    padding-left: 10px;
     bottom: 0;
     display: flex;
     align-items: center;

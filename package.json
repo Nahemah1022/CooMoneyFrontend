@@ -37,6 +37,7 @@
     "vue-awesome-swiper": "^4.1.1",
     "vue-carousel-3d": "^0.2.0",
     "vue-chartjs": "^3.5.0",
+    "vue-click-outside": "^1.1.0",
     "vue-cookies": "^1.7.0",
     "vue-coverflow": "^2.2.0",
     "vue-dynamic-dropdown": "^1.0.12",

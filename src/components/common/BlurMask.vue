@@ -1,18 +1,18 @@
 <template>
-  <div :class="{blurMask: true, show: show}" />
+  <div :class="{ blurMask: true, show: show }" />
 </template>
 
 <script>
 export default {
   name: "BlurMask",
   props: {
-    show: Boolean
-  }
+    show: Boolean,
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .blurMask {
   position: absolute;
   background-color: gray;

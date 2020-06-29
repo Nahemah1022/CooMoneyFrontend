@@ -2,8 +2,8 @@
   <div class="main">
     <img :src="require('@/assets/image/Home/avatar_empty.svg')" alt />
     <div class="profile">
-      <p class="name">{{name}}</p>
-      <a href="https://facebook.com">{{link}}</a>
+      <p class="name">{{ name }}</p>
+      <a href="https://facebook.com">{{ link }}</a>
     </div>
   </div>
 </template>
@@ -14,14 +14,14 @@ export default {
   data() {
     return {
       name: "Your name",
-      link: "facebook profile link"
+      link: "facebook profile link",
     };
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
   width: 100%;
   height: 100%;
