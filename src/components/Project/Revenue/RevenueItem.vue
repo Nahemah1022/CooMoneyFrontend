@@ -63,7 +63,8 @@ export default {
     status: String,
     description: String,
     fullRevenue: Boolean,
-    comment: String
+    comment: String,
+    revenueID: String
   },
   components: {
     Judgement
@@ -78,8 +79,8 @@ export default {
         // this.$emit("toggle");
       }
     },
-    judge(result) {
-      this.$emit("judge", result);
+    judge(result, inputComment) {
+      this.$emit("judge", result, inputComment, this.revenueID);
     }
   }
 };

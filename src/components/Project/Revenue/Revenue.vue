@@ -23,7 +23,9 @@
               :status="bill.revenueStatus.toLowerCase()"
               :description="bill.revenueDescription"
               :fullRevenue="full"
-              :comment="''"
+              :revenueID="bill._id"
+              :comment="bill.revenueComment"
+              @judge="judge"
             ></RevenueItem>
           </div>
         </div>
@@ -72,7 +74,30 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
-
+    async judge(result, inputComment, revenueID) {
+      console.log(
+        {
+          revenueStatus: result ? "APPROVED" : "REJECTED",
+          revenueComment: inputComment,
+          revenueID: revenueID
+        },
+        {
+          clubID: this.$store.state.club._id,
+          projectID: this.projectId
+        }
+      );
+      await this.$store.dispatch("updateRevenue", {
+        data: {
+          revenueStatus: result ? "APPROVED" : "REJECTED",
+          revenueComment: inputComment,
+          revenueID: revenueID
+        },
+        params: {
+          clubID: this.$store.state.club._id,
+          projectID: this.projectId
+        }
+      });
+    },
     showDate(date) {
       if (!this.dates[date]) {
         this.dates[date] = true;

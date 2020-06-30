@@ -71,7 +71,7 @@ const server = {
   revenueImage: (context, data) => axios.post("/revenue/image", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
-  updateRevenue: (context, { data, params }) => axios.post("/revenue/updateRevenue", data, { params }),
+  updateRevenue: (context, { data, params }) => axios.put("/revenue/updateRevenue", data, { params }),
   getAllRevenue: (context, params) => axios.get("/revenue/getAllRevenue", { params }),
   getTenRevenue: (context, params) => axios.get("/revenue/getTenRevenue", { params }),
 
