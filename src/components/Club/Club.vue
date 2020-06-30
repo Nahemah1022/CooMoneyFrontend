@@ -212,7 +212,7 @@ export default {
     this.club.intro = this.preClub.clubIntro;
     this.club.members = this.preClub.clubMembers;
     this.club.announces = this.preClub.clubAnnounce;
-    let clubID = this.preClub.id;
+    let clubID = this.preClub._id;
     this.club.members = await this.$store.dispatch("getClubMembers", {
       clubID
     });

@@ -145,7 +145,7 @@ export default {
   beforeMount: async function() {
     let projects = await this.$store.dispatch(
       "getClubProject",
-      this.$store.state.club.id
+      this.$store.state.club._id
     );
     this.projects = projects.data.data;
     console.log(projects);
