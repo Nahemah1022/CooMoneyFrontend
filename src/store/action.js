@@ -28,6 +28,8 @@ const server = {
       console.error(err);
     });
   },
+
+  // CLUB MODULE
   createClub: (context, data) => axios.post("/club/createClub", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
@@ -48,7 +50,16 @@ const server = {
   searchClub: async (context, params) => axios.get("/club/searchClub", { params }),
   joinApplication: (context, { data, params }) => axios.put("/club/joinApplication", data, { params }),
   getApplication: (context, params) => axios.get("/club/getApplication", { params }),
-  updateApplication: (context, { data, params }) => axios.put("/club/updateApplication", data, { params })
+  updateApplication: (context, { data, params }) => axios.put("/club/updateApplication", data, { params }),
+
+  // PROJECT MODULE
+  createProject: (context, { data, params }) => axios.post("/project/createProject", data, { params }),
+  endProject: (context, params) => axios.put("/project/endProject", null, { params }),
+  addChecker: (context, { data, params }) => axios.put("/project/addChecker", data, { params }),
+  getProject: (context, params) => axios.get("/project/getProject", { params }),
+  updateProjectNameAndTheme: (context, { data, params }) => axios.put("/project/updateProjectNameAndTheme", data, { params }),
+  addNewTags: (context, { data, params }) => axios.put("/project/addNewTags", data, { params }),
+  getProjectTags: (context, params) => axios.get("/project/getProjectTags", { params }),
 };
 
 export { server as default };

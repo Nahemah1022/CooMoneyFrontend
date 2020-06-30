@@ -1,14 +1,15 @@
 /**************************************************************
- * ctrl+F to find the dispatch function you want
- * dismiss the comment to get the dispatch function
- * pay attention to the sample data that dispatch function need
- * the data format must be right
- **************************************************************/
+* ctrl+F to find the dispatch function you want
+* dismiss the comment to get the dispatch function
+* pay attention to the sample data that dispatch function need
+* make sure the data format is right 
+* any array type should use JSON.stringify to be tranformed to string type
+**************************************************************/
 
 
 // let clubID = '5ef85483969ce6000496f1ca';
 // let announceID = '5efa8c9c0fed011844a458ba'
-// let applicationID = '5efa8c9c0fed011844a458ba'
+// let applicationID = '5efa952467c30c63c8e04e78'
 // let username = 'testuser4';
 // let passbookName = 'passbook1';
 // let passbookBalance = 5000;
@@ -17,6 +18,21 @@
 // let date = "2020-10-20";
 // let reason = "Worked for me";
 // let result = "APPROVED";
+// let projectName = "project1";
+// let projectTheme = "dark";
+// let projectBudget = 50000;
+// let projectClub = '5ef85483969ce6000496f1ca';
+// let projectChecker = [] // 可以為空，會自動把創立者加入
+// let projectID = '5efa9b32fb41b15b8c2abcaf'
+// let projectChecker = ['testuser2'];
+// projectChecker = JSON.stringify(projectChecker);
+// let projectName = 'project1_modified';
+// let projectTheme = 'bright';
+// let projectTags = [{
+//   tagName: "podcast",
+//   tagCode: "<i class='fa fa-podcast' aria-hidden='true'></i>" 必須將其中的雙引號改為單引號
+// }]
+// projectTags = JSON.stringify(projectTags); 所有arraytype都必須轉為字串
 
 
 // let response = await this.$store.dispatch('getClub');
@@ -33,3 +49,11 @@
 // let response = await this.$store.dispatch('joinApplication', { data:{ date, reason }, params:{ clubID }});
 // let response = await this.$store.dispatch('getApplication', { clubID });
 // let response = await this.$store.dispatch('updateApplication', { data:{ result }, params:{ clubID, applicationID }})
+// let response = await this.$store.dispatch('createProject', { data:{ projectName, projectTheme, projectBudget, projectClub, projectChecker }, params:{ clubID }});
+// let response = await this.$store.dispatch('endProject', { projectID });
+// let response = await this.$store.dispatch('addChecker', { data:{ projectChecker }, params: { projectID }});
+// let response = await this.$store.dispatch('getProject', { projectID });
+// let response = await this.$store.dispatch('updateProjectNameAndTheme', { data:{ projectName, projectTheme }, params: { projectID }})
+// let response = await this.$store.dispatch('addNewTags', { data:{ projectTags }, params: { projectID }});
+// let response = await this.$store.dispatch('getProjectTags', { projectID });
+// let response = await this.$store.dispatch('endProject', { projectID });

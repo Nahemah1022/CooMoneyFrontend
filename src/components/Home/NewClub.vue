@@ -46,7 +46,7 @@ export default {
       for(let i=0; i<members.length; i++){
         clubMembers.push(members[i]);
       }
-      clubMembers = JSON.stringify(clubMembers);
+      clubMembers = JSON.stringify(clubMembers);    // 要先轉成字串
       let bodyFormData = new FormData();
       bodyFormData.append("clubImage", this.uploadedFile);
       bodyFormData.set("clubName", this.clubName);
