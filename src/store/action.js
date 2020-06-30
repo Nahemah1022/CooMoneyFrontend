@@ -29,6 +29,7 @@ const server = {
       console.error(err);
     });
   },
+  getUserByID: (context, params) => axios.get("/user/getUserByID", { params }),
 
   // CLUB MODULE
   createClub: (context, data) => axios.post("/club/createClub", data, {

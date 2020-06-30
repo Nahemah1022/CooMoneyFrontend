@@ -34,6 +34,11 @@
 //   tagCode: "<i class='fa fa-podcast' aria-hidden='true'></i>" //必須將其中的雙引號改為單引號
 // }]
 // projectTags = JSON.stringify(projectTags); //所有arraytype都必須轉為字串
+// let userID = ['5ef852bc969ce6000496f1c9', '5ef862a4422fba0004ba488d', '5ef862c1422fba0004ba488e']
+// userID = JSON.stringify(userID);
+
+// USER MODULE
+// let response = await this.$store.dispatch('getUserByID', { userID });
 
 // CLUB MODULE
 // let response = await this.$store.dispatch('getClub');
