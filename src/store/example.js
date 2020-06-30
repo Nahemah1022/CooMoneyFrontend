@@ -4,6 +4,7 @@
 * pay attention to the sample data that dispatch function need
 * make sure the data format is right 
 * any array type should use JSON.stringify to be tranformed to string type
+* cuz dispatch function is async function so the caller function should be async 
 **************************************************************/
 
 
@@ -30,11 +31,11 @@
 // let projectTheme = 'bright';
 // let projectTags = [{
 //   tagName: "podcast",
-//   tagCode: "<i class='fa fa-podcast' aria-hidden='true'></i>" 必須將其中的雙引號改為單引號
+//   tagCode: "<i class='fa fa-podcast' aria-hidden='true'></i>" //必須將其中的雙引號改為單引號
 // }]
-// projectTags = JSON.stringify(projectTags); 所有arraytype都必須轉為字串
+// projectTags = JSON.stringify(projectTags); //所有arraytype都必須轉為字串
 
-
+// CLUB MODULE
 // let response = await this.$store.dispatch('getClub');
 // let response = await this.$store.dispatch('getClubProject', clubID);
 // let response = await this.$store.dispatch('getClubMembers', { clubID });
@@ -49,6 +50,8 @@
 // let response = await this.$store.dispatch('joinApplication', { data:{ date, reason }, params:{ clubID }});
 // let response = await this.$store.dispatch('getApplication', { clubID });
 // let response = await this.$store.dispatch('updateApplication', { data:{ result }, params:{ clubID, applicationID }})
+
+// PROJECT MODULE
 // let response = await this.$store.dispatch('createProject', { data:{ projectName, projectTheme, projectBudget, projectClub, projectChecker }, params:{ clubID }});
 // let response = await this.$store.dispatch('endProject', { projectID });
 // let response = await this.$store.dispatch('addChecker', { data:{ projectChecker }, params: { projectID }});
@@ -57,3 +60,10 @@
 // let response = await this.$store.dispatch('addNewTags', { data:{ projectTags }, params: { projectID }});
 // let response = await this.$store.dispatch('getProjectTags', { projectID });
 // let response = await this.$store.dispatch('endProject', { projectID });
+
+// REVENUE MODULE
+// let response = await this.$store.dispatch('createRevenue', { data: bodyFormData, params:{ projectID }});
+// let response = await this.$store.dispatch('revenueImage', bodyFormData);
+// let response = await this.$store.dispatch('updateRevenue', { data:{ revenueStatus }, params:{ clubID, projectID }});
+// let response = await this.$store.dispatch('getAllRevenue', { projectID });
+// let response = await this.$store.dispatch('getTenRevenue', { projectID });

@@ -3,6 +3,7 @@ import router from "@/router";
 
 
 const server = {
+  // USER MODULE
   signUp: (context) => {
     axios
     .post("/user/signUp", context.state.signUp)
@@ -33,11 +34,11 @@ const server = {
   createClub: (context, data) => axios.post("/club/createClub", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
-  getClub: () => axios.get("/club/getClub"),
-  getClubProject: (context, params) => axios.get(`/club/getClubProject/${params}`),
   clubImage: (context, data) => axios.post("/club/image", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
+  getClub: () => axios.get("/club/getClub"),
+  getClubProject: (context, params) => axios.get(`/club/getClubProject/${params}`),
   getClubMembers: (context, params) => axios.get("/club/getClubMembers", { params }),
   addClubMembers: (context, { data, params }) => axios.put("/club/addClubMembers", data, { params }),
   addPassbook: (context, { data, params }) => axios.put("/club/addPassbook", data, { params }),
@@ -60,6 +61,19 @@ const server = {
   updateProjectNameAndTheme: (context, { data, params }) => axios.put("/project/updateProjectNameAndTheme", data, { params }),
   addNewTags: (context, { data, params }) => axios.put("/project/addNewTags", data, { params }),
   getProjectTags: (context, params) => axios.get("/project/getProjectTags", { params }),
+
+  // REVENUE MODULE
+  createRevenue: (context, { data, params }) => axios.post("/revenue/createRevenue", data, { 
+    headers: { "Content-Type": "multipart/formdata" },
+    params 
+  }),
+  revenueImage: (context, data) => axios.post("/revenue/image", data, { 
+    headers: { "Content-Type": "multipart/formdata" },
+  }),
+  updateRevenue: (context, { data, params }) => axios.post("/revenue/updateRevenue", data, { params }),
+  getAllRevenue: (context, params) => axios.get("/revenue/getAllRevenue", params),
+  getTenRevenue: (context, params) => axios.get("/revenue/getTenRevenue", params),
+
 };
 
 export { server as default };
