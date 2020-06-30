@@ -26,6 +26,7 @@ export default new Vuex.Store({
       otherSource: false,
       time: null,
     },
+    club: {}
   },
   actions,
   mutations: {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     setUsername(state, name) {
       state.username = name;
     },
+    setSelectedClub(state, club) {
+      state.club = club;
+    }
   },
   modules: {},
 });

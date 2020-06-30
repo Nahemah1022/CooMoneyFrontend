@@ -1,20 +1,17 @@
 <template>
   <div class="main">
     <div class="block">
-      <p class="title">{{ title }}</p>
+      <p class="title">{{ projectName }}</p>
       <div class="money-block">
         <div class="first">
           <div class="money">
             <p class="text">Remaining budget</p>
             <div>
               <span>$</span>
-              {{ costFormat(this.budget) }}
+              {{ costFormat(this.projectBudget) }}
             </div>
           </div>
-          <img
-            :src="require(`@/assets/image/Project/Theme_${theme}.svg`)"
-            alt
-          />
+          <img :src="require(`@/assets/image/Project/Theme_${projectTheme}.svg`)" alt />
         </div>
         <div class="second">
           <div class="money">
@@ -89,7 +86,7 @@ export default {
   components: {
     Revenue,
     Account,
-    CreateBill,
+    CreateBill
   },
   data() {
     return {
@@ -103,14 +100,14 @@ export default {
           name: "現金",
           iconName: "piggy-bank",
           remain: 2092,
-          isEditing: false,
+          isEditing: false
         },
         {
           id: 2,
           name: "永豐銀行",
           iconName: "university",
           remain: 36000,
-          isEditing: false,
+          isEditing: false
         },
         {
           id: 3,
@@ -118,8 +115,8 @@ export default {
           iconName: "money-check-alt",
           remain: 36000,
           img: "bank",
-          isEditing: false,
-        },
+          isEditing: false
+        }
       ],
       bills: [
         {
@@ -131,7 +128,7 @@ export default {
           date: "2020-04-30 (四)",
           description:
             "慶功宴地點: 碳佐麻里\n實到人數32人\n單價499+10%，自付金額100元",
-          comment: "",
+          comment: ""
         },
         {
           id: 2,
@@ -142,7 +139,7 @@ export default {
           date: "2020-04-27 (一)",
           description:
             "需求: 後製活動期間照片\n購買軟體: Adobe Photoshop\n使用期限: 1年，2021-04-27到期",
-          comment: "經費不足，故駁回",
+          comment: "經費不足，故駁回"
         },
         {
           id: 3,
@@ -152,7 +149,7 @@ export default {
           status: "pending",
           date: "2020-04-27 (一)",
           description: "場地: 成大一活第一演講廳\n使用時間: 2020-05-06下午3點",
-          comment: "",
+          comment: ""
         },
         {
           id: 4,
@@ -163,7 +160,7 @@ export default {
           date: "2020-04-27 (一)",
           description:
             "需求: 前任相機年久失修，多處功能故障\n購買Sony A7R3，保固1年",
-          comment: "",
+          comment: ""
         },
         {
           id: 5,
@@ -173,7 +170,7 @@ export default {
           status: "approved",
           date: "2020-04-25 (六)",
           description: "社團用音響定期保養，預計2020-04-27到店取回",
-          comment: "",
+          comment: ""
         },
         {
           id: 6,
@@ -183,18 +180,18 @@ export default {
           status: "approved",
           date: "2020-04-25 (六)",
           description: "保險人: 全體工作人員",
-          comment: "",
-        },
-      ],
+          comment: ""
+        }
+      ]
     };
   },
   props: {
-    title: String,
+    projectName: String,
     projectId: Number,
-    theme: Number,
+    projectTheme: String,
     expanse: Number,
-    budget: Number,
-    income: Number,
+    projectBudget: Number,
+    income: Number
   },
   methods: {
     add() {
@@ -216,12 +213,12 @@ export default {
     },
     newRevenue(obj) {
       this.bills.unshift(obj);
-    },
+    }
   },
   beforeMount() {
     // TODO: read expanse, income, budget, accoints from db
     // TODO: read last three's bills with title, cost, categoty, status, date from db
-  },
+  }
 };
 </script>
 

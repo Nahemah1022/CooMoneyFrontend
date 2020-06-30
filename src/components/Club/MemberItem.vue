@@ -2,27 +2,27 @@
   <div class="main">
     <div class="left">
       <div class="idx">{{ idx }}</div>
-      <img :src="user.headshot" alt="">
+      <img :src="user.userPhoto" alt />
     </div>
     <div class="center">
       <div class="username">{{ user.username }}</div>
       <div class="email">{{ user.email }}</div>
     </div>
     <div class="right">
-      <div v-if="user.auth===1" class="auth">管睆員</div>
-      <div class="date">{{ user.date }}</div>
+      <div v-if="user.auth===1" class="auth">管理員</div>
+      <!-- <div class="date">{{ user.date }}</div> -->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MemberItem',
+  name: "MemberItem",
   props: {
     user: Object,
     idx: Number
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -1,9 +1,6 @@
 <template>
   <div class="main_c">
-    <img
-      :src="require('@/assets/image/Project/cross.svg')"
-      @click="$emit('cancel')"
-    />
+    <img :src="require('@/assets/image/Project/cross.svg')" @click="$emit('cancel')" />
     <div class="title">建立你的社群</div>
     <div class="block">
       <div class="pair">
@@ -35,34 +32,36 @@ export default {
       clubName: "",
       clubImage: "",
       clubMembers: "",
-      uploadedFile: "",
+      uploadedFile: ""
     };
   },
   methods: {
     async create() {
       this.$emit("cancel");
-      let clubMembers = [];
-      let members = this.clubMembers.split(" ");
-      for(let i=0; i<members.length; i++){
-        clubMembers.push(members[i]);
-      }
-      clubMembers = JSON.stringify(clubMembers);    // 要先轉成字串
-      let bodyFormData = new FormData();
-      bodyFormData.append("clubImage", this.uploadedFile);
-      bodyFormData.set("clubName", this.clubName);
-      bodyFormData.set("clubMembers", clubMembers);
-      let newClub = await this.$store.dispatch("createClub", bodyFormData);
+      // let clubMembers = [];
+      // let members = this.clubMembers.split(" ");
+      // for (let i = 0; i < members.length; i++) {
+      //   clubMembers.push(members[i]);
+      // }
+      // clubMembers = JSON.stringify(clubMembers); // 要先轉成字串
+      // let bodyFormData = new FormData();
+      // bodyFormData.append("clubImage", this.uploadedFile);
+      // bodyFormData.set("clubName", this.clubName);
+      // bodyFormData.set("clubMembers", clubMembers);
+      // let newClub = await this.$store.dispatch("createClub", bodyFormData);
 
-      let imageData = new FormData();
-      imageData.append("clubImage", this.uploadedFile);
-      let newClubImage = await this.$store.dispatch("clubImage", imageData);
-      console.log(newClub);
-      console.log(newClubImage);
+      // let imageData = new FormData();
+      // imageData.append("clubImage", this.uploadedFile);
+      // let newClubImage = await this.$store.dispatch("clubImage", imageData);
+      // console.log(newClub);+
+      // console.log(newClubImage);
+      // let club = await this.$store.dispatch("getClub");
+      // console.log(club);
     },
     uploadFile(f) {
       this.uploadedFile = f.target.files[0];
-    },
-  },
+    }
+  }
 };
 </script>
 

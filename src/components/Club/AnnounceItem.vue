@@ -2,29 +2,37 @@
   <div class="main_b">
     <div class="header">
       <div class="left">
-        <img :src="announce.authorHeadshot" alt="">
-        <span class="name">{{ announce.author }}</span>
+        <img :src="establisher.userPhoto" alt />
+        <span class="name">{{ establisher.username }}</span>
       </div>
-      <div class="title">
-        {{ announce.title }}
-      </div>
+      <!-- <div class="title">{{ announce.title }}</div> -->
       <!-- <div class="date">
         {{ announce.date }}
-      </div> -->
+      </div>-->
     </div>
-    <div class="content">
-      {{ announce.content }}
-    </div>
+    <div class="content">{{ announce.info }}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AnnounceItem',
+  name: "AnnounceItem",
+  data() {
+    return {
+      establisher: ""
+    };
+  },
   props: {
     announce: Object
+  },
+  beforeMount: async function() {
+    let userID = [];
+    userID.push(this.announce.establisher);
+    userID = JSON.stringify(userID);
+    let response = await this.$store.dispatch("getUserByID", { userID });
+    this.establisher = response.data.data[0];
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

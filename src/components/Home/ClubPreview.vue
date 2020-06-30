@@ -4,9 +4,7 @@
     :style="{
       backgroundImage:
         'url(' +
-        require('../../assets/image/Home/clubs/' +
-          club.name.split(' ').join('_') +
-          '.png') +
+        club.clubImage +
         ')',
     }"
     @click="enter"
@@ -15,15 +13,15 @@
       <!-- <img
         class="avatar"
         :src="require('@/assets/image/Home/avatar_' + (club.auth===0 ? 'member' : 'owner') + '.svg')"
-      /> -->
+      />-->
       <!-- <img
         class="avatar"
         :src="require('@/assets/image/Home/clubs/' + club.name.split(' ').join('_') + 'LOGO.png')"
       />-->
-      <p class="title">{{ club.name }}</p>
+      <p class="title">{{ club.clubName }}</p>
       <div class="right">
-        <p class="date">{{ club.createDate }}</p>
-        <p class="member">{{ club.memberCount + "位成員" }}</p>
+        <p class="date">{{ club.createdAt.substring(0, 10).replace('-', '/').replace('-', '/') }}</p>
+        <p class="member">{{ club.clubMembers.length + "位成員" }}</p>
       </div>
     </div>
   </div>
@@ -35,16 +33,16 @@ export default {
   props: {
     club: Object,
     list: Boolean,
-    disable: Boolean,
+    disable: Boolean
   },
   methods: {
     enter() {
       if (!this.disable) {
-        console.log(this.disable);
-        this.$router.push("Club");
+        this.$store.commit("setSelectedClub", this.club);
+        this.$router.push("/Club");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

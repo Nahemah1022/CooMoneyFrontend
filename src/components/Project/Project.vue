@@ -38,55 +38,55 @@ export default {
       isEditing: false,
       nullProject: {
         id: 0,
-        title: "New Project",
-        theme: 6,
-        budget: 0,
+        projectName: "New Project",
+        projectTheme: 6,
+        projectBudget: 0,
         expanse: 0,
         income: 0
       },
       targetProject: null,
       toNew: false,
       projects: [
-        {
-          id: 1,
-          title: "Orientation Party",
-          theme: 1,
-          budget: 38092,
-          expanse: 13724,
-          income: 9080
-        },
-        {
-          id: 2,
-          title: "Public Performance",
-          theme: 2,
-          budget: 15641,
-          expanse: 556,
-          income: 0
-        },
-        {
-          id: 3,
-          title: "Group Activity",
-          theme: 3,
-          budget: 1226,
-          expanse: 151,
-          income: 0
-        },
-        {
-          id: 4,
-          title: "Anniversary Activity",
-          theme: 4,
-          budget: 30000,
-          expanse: 0,
-          income: 0
-        },
-        {
-          id: 5,
-          title: "Daily Expenses",
-          theme: 5,
-          budget: 9700,
-          expanse: 300,
-          income: 0
-        }
+        // {
+        //   id: 1,
+        //   projectName: "Orientation Party",
+        //   projectTheme: 1,
+        //   projectBudget: 38092,
+        //   expanse: 13724,
+        //   income: 9080
+        // },
+        // {
+        //   id: 2,
+        //   projectName: "Public Performance",
+        //   projectTheme: 2,
+        //   projectBudget: 15641,
+        //   expanse: 556,
+        //   income: 0
+        // },
+        // {
+        //   id: 3,
+        //   projectName: "Group Activity",
+        //   projectTheme: 3,
+        //   projectBudget: 1226,
+        //   expanse: 151,
+        //   income: 0
+        // },
+        // {
+        //   id: 4,
+        //   projectName: "Anniversary Activity",
+        //   projectTheme: 4,
+        //   projectBudget: 30000,
+        //   expanse: 0,
+        //   income: 0
+        // },
+        // {
+        //   id: 5,
+        //   projectName: "Daily Expenses",
+        //   projectTheme: 5,
+        //   projectBudget: 9700,
+        //   expanse: 300,
+        //   income: 0
+        // }
       ]
     };
   },
@@ -108,7 +108,7 @@ export default {
       obj.id = this.projects.length + 1;
       obj.expanse = 0;
       obj.income = 0;
-      obj.theme = 6;
+      obj.projectTheme = 6;
       this.projects.push(obj);
       this.toNew = false;
       this.enterProject(this.projects[this.projects.length - 1]);
@@ -141,6 +141,14 @@ export default {
       }
       this.isEditing = false;
     }
+  },
+  beforeMount: async function() {
+    let projects = await this.$store.dispatch(
+      "getClubProject",
+      this.$store.state.club.id
+    );
+    this.projects = projects.data.data;
+    console.log(projects);
   }
 };
 </script>

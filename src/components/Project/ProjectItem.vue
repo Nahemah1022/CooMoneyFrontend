@@ -5,14 +5,14 @@
       <img
         class="cross"
         src="@/assets/image/Project/cross.svg"
-        @click="$emit('delete', project.id, project.title)"
+        @click="$emit('delete', project.id, project.projectName)"
       />
     </div>
     <img
-      :src="require(`@/assets/image/Project/Theme_${project.theme}.svg`)"
+      :src="require(`@/assets/image/Project/Theme_${project.projectTheme}.svg`)"
       @click="$emit('enter', project)"
     />
-    <p :class="{text: true, large: this.large}">{{project.title}}</p>
+    <p :class="{text: true, large: this.large}">{{project.projectName}}</p>
   </div>
 </template>
 

@@ -6,15 +6,9 @@
       :bg="'transparent'"
       @back="$router.go(-1)"
     ></Header>
-    <div
-      class="upper"
-      :style="{ backgroundImage: 'url(' + require('../../assets/image/Home/clubs/' + club.name.split(' ').join('_') + '.png') + ')' }"
-    >
+    <div class="upper" :style="{ backgroundImage: 'url(' + preClub.clubImage + ')' }">
       <div class="info">
-        <img
-          class="avatar"
-          :src="require('@/assets/image/Home/clubs/' + club.name.split(' ').join('_') + 'LOGO.png')"
-        />
+        <img class="avatar" :src="require('@/assets/image/Home/avatar_empty.svg')" />
         <div class="space"></div>
         <h1>{{ club.name }}</h1>
       </div>
@@ -35,15 +29,20 @@
         <div class="content">{{ club.intro }}</div>
       </div>
       <div v-if="tabIndex===1" class="announce">
-        <AnnounceItem v-for="(announce, index) in announces" :key="index" :announce="announce"></AnnounceItem>
+        <AnnounceItem v-for="(announce, index) in club.announces" :key="index" :announce="announce"></AnnounceItem>
       </div>
       <div v-if="tabIndex===2" class="member">
         <div class="header">
           <span>成員總數</span>
-          <span>{{ members.length + "人" }}</span>
+          <span>{{ club.members.length + "人" }}</span>
         </div>
         <div class="memberBlock">
-          <MemberItem v-for="(member, index) in members" :key="index" :idx="index+1" :user="member"></MemberItem>
+          <MemberItem
+            v-for="(member, index) in club.members"
+            :key="index"
+            :idx="index+1"
+            :user="member"
+          ></MemberItem>
         </div>
       </div>
     </div>
@@ -67,135 +66,157 @@ export default {
   },
   data() {
     return {
+      preClub: {},
       club: {
-        name: "成大資訊營",
-        description: "a group of fire dance NCKU",
-        auth: 0,
-        createDate: "2019/05/01",
-        memberCount: 27,
-        intro:
-          "\t已算不清多少個日與夜，那身影始終懸於海岬之上，任風吹日曬雨淋；飽經風雨摧殘的臉龐上，歷經滄桑的雙眸鑲嵌其中，目光開闔之間，自有黯淡金光流瀉而出－－那是神性的光輝。\n\n\t但那身影卻好似永遠看不膩，始終懸於那處，遠眺著黑海盡頭的海天一色，從日出到日落，看盡潮起潮落。\n\n\t黎明破曉、曙光乍現，萬丈金光刺破闃黑的夜，鎏金的海映著黯金的瞳，純金的世界讓人想起了奧林帕斯的金碧輝煌，在那場天地變色的諸神戰役中，他毅然決然投身奧林帕斯陣營，劍指自己的手足－－泰坦神族。"
+        // name: "成大資訊營",
+        // description: "a group of fire dance NCKU",
+        // auth: 0,
+        // createDate: "2019/05/01",
+        // memberCount: 27,
+        // intro:
+        //   "\t已算不清多少個日與夜，那身影始終懸於海岬之上，任風吹日曬雨淋；飽經風雨摧殘的臉龐上，歷經滄桑的雙眸鑲嵌其中，目光開闔之間，自有黯淡金光流瀉而出－－那是神性的光輝。\n\n\t但那身影卻好似永遠看不膩，始終懸於那處，遠眺著黑海盡頭的海天一色，從日出到日落，看盡潮起潮落。\n\n\t黎明破曉、曙光乍現，萬丈金光刺破闃黑的夜，鎏金的海映著黯金的瞳，純金的世界讓人想起了奧林帕斯的金碧輝煌，在那場天地變色的諸神戰役中，他毅然決然投身奧林帕斯陣營，劍指自己的手足－－泰坦神族。"
       },
       members: [
-        { 
-          username: "陳尹曈", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "a122774007@gmail.com", 
-          date: "2019/07/15", 
-          auth: 1
-        },
-        { 
-          username: "倪皓城", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "zzzzzz@gmail.com", 
-          date: "2019/12/15", 
-          auth: 0
-        },
-        { 
-          username: "辛普森", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "hinpson@gmail.com", 
-          date: "2019/11/16", 
-          auth: 1
-        },
-        { 
-          username: "陳力聖", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "shang@gmail.com", 
-          date: "2019/10/26", 
-          auth: 0
-        },
-        { 
-          username: "陳明心", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "travix@gmail.com", 
-          date: "2019/08/13", 
-          auth: 0
-        },
-        {
-          username: "阿拉哩", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "alale@gmail.com", 
-          date: "2019/09/15", 
-          auth: 0
-        },
-        {
-          username: "阿拉哩", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "alale@gmail.com", 
-          date: "2019/09/15", 
-          auth: 0
-        },
-        {
-          username: "阿拉哩", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "alale@gmail.com", 
-          date: "2019/09/15", 
-          auth: 0
-        },
-        {
-          username: "阿拉哩", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "alale@gmail.com", 
-          date: "2019/09/15", 
-          auth: 0
-        },
-        {
-          username: "阿拉哩", 
-          headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          email: "alale@gmail.com", 
-          date: "2019/09/15", 
-          auth: 0
-        },
-
+        // {
+        //   username: "陳尹曈",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "a122774007@gmail.com",
+        //   date: "2019/07/15",
+        //   auth: 1
+        // },
+        // {
+        //   username: "倪皓城",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "zzzzzz@gmail.com",
+        //   date: "2019/12/15",
+        //   auth: 0
+        // },
+        // {
+        //   username: "辛普森",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "hinpson@gmail.com",
+        //   date: "2019/11/16",
+        //   auth: 1
+        // },
+        // {
+        //   username: "陳力聖",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "shang@gmail.com",
+        //   date: "2019/10/26",
+        //   auth: 0
+        // },
+        // {
+        //   username: "陳明心",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "travix@gmail.com",
+        //   date: "2019/08/13",
+        //   auth: 0
+        // },
+        // {
+        //   username: "阿拉哩",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "alale@gmail.com",
+        //   date: "2019/09/15",
+        //   auth: 0
+        // },
+        // {
+        //   username: "阿拉哩",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "alale@gmail.com",
+        //   date: "2019/09/15",
+        //   auth: 0
+        // },
+        // {
+        //   username: "阿拉哩",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "alale@gmail.com",
+        //   date: "2019/09/15",
+        //   auth: 0
+        // },
+        // {
+        //   username: "阿拉哩",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "alale@gmail.com",
+        //   date: "2019/09/15",
+        //   auth: 0
+        // },
+        // {
+        //   username: "阿拉哩",
+        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   email: "alale@gmail.com",
+        //   date: "2019/09/15",
+        //   auth: 0
+        // }
       ],
       announces: [
-        { 
-          author: "陳尹曈", 
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          title: "2020期初社費", 
-          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna",
-          date: "2020/06/28"
-        },
-        { 
-          author: "陳尹曈", 
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          title: "2020期初社費", 
-          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28"
-        },
-        { 
-          author: "陳尹曈", 
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          title: "2020期初社費", 
-          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28"
-        },
-        { 
-          author: "陳尹曈", 
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          title: "2020期初社費", 
-          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28"
-        },
-        { 
-          author: "陳尹曈", 
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          title: "2020期初社費", 
-          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28"
-        },
-        { 
-          author: "陳尹曈", 
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png", 
-          title: "2020期初社費", 
-          content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28"
-        }
+        // {
+        //   author: "陳尹曈",
+        //   authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   title: "2020期初社費",
+        //   content:
+        //     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna",
+        //   date: "2020/06/28"
+        // },
+        // {
+        //   author: "陳尹曈",
+        //   authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   title: "2020期初社費",
+        //   content:
+        //     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+        //   date: "2020/06/28"
+        // },
+        // {
+        //   author: "陳尹曈",
+        //   authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   title: "2020期初社費",
+        //   content:
+        //     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+        //   date: "2020/06/28"
+        // },
+        // {
+        //   author: "陳尹曈",
+        //   authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   title: "2020期初社費",
+        //   content:
+        //     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+        //   date: "2020/06/28"
+        // },
+        // {
+        //   author: "陳尹曈",
+        //   authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   title: "2020期初社費",
+        //   content:
+        //     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+        //   date: "2020/06/28"
+        // },
+        // {
+        //   author: "陳尹曈",
+        //   authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
+        //   title: "2020期初社費",
+        //   content:
+        //     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
+        //   date: "2020/06/28"
+        // }
       ],
       tabs: [{ name: "簡介" }, { name: "公告" }, { name: "成員" }],
       tabIndex: 0
     };
+  },
+  beforeMount: async function() {
+    this.preClub = this.$store.state.club;
+    this.club.name = this.preClub.clubName;
+    this.club.createDate = this.preClub.createdAt
+      .substring(0, 10)
+      .replace("-", "/")
+      .replace("-", "/");
+    this.club.intro = this.preClub.clubIntro;
+    this.club.members = this.preClub.clubMembers;
+    this.club.announces = this.preClub.clubAnnounce;
+    let clubID = this.preClub.id;
+    this.club.members = await this.$store.dispatch("getClubMembers", {
+      clubID
+    });
+    this.club.members = this.club.members.data.data;
   }
 };
 </script>

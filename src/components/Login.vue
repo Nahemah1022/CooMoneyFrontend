@@ -81,6 +81,7 @@ export default {
           this.$cookies.set("token", res.data.data.token, "1d");
           this.$router.push("/Home");
           this.$store.commit("setUsername", this.username);
+          localStorage.setItem("token", res.data.data.token);
         })
         .catch(() => {
           this.error();
