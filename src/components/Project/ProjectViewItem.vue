@@ -17,12 +17,12 @@
           <div class="money">
             <p class="text">Monthly income</p>
             <span>$</span>
-            {{ costFormat(this.income) }}
+            {{ costFormat(this.projectTotalIncome) }}
           </div>
           <div class="money">
             <p class="text">Monthly expenses</p>
             <span>$</span>
-            {{ costFormat(this.expanse) }}
+            {{ costFormat(this.projectTotalExpanse) }}
           </div>
         </div>
       </div>
@@ -58,7 +58,6 @@
           :class="{ revenue: true, full: fullRevenue }"
           :projectId="projectId"
           :full="fullRevenue"
-          :bills="bills"
           @full="toggleRevenue"
         ></Revenue>
       </div>
@@ -119,79 +118,79 @@ export default {
         }
       ],
       bills: [
-        {
-          id: 1,
-          title: "慶功宴 - 碳佐麻里",
-          cost: 6092,
-          categoty: "meal",
-          status: "approved",
-          date: "2020-04-30 (四)",
-          description:
-            "慶功宴地點: 碳佐麻里\n實到人數32人\n單價499+10%，自付金額100元",
-          comment: ""
-        },
-        {
-          id: 2,
-          title: "購買軟體 - Adobe",
-          cost: 2000,
-          categoty: "purchase",
-          status: "rejected",
-          date: "2020-04-27 (一)",
-          description:
-            "需求: 後製活動期間照片\n購買軟體: Adobe Photoshop\n使用期限: 1年，2021-04-27到期",
-          comment: "經費不足，故駁回"
-        },
-        {
-          id: 3,
-          title: "場地租借 - 晚會場地",
-          cost: 9600,
-          categoty: "rent",
-          status: "pending",
-          date: "2020-04-27 (一)",
-          description: "場地: 成大一活第一演講廳\n使用時間: 2020-05-06下午3點",
-          comment: ""
-        },
-        {
-          id: 4,
-          title: "購買設備 - 相機",
-          cost: 65980,
-          categoty: "device",
-          status: "pending",
-          date: "2020-04-27 (一)",
-          description:
-            "需求: 前任相機年久失修，多處功能故障\n購買Sony A7R3，保固1年",
-          comment: ""
-        },
-        {
-          id: 5,
-          title: "設備維修 - 音響",
-          cost: 1222,
-          categoty: "repair",
-          status: "approved",
-          date: "2020-04-25 (六)",
-          description: "社團用音響定期保養，預計2020-04-27到店取回",
-          comment: ""
-        },
-        {
-          id: 6,
-          title: "平安保險",
-          cost: 420,
-          categoty: "medical",
-          status: "approved",
-          date: "2020-04-25 (六)",
-          description: "保險人: 全體工作人員",
-          comment: ""
-        }
+        // {
+        //   id: 1,
+        //   title: "慶功宴 - 碳佐麻里",
+        //   cost: 6092,
+        //   categoty: "meal",
+        //   status: "approved",
+        //   date: "2020-04-30 (四)",
+        //   description:
+        //     "慶功宴地點: 碳佐麻里\n實到人數32人\n單價499+10%，自付金額100元",
+        //   comment: ""
+        // },
+        // {
+        //   id: 2,
+        //   title: "購買軟體 - Adobe",
+        //   cost: 2000,
+        //   categoty: "purchase",
+        //   status: "rejected",
+        //   date: "2020-04-27 (一)",
+        //   description:
+        //     "需求: 後製活動期間照片\n購買軟體: Adobe Photoshop\n使用期限: 1年，2021-04-27到期",
+        //   comment: "經費不足，故駁回"
+        // },
+        // {
+        //   id: 3,
+        //   title: "場地租借 - 晚會場地",
+        //   cost: 9600,
+        //   categoty: "rent",
+        //   status: "pending",
+        //   date: "2020-04-27 (一)",
+        //   description: "場地: 成大一活第一演講廳\n使用時間: 2020-05-06下午3點",
+        //   comment: ""
+        // },
+        // {
+        //   id: 4,
+        //   title: "購買設備 - 相機",
+        //   cost: 65980,
+        //   categoty: "device",
+        //   status: "pending",
+        //   date: "2020-04-27 (一)",
+        //   description:
+        //     "需求: 前任相機年久失修，多處功能故障\n購買Sony A7R3，保固1年",
+        //   comment: ""
+        // },
+        // {
+        //   id: 5,
+        //   title: "設備維修 - 音響",
+        //   cost: 1222,
+        //   categoty: "repair",
+        //   status: "approved",
+        //   date: "2020-04-25 (六)",
+        //   description: "社團用音響定期保養，預計2020-04-27到店取回",
+        //   comment: ""
+        // },
+        // {
+        //   id: 6,
+        //   title: "平安保險",
+        //   cost: 420,
+        //   categoty: "medical",
+        //   status: "approved",
+        //   date: "2020-04-25 (六)",
+        //   description: "保險人: 全體工作人員",
+        //   comment: ""
+        // }
       ]
     };
   },
   props: {
     projectName: String,
-    projectId: Number,
+    projectId: String,
     projectTheme: String,
-    expanse: Number,
+    projectTotalExpanse: Number,
     projectBudget: Number,
-    income: Number
+    projectTotalIncome: Number
   },
   methods: {
     add() {
@@ -211,11 +210,11 @@ export default {
     toggleRevenue() {
       this.fullRevenue = !this.fullRevenue;
     },
-    newRevenue(obj) {
+    async newRevenue(obj) {
       this.bills.unshift(obj);
     }
   },
-  beforeMount() {
+  async beforeMount() {
     // TODO: read expanse, income, budget, accoints from db
     // TODO: read last three's bills with title, cost, categoty, status, date from db
   }

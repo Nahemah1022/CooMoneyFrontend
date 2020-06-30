@@ -134,7 +134,7 @@ $transition: 0.3s;
     .titleBlock {
       width: 70%;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: flex-start;
       height: 3vh;
       font-size: 16px;
@@ -163,6 +163,7 @@ $transition: 0.3s;
         width: auto;
         height: auto;
         font-size: 20px;
+        align-items: flex-start;
         img {
           width: 5vw;
           &:not(.space) {

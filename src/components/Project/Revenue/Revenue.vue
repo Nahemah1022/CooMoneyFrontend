@@ -10,17 +10,22 @@
         />
       </div>
       <div :class="{bills: true, fullBills: full}">
-        <div v-for="bill in bills" :key="bill.id">
-          <p class="date" v-if="showDate(full && bill.date)">{{bill.date}}</p>
-          <RevenueItem
-            :costTitle="bill.title"
-            :category="bill.categoty"
-            :cost="costFormat(bill.cost)"
-            :status="bill.status"
-            :description="bill.description"
-            :fullRevenue="full"
-            :comment="bill.comment"
-          ></RevenueItem>
+        <div v-if="bills.length !== 0">
+          <div v-for="bill in bills" :key="bill.revenueID">
+            <p
+              class="date"
+              v-if="showDate(full && bill.createdAt.substring(0, 10))"
+            >{{bill.createdAt.substring(0, 10)}}</p>
+            <RevenueItem
+              :costTitle="bill.revenueTitle"
+              :category="bill.revenueTag"
+              :cost="costFormat(bill.revenueCost)"
+              :status="bill.revenueStatus.toLowerCase()"
+              :description="bill.revenueDescription"
+              :fullRevenue="full"
+              :comment="''"
+            ></RevenueItem>
+          </div>
         </div>
       </div>
     </div>
@@ -36,6 +41,7 @@ export default {
   data() {
     return {
       dates: {},
+      bills: [],
       detailedBills: {}
     };
   },
@@ -44,9 +50,8 @@ export default {
     //BlurMask
   },
   props: {
-    projectId: Number,
-    full: Boolean,
-    bills: Array
+    projectId: String,
+    full: Boolean
   },
   methods: {
     fullRevenue() {
@@ -77,14 +82,19 @@ export default {
       }
     }
   },
-  beforeMount() {
-    for (const bill of this.bills) {
-      if (this.detailedBills[bill.date] == undefined) {
-        this.detailedBills[bill.date] = new Array();
-        this.dates[bill.date] = false;
-      }
-      this.detailedBills[bill.date].push(bill);
-    }
+  async beforeMount() {
+    let projectID = this.projectId;
+    let response = await this.$store.dispatch("getAllRevenue", { projectID });
+    response = response.data.data;
+    this.bills = response;
+    console.log(this.bills);
+    // for (const bill of this.bills) {
+    //   if (this.detailedBills[bill.date] == undefined) {
+    //     this.detailedBills[bill.date] = new Array();
+    //     this.dates[bill.date] = false;
+    //   }
+    //   this.detailedBills[bill.date].push(bill);
+    // }
   }
 };
 </script>

@@ -7,10 +7,10 @@
           <ProjectViewItem
             :projectName="preProject.projectName"
             :projectTheme="preProject.projectTheme"
-            :projectId="preProject.id"
+            :projectId="preProject._id"
             :projectBudget="preProject.projectBudget"
-            :expanse="preProject.expanse"
-            :income="preProject.income"
+            :projectTotalExpanse="preProject.projectTotalExpanse"
+            :projectTotalIncome="preProject.projectTotalIncome"
           ></ProjectViewItem>
         </swiper-slide>
       </swiper>

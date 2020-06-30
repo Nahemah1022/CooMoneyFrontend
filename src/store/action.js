@@ -6,28 +6,28 @@ const server = {
   // USER MODULE
   signUp: (context) => {
     axios
-    .post("/user/signUp", context.state.signUp)
-    .then((res) => {
-      console.log(res);
-      router.push("/Login");
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .post("/user/signUp", context.state.signUp)
+      .then((res) => {
+        console.log(res);
+        router.push("/Login");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   login: (context) => {
     axios
-    .post("/user/login", {
-      email: context.state.login.email,
-      password: context.state.login.password,
-    })
-    .then((res) => {
-      console.log(res);
-      router.push("/Home");
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .post("/user/login", {
+        email: context.state.login.email,
+        password: context.state.login.password,
+      })
+      .then((res) => {
+        console.log(res);
+        router.push("/Home");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   getUserByID: (context, params) => axios.get("/user/getUserByID", { params }),
 
@@ -64,16 +64,16 @@ const server = {
   getProjectTags: (context, params) => axios.get("/project/getProjectTags", { params }),
 
   // REVENUE MODULE
-  createRevenue: (context, { data, params }) => axios.post("/revenue/createRevenue", data, { 
+  createRevenue: (context, { data, params }) => axios.post("/revenue/createRevenue", data, {
     headers: { "Content-Type": "multipart/formdata" },
-    params 
+    params
   }),
-  revenueImage: (context, data) => axios.post("/revenue/image", data, { 
+  revenueImage: (context, data) => axios.post("/revenue/image", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
   updateRevenue: (context, { data, params }) => axios.post("/revenue/updateRevenue", data, { params }),
-  getAllRevenue: (context, params) => axios.get("/revenue/getAllRevenue", params),
-  getTenRevenue: (context, params) => axios.get("/revenue/getTenRevenue", params),
+  getAllRevenue: (context, params) => axios.get("/revenue/getAllRevenue", { params }),
+  getTenRevenue: (context, params) => axios.get("/revenue/getTenRevenue", { params }),
 
 };
 

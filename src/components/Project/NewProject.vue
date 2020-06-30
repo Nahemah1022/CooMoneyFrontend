@@ -30,9 +30,7 @@
         </div>
       </div>
 
-      <button
-        @click="$emit('newProject', {projectName: projectName, projectBudget: parseInt(projectBudget)})"
-      >Confirm</button>
+      <button @click="submit">Confirm</button>
     </div>
   </div>
 </template>
@@ -63,6 +61,14 @@ export default {
   },
   components: {
     ProjectItem
+  },
+  methods: {
+    submit() {
+      this.$emit("newProject", {
+        projectName: this.projectName,
+        projectBudget: parseInt(this.projectBudget)
+      });
+    }
   },
   beforeMount() {
     console.log(this.preProject);

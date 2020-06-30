@@ -32,7 +32,10 @@
           </Draggable>
           <p>Order thier priority by dragging</p>
           <br />
-          <p>Or <span @click="newAccount">click here</span> to create</p>
+          <p>
+            Or
+            <span @click="newAccount">click here</span> to create
+          </p>
         </div>
 
         <div v-else class="account">
@@ -67,18 +70,18 @@ export default {
   data() {
     return {
       isDragging: false,
-      localAccounts: [],
+      localAccounts: []
     };
   },
   components: {
     Draggable,
-    AccountItem,
+    AccountItem
     // BlurMask
   },
   props: {
     full: Boolean,
-    projectId: Number,
-    accounts: Array,
+    projectId: String,
+    accounts: Array
   },
   computed: {
     dragOptions() {
@@ -86,9 +89,9 @@ export default {
         animation: 0,
         group: "description",
         disabled: false,
-        ghostClass: "ghost",
+        ghostClass: "ghost"
       };
-    },
+    }
   },
   methods: {
     costFormat(cost) {
@@ -107,14 +110,14 @@ export default {
         name: "",
         iconName: "money-check-alt",
         remain: 0,
-        isEditing: true,
+        isEditing: true
       };
       this.localAccounts.push(a);
-    },
+    }
   },
   beforeMount() {
     this.localAccounts = this.accounts;
-  },
+  }
 };
 </script>
 

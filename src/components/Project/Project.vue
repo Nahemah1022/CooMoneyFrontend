@@ -104,11 +104,22 @@ export default {
       this.toNew = true;
       this.targetProject = this.nullProject;
     },
-    newProject(obj) {
-      obj.id = this.projects.length + 1;
+    async newProject(obj) {
+      console.log(obj);
+      let clubID = this.$store.state.club._id;
+      let response = await this.$store.dispatch("createProject", {
+        data: {
+          projectName: obj.projectName,
+          projectTheme: "colorful",
+          projectBudget: obj.projectBudget,
+          projectClub: clubID,
+          projectChecker: ""
+        },
+        params: { clubID }
+      });
+      console.log(response);
       obj.expanse = 0;
       obj.income = 0;
-      obj.projectTheme = 6;
       this.projects.push(obj);
       this.toNew = false;
       this.enterProject(this.projects[this.projects.length - 1]);
@@ -143,12 +154,9 @@ export default {
     }
   },
   beforeMount: async function() {
-    let projects = await this.$store.dispatch(
-      "getClubProject",
-      this.$store.state.club._id
-    );
+    let clubID = this.$store.state.club._id;
+    let projects = await this.$store.dispatch("getClubProject", clubID);
     this.projects = projects.data.data;
-    console.log(projects);
   }
 };
 </script>
