@@ -25,7 +25,10 @@
       </div>
       <div class="space"></div>
       <div v-if="tabIndex===0" class="intro">
-        <div class="title">社群簡介</div>
+        <div class="title">
+          <span>社群簡介</span>
+          <font-awesome-icon icon="edit"></font-awesome-icon>
+        </div>
         <div class="content">{{ club.intro }}</div>
       </div>
       <div v-if="tabIndex===1" class="announce">
@@ -312,6 +315,9 @@ $tabHeight: 36px;
         font-size: 26px;
         font-weight: 700;
         margin: 2vh 0;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
       }
       .content {
         white-space: pre-wrap;
