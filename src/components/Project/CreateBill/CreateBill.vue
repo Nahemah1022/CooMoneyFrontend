@@ -317,12 +317,12 @@ export default {
         "-" +
         ("0" + new Date(d).getDate()).slice(-2);
       this.$emit("newRevenue", {
-        title: this.title,
-        cost: this.money,
-        categoty: this.categorys[this.categoryIndex].type,
-        status: "pending",
-        date: day_f + " " + days[d.getDay()],
-        description: this.description
+        revenueTitle: this.title,
+        revenueCost: this.money,
+        revenueTag: this.categorys[this.categoryIndex].type,
+        revenueStatus: "pending",
+        revenueDate: day_f + " " + days[d.getDay()],
+        revenueDescription: this.description
       });
 
       let bodyFormData = new FormData();

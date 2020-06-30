@@ -11,11 +11,11 @@
       </div>
       <div :class="{bills: true, fullBills: full}">
         <div v-if="bills.length !== 0">
-          <div v-for="bill in bills" :key="bill.revenueID">
+          <div v-for="bill in bills" :key="bill._id">
             <p
               class="date"
-              v-if="showDate(full && bill.createdAt.substring(0, 10))"
-            >{{bill.createdAt.substring(0, 10)}}</p>
+              v-if="showDate(full && (bill.revenueYear + '-' + bill.revenueMonth + '-' + bill.revenueDay))"
+            >{{(bill.revenueYear + '-' + bill.revenueMonth + '-' + bill.revenueDay)}}</p>
             <RevenueItem
               :costTitle="bill.revenueTitle"
               :category="bill.revenueTag"
@@ -112,14 +112,16 @@ export default {
     let response = await this.$store.dispatch("getAllRevenue", { projectID });
     response = response.data.data;
     this.bills = response;
-    console.log(this.bills);
-    // for (const bill of this.bills) {
-    //   if (this.detailedBills[bill.date] == undefined) {
-    //     this.detailedBills[bill.date] = new Array();
-    //     this.dates[bill.date] = false;
-    //   }
-    //   this.detailedBills[bill.date].push(bill);
-    // }
+    for (const bill of this.bills) {
+      let date =
+        bill.revenueYear + "-" + bill.revenueMonth + "-" + bill.revenueDay;
+      if (this.detailedBills[date] == undefined) {
+        this.detailedBills[date] = new Array();
+        this.dates[date] = false;
+      }
+      this.detailedBills[date].push(bill);
+    }
+    console.log(this.detailedBills);
   }
 };
 </script>
