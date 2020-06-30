@@ -12,6 +12,8 @@
         placeholder="尋找在CooMoney中的社群"
         @focus="isFocus = true"
         @blur="isFocus = false"
+        @change="searchClub"
+        v-model="clubName"
       />
       <img :src="require('@/assets/image/Home/avatar_empty.svg')" alt="" />
     </div>
@@ -34,7 +36,14 @@ export default {
   data() {
     return {
       isFocus: false,
+      clubName: ""
     };
+  },
+  methods: {
+    async searchClub(){
+      let response = await this.$store.dispatch('searchClub', { clubName: this.clubName });   // 預設是只會搜尋到尚未加入的社團
+      console.log(response);
+    }
   },
 };
 </script>

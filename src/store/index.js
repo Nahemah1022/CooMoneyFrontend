@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import action from "./action";
+import actions from "./action";
 
 Vue.use(Vuex);
 
@@ -27,6 +27,7 @@ export default new Vuex.Store({
       time: null,
     },
   },
+  actions,
   mutations: {
     onSuccess: (state, googleUser) => {
       console.log(googleUser);
@@ -48,6 +49,5 @@ export default new Vuex.Store({
       state.username = name;
     },
   },
-  action,
   modules: {},
 });

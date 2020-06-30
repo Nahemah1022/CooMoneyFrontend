@@ -39,14 +39,25 @@ export default {
     };
   },
   methods: {
-    create() {
+    async create() {
       this.$emit("cancel");
-      console.log(this.$store.username);
-      var bodyFormData = new FormData();
+      let clubMembers = [];
+      let members = this.clubMembers.split(" ");
+      for(let i=0; i<members.length; i++){
+        clubMembers.push(members[i]);
+      }
+      clubMembers = JSON.stringify(clubMembers);
+      let bodyFormData = new FormData();
       bodyFormData.append("clubImage", this.uploadedFile);
       bodyFormData.set("clubName", this.clubName);
-      bodyFormData.set("clubMembers", this.clubMembers);
-      this.$store.dispatch("createClub", bodyFormData);
+      bodyFormData.set("clubMembers", clubMembers);
+      let newClub = await this.$store.dispatch("createClub", bodyFormData);
+
+      let imageData = new FormData();
+      imageData.append("clubImage", this.uploadedFile);
+      let newClubImage = await this.$store.dispatch("clubImage", imageData);
+      console.log(newClub);
+      console.log(newClubImage);
     },
     uploadFile(f) {
       this.uploadedFile = f.target.files[0];
