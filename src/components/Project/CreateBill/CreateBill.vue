@@ -4,21 +4,43 @@
     <NewCategory
       v-if="newingCategory"
       :show="newingCategory"
-      @hide="newingCategory=!newingCategory"
+      @hide="newingCategory = !newingCategory"
       @addCategory="addCategory"
     ></NewCategory>
     <div class="block">
       <BlurMask :show="newingCategory"></BlurMask>
-      <img class="collapse" src="@/assets/image/Project/collapse.svg" @click="collapse" />
+      <img
+        class="collapse"
+        src="@/assets/image/Project/collapse.svg"
+        @click="collapse"
+      />
       <div class="upper">
         <div class="type-picker">
-          <label for="expense" :class="{selected: selectedIndex==1}" @click="selectedIndex=1">
+          <label
+            for="expense"
+            :class="{ selected: selectedIndex == 1 }"
+            @click="selectedIndex = 1"
+          >
             <input type="radio" name="btns" id="expense" />
-            <p :class="{selectedP: selectedIndex==1}" @click="selectedIndex=1">Expense</p>
+            <p
+              :class="{ selectedP: selectedIndex == 1 }"
+              @click="selectedIndex = 1"
+            >
+              Expense
+            </p>
           </label>
-          <label for="income" :class="{selected: selectedIndex==2}" @click="selectedIndex=2">
+          <label
+            for="income"
+            :class="{ selected: selectedIndex == 2 }"
+            @click="selectedIndex = 2"
+          >
             <input type="radio" name="btns" id="income" />
-            <p :class="{selectedP: selectedIndex==2}" @click="selectedIndex=2">Income</p>
+            <p
+              :class="{ selectedP: selectedIndex == 2 }"
+              @click="selectedIndex = 2"
+            >
+              Income
+            </p>
           </label>
           <!-- <label for="transfer" :class="{selected: selectedIndex==3}" @click="selectedIndex=3">
             <input type="radio" name="btns" id="transfer" />
@@ -26,30 +48,30 @@
           </label>-->
         </div>
         <div class="cost-block">
-          <div :class="{inputBlock: true, focus: focus}">
+          <div :class="{ inputBlock: true, focus: focus }">
             <input
               v-model="title"
-              @focus="focus=true"
-              @blur="focus=false"
+              @focus="focus = true"
+              @blur="focus = false"
               type="text"
               placeholder="Title here"
             />
             <textarea
-              @focus="focus=true"
-              @blur="focus=false"
+              @focus="focus = true"
+              @blur="focus = false"
               v-model="description"
-              :class="{desc: true, focus: focus}"
+              :class="{ desc: true, focus: focus }"
               placeholder="brief description"
             ></textarea>
           </div>
           <div class="money-block">
             <div v-if="costBufferDisplay" class="buffer">
               <span>$</span>
-              <p>{{costBufferDisplay}}</p>
+              <p>{{ costBufferDisplay }}</p>
             </div>
             <div class="cost">
               <span>$</span>
-              <p>{{costFormat(money)}}</p>
+              <p>{{ costFormat(money) }}</p>
             </div>
           </div>
         </div>
@@ -66,22 +88,26 @@
                 type="radio"
                 name="categorys"
                 :value="index"
-                :checked="categoryIndex==index?'checked':''"
+                :checked="categoryIndex == index ? 'checked' : ''"
                 :id="`category_${index}`"
               />
-              <div class="icon" @click="categoryIndex=index">
-                <font-awesome-icon :icon="category.font.iconName" size="lg" style="color: white" />
+              <div class="icon" @click="categoryIndex = index">
+                <font-awesome-icon
+                  :icon="category.font.iconName"
+                  size="lg"
+                  style="color: white"
+                />
               </div>
               <!-- <img
                 @click="categoryIndex=category.index"
                 :src="require(`@/assets/image/Project/${category.type}.svg`)"
               />-->
-              <p>{{category.type}}</p>
+              <p>{{ category.type }}</p>
             </div>
             <div for="more">
               <input type="radio" name="categorys" value="0" id="more" />
               <img
-                @click="newingCategory=!newingCategory"
+                @click="newingCategory = !newingCategory"
                 :src="require(`@/assets/image/Project/more.svg`)"
               />
               <p>more</p>
@@ -91,7 +117,11 @@
         <div class="bottom">
           <label class="date_block">
             <datepicker v-model="date" :format="'yyyy-MM-dd'"></datepicker>
-            <font-awesome-icon icon="calendar-day" size="sm" style="color: #00c5b8" />
+            <font-awesome-icon
+              icon="calendar-day"
+              size="sm"
+              style="color: #00c5b8"
+            />
           </label>
           <!-- <div class="account">
             <swiper class="swiper" :options="swiperOption">
@@ -106,23 +136,40 @@
           </div>-->
           <div
             class="evid"
-            :style="{height: uploadedFiles.length===0 || !evidFocus ? '20px' : (20*(uploadedFiles.length) + 'px')}"
-            @click="evidFocus=!evidFocus"
+            :style="{
+              height:
+                uploadedFiles.length === 0 || !evidFocus
+                  ? '20px'
+                  : 20 * uploadedFiles.length + 'px',
+            }"
+            @click="evidFocus = !evidFocus"
           >
             <div class="items">
               <div class="item" v-for="file in uploadedFiles" :key="file.name">
-                <img :class="{focus: evidFocus}" src="@/assets/image/Project/cross.svg" alt />
-                {{file.name}}
+                <img
+                  :class="{ focus: evidFocus }"
+                  src="@/assets/image/Project/cross.svg"
+                  alt
+                />
+                {{ file.name }}
               </div>
             </div>
             <label for="attach">
               <input id="attach" type="file" @change="uploadFile" />
-              <font-awesome-icon icon="paperclip" size="sm" style="color: #00c5b8" />
+              <font-awesome-icon
+                icon="paperclip"
+                size="sm"
+                style="color: #00c5b8"
+              />
               <!-- <img src="@/assets/image/Project/attach.svg" alt /> -->
             </label>
             <label for="shot">
               <input id="shot" type="file" @change="uploadFile" />
-              <font-awesome-icon icon="camera" size="sm" style="color: #00c5b8" />
+              <font-awesome-icon
+                icon="camera"
+                size="sm"
+                style="color: #00c5b8"
+              />
               <!-- <img src="@/assets/image/Project/shot.svg" alt /> -->
             </label>
           </div>
@@ -191,14 +238,14 @@ export default {
       focus: false,
       costBufferDisplay: "",
       operation: "",
-      uploadedFile: ""
+      uploadedFile: "",
     };
   },
   props: {
     projectId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     // Swiper,
@@ -206,7 +253,7 @@ export default {
     Datepicker,
     Confirm,
     BlurMask,
-    NewCategory
+    NewCategory,
   },
   methods: {
     costFormat(cost) {
@@ -321,7 +368,7 @@ export default {
         revenueTag: this.categorys[this.categoryIndex].type,
         revenueStatus: "pending",
         revenueDate: day_f + " " + days[d.getDay()],
-        revenueDescription: this.description
+        revenueDescription: this.description,
       });
 
       let bodyFormData = new FormData();
@@ -334,7 +381,7 @@ export default {
       );
       bodyFormData.set("revenuePassbook", "現金");
       bodyFormData.set("revenueDescription", this.description);
-      bodyFormData.append("revenueEvidence", this.uploadedFile);
+      // bodyFormData.append("revenueEvidence", this.uploadedFile);
       console.log(
         this.title,
         this.categorys[this.categoryIndex].type,
@@ -346,7 +393,7 @@ export default {
       let projectID = this.projectId;
       let newRevenue = await this.$store.dispatch("createRevenue", {
         data: bodyFormData,
-        params: { projectID }
+        params: { projectID },
       });
 
       let imageData = new FormData();
@@ -363,13 +410,13 @@ export default {
       this.costBufferDisplay = "";
       this.money = 0;
       this.categoryIndex = 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 $transition: 0.5s;
 $radius: 14px;
 * {
