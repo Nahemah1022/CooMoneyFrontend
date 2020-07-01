@@ -26,6 +26,7 @@
 
 <script>
 import Header from "@/components/common/Header.vue";
+import axios from '@/store/axios';
 
 export default {
   name: "SignUp",
@@ -41,7 +42,20 @@ export default {
     async signUp() {
       let response = await this.$store.dispatch('signUp');
       if(response.data.status == 200){
-        this.$router.push('/Home')
+        this.$store.state.login.email = response.data.data.email;
+        this.$store.state.login.password = response.data.data.password;
+        let response = await this.$store.dispatch("login");
+        if (response.data.status == 200) {
+          this.$store.state.userData.username = this.$store.state.signUp.username;
+          this.$store.state.userData.email = this.$store.state.signUp.email;
+          this.$store.state.userData.userPhoto = this.$store.state.signUp.userPhoto;
+          this.$cookies.set("token", response.data.data.token, "1d");
+          localStorage.setItem("token", response.data.data.token);
+          axios.defaults.headers['Authorization'] = 'Bearer ' + response.data.data.token;
+          this.$router.push("/Home");
+        } else {
+          this.error();
+        }
       }
       console.log(response.data);
     }
