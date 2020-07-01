@@ -15,39 +15,36 @@ export default new Vuex.Store({
       userPhoto: "",
       userBirth: "2020-06-28",
     },
+    // google: {
+    //   username: "",
+    //   email: "",
+    //   personalID: "",
+    //   picture: "",
+    //   userPhoto: "",
+    //   params: {
+    //     client_id:
+    //       "1029131813912-i7g1k358ad467mk9on0r1ht9jj55akoq.apps.googleusercontent.com",
+    //   }
+    // },
     login: {
-      username: "",
       email: "",
-      personalID: "",
-      userPhoto: "",
-      showForgot: false,
-      showError: false,
-      showAni: false,
-      otherSource: false,
-      time: null,
+      password: ""
     },
   },
   actions,
   mutations: {
-    onSuccess: (state, googleUser) => {
-      console.log(googleUser);
-      let profile = googleUser.getBasicProfile();
-      state.login.username = profile.getName();
-      state.login.email = profile.getEmail();
-      state.login.personalID = profile.getId();
-      state.login.userPhoto = profile.getImageUrl();
-    },
     loginError: (state) => {
       state.login.showError = true;
       state.login.showForgot = true;
       state.login.showAni = true;
     },
-    setHeadshot(state, pic) {
-      state.headshot = pic;
-    },
-    setUsername(state, name) {
+    setUsername: (state, name) => {
       state.username = name;
     },
+    setSelectedClub: (state, club) => {
+      state.club = club;
+    }
+
   },
   modules: {},
 });

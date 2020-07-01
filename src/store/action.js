@@ -1,35 +1,15 @@
 import axios from "./axios";
-import router from "@/router";
 
 
 const server = {
   // USER MODULE
-  signUp: (context) => {
-    axios
-    .post("/user/signUp", context.state.signUp)
-    .then((res) => {
-      console.log(res);
-      router.push("/Login");
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  },
-  login: (context) => {
-    axios
-    .post("/user/login", {
+  signUp: (context) => axios.post("/user/signUp", context.state.signUp),
+  login: (context) => axios.post("/user/login", {
       email: context.state.login.email,
       password: context.state.login.password,
-    })
-    .then((res) => {
-      console.log(res);
-      router.push("/Home");
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  },
+  }),
   getUserByID: (context, params) => axios.get("/user/getUserByID", { params }),
+  checkUser: (context, params) => axios.get("/user/checkUser", { params }),
 
   // CLUB MODULE
   createClub: (context, data) => axios.post("/club/createClub", data, {
@@ -38,12 +18,17 @@ const server = {
   clubImage: (context, data) => axios.post("/club/image", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
+  updateClubImage: (context, data) => axios.put('/club/updateClubImage', data, {
+    headers: { "Content-Type": "multipart/formdata" },
+  }),
   getClub: () => axios.get("/club/getClub"),
   getClubProject: (context, params) => axios.get(`/club/getClubProject/${params}`),
   getClubMembers: (context, params) => axios.get("/club/getClubMembers", { params }),
   addClubMembers: (context, { data, params }) => axios.put("/club/addClubMembers", data, { params }),
   addPassbook: (context, { data, params }) => axios.put("/club/addPassbook", data, { params }),
   getPassbook: (context, params) => axios.get("/club/getPassbook", { params }),
+  updatePassbookOrder: (context, { data, params }) => axios.put("/club/addPassbook", data, { params }),
+  updatePassbookInform: (context, { data, params }) => axios.put("/club/addPassbook", data, { params }),
   updateIntro: (context, { data, params }) => axios.put("/club/updateIntro", data, { params }),
   addAnnounce: (context, { data, params }) => axios.put("/club/addAnnounce", data, { params }),
   deleteAnnounce: (context, params) => axios.delete("/club/deleteAnnounce", { params }),

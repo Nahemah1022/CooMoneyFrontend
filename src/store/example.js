@@ -41,12 +41,16 @@
 // let response = await this.$store.dispatch('getUserByID', { userID });
 
 // CLUB MODULE
+// let response = await this.$store.dispatch("createClub", bodyFormData);
+// let response = await this.$store.dispatch('updateClubImage', bodyFormData, { clubID });
 // let response = await this.$store.dispatch('getClub');
 // let response = await this.$store.dispatch('getClubProject', clubID);
 // let response = await this.$store.dispatch('getClubMembers', { clubID });
 // let response = await this.$store.dispatch('addClubMembers', { data:{ username }, params:{ clubID }});
 // let response = await this.$store.dispatch('addPassbook', { data:{ passbookName, passbookBalance }, params:{ clubID }});
 // let response = await this.$store.dispatch('getPassbook', { clubID });
+// let response = await this.$store.dispatch('updatePassbookOrder', { data:{ passbookID1, passbookID2 }, params:{ clubID }});
+// let response = await this.$store.dispatch('updatePassbookInform', { data:{ passbookName, passbookBalance }, params: { clubID }});
 // let response = await this.$store.dispatch('updateIntro', { data:{ clubIntro }, params:{ clubID }});
 // let response = await this.$store.dispatch('addAnnounce', { data:{ info, date }, params:{ clubID }});
 // let response = await this.$store.dispatch('deleteAnnounce', { clubID, announceID });
