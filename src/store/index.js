@@ -19,6 +19,10 @@ export default new Vuex.Store({
       username: "",
       userPhoto: "",
     },
+    loginData: {
+      email: "",
+      password: ""
+    },
     club: {}
   },
   actions,

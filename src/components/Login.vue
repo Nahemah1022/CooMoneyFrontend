@@ -10,10 +10,10 @@
       <div>
         <p class="p1">or login with email.</p>
         <div class="input-block">
-          <input placeholder="Your Email" type="email" v-model="email" />
+          <input placeholder="Your Email" type="email" v-model="loginData.email" />
           <br />
           <br />
-          <input placeholder="Your Password" type="password" v-model="password" />
+          <input placeholder="Your Password" type="password" v-model="loginData.password" />
           <p class="p2" v-if="showForgot" @click="sendInfor">Forgot your password?</p>
           <p :class="textAni()" v-if="showError">incorrect account or password!</p>
         </div>
@@ -40,6 +40,11 @@ export default {
     Header,
     FB,
     Google
+  },
+  computed: {
+    loginData() {
+      return this.$store.state.loginData
+    }
   },
   data() {
     return {
