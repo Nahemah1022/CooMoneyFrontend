@@ -10,9 +10,9 @@ export default new Vuex.Store({
       email: "",
       password: "",
       username: "",
-      userGender: "MALE",
+      userGender: "",
       userPhoto: "",
-      userBirth: "2020-06-28",
+      userBirth: "",
     },
     userData: {
       email: "",

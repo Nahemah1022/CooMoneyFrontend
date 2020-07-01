@@ -66,19 +66,8 @@ export default {
   },
   methods: {
     async getProp(data) {
-      this.name = data.name;
-      this.$store.state.signUp.email = data.email;
-      this.$store.state.signUp.username = data.name;
-      // this.email = data.email;
-      this.$store.state.signUp.password = data.id;
-      this.picture = data.pic;
-      this.nickname = data.name;
-      // this.username = data.email;
-      this.password = data.id;
-      this.otherSource = true;
       let response;
       if(data.email){
-        console.log(this.$store.state.signUp.username);
         response = await this.$store.dispatch('checkUser', { email: data.email, username: data.name, password: data.id, userPhoto: data.pic });
         if(response.data.data.isExist){
           this.$cookies.set("token", response.data.data.token, "1d");
