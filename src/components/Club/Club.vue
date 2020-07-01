@@ -18,7 +18,20 @@
       </div>
       <input type="text" v-model="addUsername" />
     </div>
-    <BlurMask :show="isAddingMember"></BlurMask>
+
+    <div v-if="tabIndex === 2" :class="{ judge: true, show: judge }">
+      <div class="header">入社申請</div>
+      <MemberItem
+        v-for="(member, index) in applicants"
+        :key="index"
+        :idx="index + 1"
+        :user="member"
+        :isJudge="true"
+        @judge="onJudge"
+      ></MemberItem>
+    </div>
+
+    <BlurMask :show="isAddingMember || judge"></BlurMask>
     <div
       class="upper"
       :style="{ backgroundImage: 'url(' + preClub.clubImage + ')' }"
@@ -94,7 +107,15 @@
         <div class="header">
           <span>成員總數</span>
           <div class="right">
-            <div @click="addMember">新增成員</div>
+            <div class="cont">
+              <div @click="addMember">新增成員</div>
+              <div @click="judge = !judge">
+                入社申請
+                <span v-if="application.length !== 0">{{
+                  application.length
+                }}</span>
+              </div>
+            </div>
             <span>{{ club.members.length + "人" }}</span>
           </div>
         </div>
@@ -131,6 +152,7 @@ export default {
   data() {
     return {
       announceInputing: false,
+      judge: false,
       preClub: {},
       club: {
         intro: "",
@@ -144,6 +166,8 @@ export default {
       type: "edit",
       inputAnnounce: "",
       isAddingMember: false,
+      application: [],
+      applicants: [],
     };
   },
   beforeMount: async function() {
@@ -162,9 +186,18 @@ export default {
       clubID,
     });
     this.club.members = this.club.members.data.data;
-    //console.log(this.preClub.announce);
-    //console.log(await this.$store.dispatch("getAnnounce", { clubID }));
-    // console.log(this.$store.state);
+    let response = await this.$store.dispatch("getApplication", { clubID });
+    this.application = response.data.data;
+    for (let app of this.application) {
+      this.applicants.push(app.applicant);
+    }
+    let userID = [];
+    userID = JSON.stringify(this.applicants);
+    response = await this.$store.dispatch("getUserByID", { userID });
+    this.applicants = response.data.data;
+    for (let i = 0; i < this.applicants.length; ++i) {
+      this.applicants[i].applicationId = this.application[i]._id;
+    }
   },
   methods: {
     async editIntro() {
@@ -207,6 +240,13 @@ export default {
         (a) => a._id !== announceID
       );
     },
+    async onJudge(result, appId) {
+      await this.$store.dispatch("updateApplication", {
+        data: { result: result ? "APPROVED" : "REJECTED" },
+        params: { clubID: this.$store.state.club._id, applicationID: appId },
+      });
+      this.judge = false;
+    },
     addMember() {
       this.isAddingMember = true;
     },
@@ -230,6 +270,7 @@ $tabHeight: 36px;
 .main {
   width: 100%;
   overflow: hidden;
+  // position: relative;
   .addMember {
     position: absolute;
     top: 50%;
@@ -270,6 +311,30 @@ $tabHeight: 36px;
       border: 1px solid #00c5b8;
       border-radius: 16px;
       padding: 5px 10px;
+    }
+  }
+  .judge {
+    width: 97%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50vh;
+    position: fixed;
+    top: 100vh;
+    border: 0;
+    border-radius: 20px;
+    transition: 0.3s;
+    z-index: 2000;
+    background-color: #fff;
+    box-shadow: 0 0 12px gray;
+    &.show {
+      top: 60vh;
+    }
+    .header {
+      height: 30px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #00c5b8;
+      text-align: center;
     }
   }
   .upper {
@@ -415,19 +480,41 @@ $tabHeight: 36px;
         align-items: flex-end;
         border-bottom: 1px solid #e4e4e4;
         .right {
+          width: 60%;
           display: flex;
           flex-direction: column;
           align-items: flex-end;
-          div {
-            background-color: #dddddd;
-            color: #fff;
-            padding: 2px 8px;
-            margin-right: -3px;
-            border-radius: 16px;
+          .cont {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            div {
+              position: relative;
+              width: 33%;
+              margin-left: 5px;
+              text-align: center;
+              background-color: #dddddd;
+              color: #fff;
+              padding: 2px 8px;
+              border-radius: 16px;
+              span {
+                position: absolute;
+                color: #fff;
+                background-color: #f00;
+                border-radius: 50%;
+                width: 18px;
+                height: 18px;
+                right: 0;
+                top: 0;
+                transform: translate(50%, -50%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
           }
         }
-        span,
-        div {
+        span {
           margin: 5px 5px 2px 10px;
           font-weight: 700;
           color: #00c5b8;
