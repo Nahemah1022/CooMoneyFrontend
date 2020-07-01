@@ -24,7 +24,7 @@
             <transition-group type="transition" name="flip-list">
               <AccountItem
                 v-for="(account, index) in localAccounts"
-                :key="account._id"
+                :key="index"
                 :index="index"
                 :account="account"
               ></AccountItem>
@@ -73,18 +73,18 @@ export default {
   data() {
     return {
       isDragging: false,
-      localAccounts: []
+      localAccounts: [],
     };
   },
   components: {
     Draggable,
-    AccountItem
+    AccountItem,
     // BlurMask
   },
   props: {
     full: Boolean,
     projectId: String,
-    accounts: Array
+    accounts: Array,
   },
   computed: {
     dragOptions() {
@@ -92,9 +92,9 @@ export default {
         animation: 0,
         group: "description",
         disabled: false,
-        ghostClass: "ghost"
+        ghostClass: "ghost",
       };
-    }
+    },
   },
   methods: {
     costFormat(cost) {
@@ -114,17 +114,18 @@ export default {
         iconName: "money-check-alt",
         passbookBalance: 0,
         isEditing: true,
-        isNew: true
+        isNew: true,
       };
       this.localAccounts.push(a);
-    }
+      console.log(a);
+    },
   },
   async beforeMount() {
     let response = await this.$store.dispatch("getPassbook", {
-      clubID: this.$store.state.club._id
+      clubID: this.$store.state.club._id,
     });
     this.localAccounts = response.data.data;
-  }
+  },
 };
 </script>
 

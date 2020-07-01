@@ -4,18 +4,30 @@
       <!-- <font-awesome-icon icon="bars" size="sm" style="color: gray" /> -->
       <span class="pirority">{{ index + 1 + ". " }}</span>
       <div class="icon">
-        <font-awesome-icon icon="money-check-alt" size="sm" style="color: #fff" />
+        <font-awesome-icon
+          icon="money-check-alt"
+          size="sm"
+          style="color: #fff"
+        />
       </div>
       <img class="space" src alt />
       <div class="title">
-        <input v-if="account.isEditing" type="text" v-model="account.passbookName" />
+        <input
+          v-if="account.isEditing"
+          type="text"
+          v-model="account.passbookName"
+        />
         <div v-else>{{ account.passbookName }}</div>
       </div>
     </div>
     <div class="right">
       <div class="cost">
         <span>$</span>
-        <input v-if="account.isEditing" type="number" v-model="account.passbookBalance" />
+        <input
+          v-if="account.isEditing"
+          type="number"
+          v-model="account.passbookBalance"
+        />
         <div v-else>{{ costFormat(account.passbookBalance) }}</div>
         <!-- {{costFormat(account.remain)}} -->
       </div>
@@ -37,7 +49,7 @@ export default {
   },
   props: {
     index: Number,
-    account: Object
+    account: Object,
   },
   methods: {
     costFormat(cost) {
@@ -55,15 +67,15 @@ export default {
         let res = await this.$store.dispatch("addPassbook", {
           data: {
             passbookName: this.account.passbookName,
-            passbookBalance: this.account.passbookBalance
+            passbookBalance: this.account.passbookBalance,
           },
-          params: { clubID: this.$store.state.club._id }
+          params: { clubID: this.$store.state.club._id },
         });
         console.log(res);
       }
       this.account.isEditing = !this.account.isEditing;
-    }
-  }
+    },
+  },
 };
 </script>
 

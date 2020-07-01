@@ -6,6 +6,19 @@
       :bg="'transparent'"
       @back="$router.go(-1)"
     ></Header>
+    <div v-if="isAddingMember" class="addMember">
+      <div class="header">
+        Add member
+        <div class="check">
+          <img class="check" src="@/assets/image/Project/check.svg" alt />
+        </div>
+        <div class="cross">
+          <img class="cross" src="@/assets/image/Project/cross.svg" alt />
+        </div>
+      </div>
+      <input type="text" v-model="addUsername" />
+    </div>
+    <BlurMask :show="isAddingMember"></BlurMask>
     <div
       class="upper"
       :style="{ backgroundImage: 'url(' + preClub.clubImage + ')' }"
@@ -43,9 +56,8 @@
           v-model="club.intro"
           name="intro"
           id="edit"
-          cols="30"
+          cols="60"
           rows="10"
-          autofocus
         ></textarea>
         <div class="content">{{ club.intro }}</div>
       </div>
@@ -55,26 +67,36 @@
           v-for="(announce, index) in club.announces"
           :key="index"
           :announce="announce"
+          @deleteAnnounce="deleteAnnounce"
         ></AnnounceItem>
-        <div class="container">
-          <img
-            :src="require('@/assets/image/Home/avatar_empty.svg')"
-          /><textarea
+        <div :class="{ container: true, onFocus: announceInputing }">
+          <textarea
             placeholder="撰寫公告..."
             name=""
             id="messege"
             cols="10"
             rows="5"
             v-model="inputAnnounce"
+            @focus="announceInputing = true"
+            @blur="announceInputing = false"
           ></textarea>
-          <font-awesome-icon class="arrow" icon="edit " @click="editIntro">
+          <font-awesome-icon
+            class="arrow"
+            icon="location-arrow"
+            size="lg"
+            style="color: #00c5b8"
+            @click="addAnnounce"
+          >
           </font-awesome-icon>
         </div>
       </div>
       <div v-if="tabIndex === 2" class="member">
         <div class="header">
           <span>成員總數</span>
-          <span>{{ club.members.length + "人" }}</span>
+          <div class="right">
+            <div @click="addMember">新增成員</div>
+            <span>{{ club.members.length + "人" }}</span>
+          </div>
         </div>
         <div class="memberBlock">
           <MemberItem
@@ -93,6 +115,7 @@
 <script>
 import Header from "@/components/common/Header.vue";
 import Footer from "@/components/common/Footer.vue";
+import BlurMask from "@/components/common/BlurMask.vue";
 import MemberItem from "@/components/Club/MemberItem.vue";
 import AnnounceItem from "@/components/Club/AnnounceItem.vue";
 
@@ -103,147 +126,24 @@ export default {
     Footer,
     MemberItem,
     AnnounceItem,
+    BlurMask,
   },
   data() {
     return {
+      announceInputing: false,
       preClub: {},
       club: {
-        // name: "成大資訊營",
-        // description: "a group of fire dance NCKU",
-        // auth: 0,
-        // createDate: "2019/05/01",
-        // memberCount: 27,
         intro: "",
-        announce: {},
-        //"\t已算不清多少個日與夜，那身影始終懸於海岬之上，任風吹日曬雨淋；飽經風雨摧殘的臉龐上，歷經滄桑的雙眸鑲嵌其中，目光開闔之間，自有黯淡金光流瀉而出－－那是神性的光輝。\n\n\t但那身影卻好似永遠看不膩，始終懸於那處，遠眺著黑海盡頭的海天一色，從日出到日落，看盡潮起潮落。\n\n\t黎明破曉、曙光乍現，萬丈金光刺破闃黑的夜，鎏金的海映著黯金的瞳，純金的世界讓人想起了奧林帕斯的金碧輝煌，在那場天地變色的諸神戰役中，他毅然決然投身奧林帕斯陣營，劍指自己的手足－－泰坦神族。",
+        announces: [],
       },
-      members: [
-        // {
-        //   username: "陳尹曈",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "a122774007@gmail.com",
-        //   date: "2019/07/15",
-        //   auth: 1
-        // },
-        // {
-        //   username: "倪皓城",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "zzzzzz@gmail.com",
-        //   date: "2019/12/15",
-        //   auth: 0
-        // },
-        // {
-        //   username: "辛普森",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "hinpson@gmail.com",
-        //   date: "2019/11/16",
-        //   auth: 1
-        // },
-        // {
-        //   username: "陳力聖",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "shang@gmail.com",
-        //   date: "2019/10/26",
-        //   auth: 0
-        // },
-        // {
-        //   username: "陳明心",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "travix@gmail.com",
-        //   date: "2019/08/13",
-        //   auth: 0
-        // },
-        // {
-        //   username: "阿拉哩",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "alale@gmail.com",
-        //   date: "2019/09/15",
-        //   auth: 0
-        // },
-        // {
-        //   username: "阿拉哩",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "alale@gmail.com",
-        //   date: "2019/09/15",
-        //   auth: 0
-        // },
-        // {
-        //   username: "阿拉哩",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "alale@gmail.com",
-        //   date: "2019/09/15",
-        //   auth: 0
-        // },
-        // {
-        //   username: "阿拉哩",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "alale@gmail.com",
-        //   date: "2019/09/15",
-        //   auth: 0
-        // },
-        // {
-        //   username: "阿拉哩",
-        //   headshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-        //   email: "alale@gmail.com",
-        //   date: "2019/09/15",
-        //   auth: 0
-        // }
-      ],
-      announces: [
-        {
-          author: "陳尹曈",
-          userPhoto: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-          title: "2020期初社費",
-          content:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna",
-          date: "2020/06/28",
-        },
-        {
-          author: "陳尹曈",
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-          title: "2020期初社費",
-          content:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28",
-        },
-        {
-          author: "陳尹曈",
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-          title: "2020期初社費",
-          content:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28",
-        },
-        {
-          author: "陳尹曈",
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-          title: "2020期初社費",
-          content:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28",
-        },
-        {
-          author: "陳尹曈",
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-          title: "2020期初社費",
-          content:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28",
-        },
-        {
-          author: "陳尹曈",
-          authorHeadshot: "https://cdn.onlinewebfonts.com/svg/img_326384.png",
-          title: "2020期初社費",
-          content:
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.",
-          date: "2020/06/28",
-        },
-      ],
+      addUsername: "",
+      members: [],
       tabs: [{ name: "簡介" }, { name: "公告" }, { name: "成員" }],
       tabIndex: 0,
       introExist: false,
       type: "edit",
       inputAnnounce: "",
+      isAddingMember: false,
     };
   },
   beforeMount: async function() {
@@ -256,6 +156,7 @@ export default {
     this.club.intro = this.preClub.clubIntro;
     this.club.members = this.preClub.clubMembers;
     this.club.announces = this.preClub.clubAnnounce;
+    // console.log(this.club.announces);
     let clubID = this.preClub._id;
     this.club.members = await this.$store.dispatch("getClubMembers", {
       clubID,
@@ -263,8 +164,8 @@ export default {
     this.club.members = this.club.members.data.data;
     //console.log(this.preClub.announce);
     //console.log(await this.$store.dispatch("getAnnounce", { clubID }));
+    // console.log(this.$store.state);
   },
-
   methods: {
     async editIntro() {
       if (this.type === "edit") {
@@ -274,15 +175,45 @@ export default {
       } else if (this.type === "check") {
         this.type = "edit";
         this.introExist = false;
-        let clubIntro = this.club.intro;
-        let clubID = this.preClub._id;
-        let response = await this.$store.dispatch("updateIntro", {
-          data: { clubIntro },
-          params: { clubID },
+        await this.$store.dispatch("updateIntro", {
+          data: { clubIntro: this.club.intro },
+          params: { clubID: this.$store.state.club._id },
         });
-        console.log(response);
-        console.log(this.club.intro);
       }
+    },
+    async addAnnounce() {
+      let d = new Date();
+      d =
+        d.getFullYear() +
+        "-" +
+        (d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1) +
+        "-" +
+        (d.getDate() < 10 ? "0" + d.getDate() : d.getDate());
+
+      let res = await this.$store.dispatch("addAnnounce", {
+        data: {
+          info: this.inputAnnounce,
+          date: d,
+        },
+        params: { clubID: this.$store.state.club._id },
+      });
+      this.club.announces.push(
+        res.data.data.clubAnnounce[res.data.data.clubAnnounce.length - 1]
+      );
+      console.log(this.club.announces);
+    },
+    async deleteAnnounce(announceID) {
+      this.club.announces = this.club.announces.filter(
+        (a) => a._id !== announceID
+      );
+    },
+    async addMember() {
+      this.isAddingMember = true;
+      // let response = await this.$store.dispatch("addClubMembers", {
+      //   data: { username: this.addUsername },
+      //   params: { clubID: this.$store.state.club._id },
+      // });
+      // console.log(response);
     },
   },
 };
@@ -296,6 +227,42 @@ $tabHeight: 36px;
 .main {
   width: 100%;
   overflow: hidden;
+  .addMember {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70vw;
+    height: 20vw;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 16px;
+    border: 1px solid #00c5b8;
+    .header {
+      height: 50%;
+      .check {
+        position: absolute;
+        z-index: 100;
+        top: 2%;
+        left: 84%;
+      }
+      .cross {
+        position: absolute;
+        z-index: 100;
+        top: 2%;
+        left: 92%;
+      }
+    }
+    input {
+      width: 50vw;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid #00c5b8;
+      border-radius: 16px;
+    }
+  }
   .upper {
     position: relative;
     padding-top: 8vh;
@@ -399,32 +366,34 @@ $tabHeight: 36px;
       height: 70vh;
       overflow: scroll;
       .container {
-        height: 20%;
+        height: 40px;
         width: 90%;
-
-        position: absolute;
+        position: fixed;
         display: flex;
         justify-content: center;
-        background: red;
-        top: 70%;
-        img {
-          width: 30%;
-          height: 30%;
-          position: absolute;
-          background: transparent;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 8vh;
+        transition: 0.3s;
+        &.onFocus {
+          height: 130px;
         }
         .arrow {
           position: absolute;
-          left: 85%;
-          bottom: 10%;
+          left: 100%;
+          bottom: 0;
+          transform: translate(-150%, -40%);
         }
         #messege {
-          //background-color: red;
-          width: 90%;
-          height: 90%;
+          width: 100%;
+          height: 100%;
+          padding: 6px 10px;
+          box-sizing: border-box;
           font-size: 5vw;
           border-radius: 16px;
-          align-items: center;
         }
       }
     }
@@ -436,8 +405,21 @@ $tabHeight: 36px;
         justify-content: space-between;
         align-items: flex-end;
         border-bottom: 1px solid #e4e4e4;
-        span {
-          margin: 5px 10px;
+        .right {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          div {
+            background-color: #dddddd;
+            color: #fff;
+            padding: 2px 8px;
+            margin-right: -3px;
+            border-radius: 16px;
+          }
+        }
+        span,
+        div {
+          margin: 5px 5px 2px 10px;
           font-weight: 700;
           color: #00c5b8;
         }

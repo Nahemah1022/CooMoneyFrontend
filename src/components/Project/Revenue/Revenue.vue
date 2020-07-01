@@ -1,21 +1,42 @@
 <template>
   <div class="submain">
     <!-- <BlurMask :show="judgementShow"></BlurMask> -->
-    <div :class="{block: true, fullBlock: full}">
-      <div :class="{header: true, fullHeader: full}">
+    <div :class="{ block: true, fullBlock: full }">
+      <div :class="{ header: true, fullHeader: full }">
         <span>Bills</span>
         <img
           @click="fullRevenue"
-          :src="require('@/assets/image/Project/Revenue/'+ (full ? 'down' : 'option') +'.svg')"
+          :src="
+            require('@/assets/image/Project/Revenue/' +
+              (full ? 'down' : 'option') +
+              '.svg')
+          "
         />
       </div>
-      <div :class="{bills: true, fullBills: full}">
+      <div :class="{ bills: true, fullBills: full }">
         <div v-if="bills.length !== 0">
           <div v-for="bill in bills" :key="bill._id">
             <p
               class="date"
-              v-if="showDate(full && (bill.revenueYear + '-' + bill.revenueMonth + '-' + bill.revenueDay))"
-            >{{(bill.revenueYear + '-' + bill.revenueMonth + '-' + bill.revenueDay)}}</p>
+              v-if="
+                showDate(
+                  full &&
+                    bill.revenueYear +
+                      '-' +
+                      bill.revenueMonth +
+                      '-' +
+                      bill.revenueDay
+                )
+              "
+            >
+              {{
+                bill.revenueYear +
+                  "-" +
+                  bill.revenueMonth +
+                  "-" +
+                  bill.revenueDay
+              }}
+            </p>
             <RevenueItem
               :costTitle="bill.revenueTitle"
               :category="bill.revenueTag"
@@ -44,16 +65,16 @@ export default {
     return {
       dates: {},
       bills: [],
-      detailedBills: {}
+      detailedBills: {},
     };
   },
   components: {
-    RevenueItem
+    RevenueItem,
     //BlurMask
   },
   props: {
     projectId: String,
-    full: Boolean
+    full: Boolean,
   },
   methods: {
     fullRevenue() {
@@ -80,12 +101,12 @@ export default {
         data: {
           revenueStatus: result ? "APPROVED" : "REJECTED",
           revenueComment: inputComment,
-          revenueID: revenueID
+          revenueID: revenueID,
         },
         params: {
           clubID: this.$store.state.club._id,
-          projectID: this.projectId
-        }
+          projectID: this.projectId,
+        },
       });
     },
     showDate(date) {
@@ -95,13 +116,14 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
   async beforeMount() {
     let projectID = this.projectId;
     let response = await this.$store.dispatch("getAllRevenue", { projectID });
     response = response.data.data;
     this.bills = response;
+    console.log(this.bills);
     for (const bill of this.bills) {
       let date =
         bill.revenueYear + "-" + bill.revenueMonth + "-" + bill.revenueDay;
@@ -111,12 +133,12 @@ export default {
       }
       this.detailedBills[date].push(bill);
     }
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 $transition: 0.5s;
 * {
   background-color: transparent;
