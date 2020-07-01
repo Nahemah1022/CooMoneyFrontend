@@ -1,6 +1,9 @@
 <template>
   <div class="main_c">
-    <img :src="require('@/assets/image/Project/cross.svg')" @click="$emit('cancel')" />
+    <img
+      :src="require('@/assets/image/Project/cross.svg')"
+      @click="$emit('cancel')"
+    />
     <div class="title">建立你的社群</div>
     <div class="block">
       <div class="pair">
@@ -9,7 +12,34 @@
       </div>
       <div class="pair">
         <div class="topic">社群成員</div>
-        <input type="text" v-model="clubMembers" />
+        <div :class="{ matchBlock: true, focus: focusPartner }">
+          <input
+            type="text"
+            @focus="focusPartner = true"
+            @blur="focusPartner = false"
+            @input="searchUser"
+            v-model="username"
+            placeholder="Your Partners"
+          />
+          <div class="selectedUsers">
+            <img
+              v-for="(user, index) in this.selectedUser"
+              :key="index"
+              :src="
+                user.userPhoto
+                  ? user.userPhoto
+                  : require('@/assets/image/Home/avatar_empty.svg')
+              "
+              alt=""
+            />
+          </div>
+          <MemberItem
+            v-for="(user, index) in this.matchUsers"
+            :key="index"
+            :user="user"
+            @select="selectUser"
+          ></MemberItem>
+        </div>
       </div>
       <div class="pair">
         <div class="topic">封面照片</div>
@@ -29,18 +59,30 @@ export default {
   name: "NewClub",
   data() {
     return {
+      username: "",
+      matchUsers: [],
+      selectedUser: [],
+      focusPartner: false,
       clubName: "",
       clubImage: "",
       clubMembers: "",
-      uploadedFile: ""
+      uploadedFile: "",
     };
   },
   methods: {
+    async searchUser() {
+      let response = await this.$store.dispatch(
+        "getAllUserByUsername",
+        this.username
+      );
+      this.matchUsers = response.data.data;
+      console.log(this.matchUsers);
+    },
     async create() {
       this.$emit("cancel");
       let clubMembers = [];
       let members = this.clubMembers.split(" ");
-      if(members[0]){
+      if (members[0]) {
         for (let i = 0; i < members.length; i++) {
           clubMembers.push(members[i]);
         }
@@ -62,8 +104,8 @@ export default {
     },
     uploadFile(f) {
       this.uploadedFile = f.target.files[0];
-    }
-  }
+    },
+  },
 };
 </script>
 

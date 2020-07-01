@@ -74,18 +74,17 @@ export default {
     },
     async apply(clubID, clubName) {
       if (confirm(`確定要申請加入「${clubName}」社群嗎?`)) {
-        let d = new Date(this.date);
+        let d = new Date();
         let day_f =
           new Date(d).getFullYear() +
           "-" +
           ("0" + (new Date(d).getMonth() + 1)).slice(-2) +
           "-" +
           ("0" + new Date(d).getDate()).slice(-2);
-        let response = await this.$store.dispatch("joinApplication", {
+        await this.$store.dispatch("joinApplication", {
           data: { date: day_f, reason: "none" },
           params: { clubID: clubID },
         });
-        console.log(response);
       }
     },
   },

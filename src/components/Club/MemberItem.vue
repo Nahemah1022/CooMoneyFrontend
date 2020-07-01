@@ -1,8 +1,14 @@
 <template>
-  <div class="main">
+  <div class="main" @click="$emit('select', user)">
     <div class="left">
       <div class="idx">{{ idx }}</div>
-      <img :src="user.userPhoto" alt />
+      <img
+        :src="
+          user.userPhoto
+            ? user.userPhoto
+            : require('@/assets/image/Home/avatar_empty.svg')
+        "
+      />
     </div>
     <div class="center">
       <div class="username">{{ user.username }}</div>

@@ -3,15 +3,19 @@
     <Header
       :title="'All Project'"
       :right="require('@/assets/image/Project/icon_edit.svg')"
-      @back="toNew ? toNew = false : $router.go(-1)"
+      @back="toNew ? (toNew = false) : $router.go(-1)"
       @rightClick="editStart"
     ></Header>
-    <NewProject v-if="toNew" :preProject="targetProject" @newProject="newProject"></NewProject>
+    <NewProject
+      v-if="toNew"
+      :preProject="targetProject"
+      @newProject="newProject"
+    ></NewProject>
     <div v-else class="project-container">
       <ProjectItem
         v-for="index in projects.length"
         :key="index"
-        :project="projects[index-1]"
+        :project="projects[index - 1]"
         :isEditing="isEditing"
         @enter="enterProject"
         @edit="editProject"
@@ -42,7 +46,7 @@ export default {
         projectTheme: 6,
         projectBudget: 0,
         expanse: 0,
-        income: 0
+        income: 0,
       },
       targetProject: null,
       toNew: false,
@@ -87,14 +91,14 @@ export default {
         //   expanse: 300,
         //   income: 0
         // }
-      ]
+      ],
     };
   },
   components: {
     Header,
     Footer,
     ProjectItem,
-    NewProject
+    NewProject,
   },
   methods: {
     editStart() {
@@ -105,6 +109,7 @@ export default {
       this.targetProject = this.nullProject;
     },
     async newProject(obj) {
+      console.log(obj);
       if (!this.isEditing) {
         let clubID = this.$store.state.club._id;
         await this.$store.dispatch("createProject", {
@@ -113,19 +118,19 @@ export default {
             projectTheme: "colorful",
             projectBudget: obj.projectBudget,
             projectClub: clubID,
-            projectChecker: ""
+            projectChecker: obj.projectChecker,
           },
-          params: { clubID }
+          params: { clubID },
         });
-        obj.expanse = 0;
-        obj.income = 0;
+        obj.projectTotalExpanse = 0;
+        obj.projectTotalIncome = 0;
         this.projects.push(obj);
         this.toNew = false;
         this.enterProject(this.projects[this.projects.length - 1]);
       } else {
         await this.$store.dispatch("updateProjectNameAndTheme", {
           data: { projectName: obj.projectName, projectTheme: "colorful" },
-          params: { projectID: this.targetProject._id }
+          params: { projectID: this.targetProject._id },
         });
         this.enterProject(this.targetProject);
       }
@@ -139,8 +144,8 @@ export default {
         name: "ProjectView",
         params: {
           projects: this.projects,
-          default: this.projects.indexOf(project)
-        }
+          default: this.projects.indexOf(project),
+        },
       });
     },
     async deleteProject(id, title, project) {
@@ -150,28 +155,28 @@ export default {
         )
       ) {
         this.projects = this.projects.filter(
-          _project => _project._id !== project._id
+          (_project) => _project._id !== project._id
         );
         let response = await this.$store.dispatch("endProject", {
-          projectID: project._id
+          projectID: project._id,
         });
         console.log(response);
       }
       this.isEditing = false;
-    }
+    },
   },
   beforeMount: async function() {
     let clubID = this.$store.state.club._id;
     let projects = await this.$store.dispatch("getClubProject", clubID);
     this.projects = projects.data.data.filter(
-      p => p.projectStatus === "ONGOING"
+      (p) => p.projectStatus === "ONGOING"
     );
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .project-container {
   padding-top: 8vh;
   display: flex;
