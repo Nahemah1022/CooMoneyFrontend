@@ -65,9 +65,19 @@ export default {
   name: "Index",
   methods: {
     Login() {
+      if(localStorage.getItem('username')){
+        localStorage.removeItem('username');
+      }
+      if(localStorage.getItem('email')){
+        localStorage.removeItem('email');
+      }
+      if(localStorage.getItem('userPhoto')){
+        localStorage.removeItem('userPhoto');
+      }
       this.$router.push("/Login");
     },
     SignUp() {
+      if(localStorage.getItem(''))
       this.$router.push("/SignUp");
     }
   }

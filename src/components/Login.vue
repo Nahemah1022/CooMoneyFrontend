@@ -127,6 +127,7 @@ export default {
         this.$cookies.set("token", response.data.data.token, "1d");
         localStorage.setItem("token", response.data.data.token);
         this.$router.push("/Home");
+        axios.defaults.headers['Authorization'] = 'Bearer ' + response.data.data.token;
         this.$store.commit("setUsername", this.username);
       } else {
         this.error();
