@@ -100,18 +100,19 @@ export default {
           this.$store.state.signUp.username = response.data.data.username;
           this.$store.state.signUp.password = response.data.data.password;
           this.$store.state.signUp.userPhoto = response.data.data.userPhoto;
+          this.$store.state.signUp.userGender = 'MALE';
           let responseSignUp = await this.$store.dispatch("signUp");
           if (responseSignUp.data.status == 200) {
             this.$store.state.loginData.email = response.data.data.email;
             this.$store.state.loginData.password = response.data.data.password;
-            let response = await this.$store.dispatch("login");
-            if (response.data.status == 200) {
-              this.$cookies.set("token", response.data.data.token, "1d");
+            let responseLogin = await this.$store.dispatch("login");
+            if (responseLogin.data.status == 200) {
+              this.$cookies.set("token", responseLogin.data.data.token, "1d");
               localStorage.setItem("username", response.data.data.username);
               localStorage.setItem("email", response.data.data.email);
               localStorage.setItem("userPhoto", response.data.data.userPhoto);
-              localStorage.setItem("token", response.data.data.token);
-              axios.defaults.headers['Authorization'] = 'Bearer ' + response.data.data.token;
+              localStorage.setItem("token", responseLogin.data.data.token);
+              axios.defaults.headers['Authorization'] = 'Bearer ' + responseLogin.data.data.token;
               this.$router.push("/Home");
             } else {
               this.error();
