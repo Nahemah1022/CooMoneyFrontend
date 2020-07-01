@@ -8,7 +8,6 @@ import * as Cookies from 'js-cookie'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [createPersistedState({ storage: window.sessionStorage })],
   state: {
     signUp: {
       email: "",
