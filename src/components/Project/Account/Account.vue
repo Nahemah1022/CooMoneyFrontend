@@ -24,7 +24,7 @@
             <transition-group type="transition" name="flip-list">
               <AccountItem
                 v-for="(account, index) in localAccounts"
-                :key="account.id"
+                :key="account._id"
                 :index="index"
                 :account="account"
               ></AccountItem>
@@ -38,22 +38,25 @@
           </p>
         </div>
 
-        <div v-else class="account">
+        <div v-else-if="localAccounts.length !== 0" class="account">
           <div class="left">
             <div class="icon">
               <font-awesome-icon
-                :icon="localAccounts[0].iconName"
+                icon="money-check-alt"
                 :size="full ? '2x' : 'sm'"
                 style="color: #fff"
               />
             </div>
             <img class="space" src alt />
-            <div class="title">{{ localAccounts[0].name }}</div>
+            <div class="title">{{ localAccounts[0].passbookName }}</div>
           </div>
           <div class="cost">
             <span>$</span>
-            {{ costFormat(localAccounts[0].remain) }}
+            {{ costFormat(localAccounts[0].passbookBalance) }}
           </div>
+        </div>
+        <div v-else class="account">
+          <p>...社群中目前沒有可用的帳戶</p>
         </div>
       </div>
     </div>
@@ -107,16 +110,20 @@ export default {
     newAccount() {
       let a = {
         id: this.localAccounts.length + 1,
-        name: "",
+        passbookName: "",
         iconName: "money-check-alt",
-        remain: 0,
-        isEditing: true
+        passbookBalance: 0,
+        isEditing: true,
+        isNew: true
       };
       this.localAccounts.push(a);
     }
   },
-  beforeMount() {
-    this.localAccounts = this.accounts;
+  async beforeMount() {
+    let response = await this.$store.dispatch("getPassbook", {
+      clubID: this.$store.state.club._id
+    });
+    this.localAccounts = response.data.data;
   }
 };
 </script>

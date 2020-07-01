@@ -4,34 +4,26 @@
       <!-- <font-awesome-icon icon="bars" size="sm" style="color: gray" /> -->
       <span class="pirority">{{ index + 1 + ". " }}</span>
       <div class="icon">
-        <font-awesome-icon
-          :icon="account.iconName"
-          size="sm"
-          style="color: #fff"
-        />
+        <font-awesome-icon icon="money-check-alt" size="sm" style="color: #fff" />
       </div>
       <img class="space" src alt />
       <div class="title">
-        <input v-if="account.isEditing" type="text" v-model="account.name" />
-        <div v-else>{{ account.name }}</div>
+        <input v-if="account.isEditing" type="text" v-model="account.passbookName" />
+        <div v-else>{{ account.passbookName }}</div>
       </div>
     </div>
     <div class="right">
       <div class="cost">
         <span>$</span>
-        <input
-          v-if="account.isEditing"
-          type="number"
-          v-model="account.remain"
-        />
-        <div v-else>{{ costFormat(account.remain) }}</div>
+        <input v-if="account.isEditing" type="number" v-model="account.passbookBalance" />
+        <div v-else>{{ costFormat(account.passbookBalance) }}</div>
         <!-- {{costFormat(account.remain)}} -->
       </div>
       <font-awesome-icon
         :icon="account.isEditing ? 'check' : 'edit'"
         size="sm"
         style="color: #00c5b8"
-        @click="account.isEditing = !account.isEditing"
+        @click="toggle"
       />
     </div>
   </div>
@@ -45,7 +37,7 @@ export default {
   },
   props: {
     index: Number,
-    account: Object,
+    account: Object
   },
   methods: {
     costFormat(cost) {
@@ -58,7 +50,20 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
-  },
+    async toggle() {
+      if (this.account.isNew) {
+        let res = await this.$store.dispatch("addPassbook", {
+          data: {
+            passbookName: this.account.passbookName,
+            passbookBalance: this.account.passbookBalance
+          },
+          params: { clubID: this.$store.state.club._id }
+        });
+        console.log(res);
+      }
+      this.account.isEditing = !this.account.isEditing;
+    }
+  }
 };
 </script>
 

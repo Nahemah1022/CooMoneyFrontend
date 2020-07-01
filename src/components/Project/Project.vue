@@ -105,32 +105,34 @@ export default {
       this.targetProject = this.nullProject;
     },
     async newProject(obj) {
-      console.log(obj);
-      let clubID = this.$store.state.club._id;
-      let response = await this.$store.dispatch("createProject", {
-        data: {
-          projectName: obj.projectName,
-          projectTheme: "colorful",
-          projectBudget: obj.projectBudget,
-          projectClub: clubID,
-          projectChecker: ""
-        },
-        params: { clubID }
-      });
-      console.log(response);
-      obj.expanse = 0;
-      obj.income = 0;
-      this.projects.push(obj);
-      this.toNew = false;
-      this.enterProject(this.projects[this.projects.length - 1]);
+      if (!this.isEditing) {
+        let clubID = this.$store.state.club._id;
+        await this.$store.dispatch("createProject", {
+          data: {
+            projectName: obj.projectName,
+            projectTheme: "colorful",
+            projectBudget: obj.projectBudget,
+            projectClub: clubID,
+            projectChecker: ""
+          },
+          params: { clubID }
+        });
+        obj.expanse = 0;
+        obj.income = 0;
+        this.projects.push(obj);
+        this.toNew = false;
+        this.enterProject(this.projects[this.projects.length - 1]);
+      } else {
+        await this.$store.dispatch("updateProjectNameAndTheme", {
+          data: { projectName: obj.projectName, projectTheme: "colorful" },
+          params: { projectID: this.targetProject._id }
+        });
+        this.enterProject(this.targetProject);
+      }
     },
     editProject(project) {
       this.targetProject = project;
       this.toNew = true;
-      // this.$router.push({
-      //   name: "NewProject",
-      //   params: { preProject: project }
-      // });
     },
     enterProject(project) {
       this.$router.push({
@@ -141,14 +143,19 @@ export default {
         }
       });
     },
-    deleteProject(id, title) {
+    async deleteProject(id, title, project) {
       if (
         confirm(
           `Sure to delete project ${title}?\nThis action is not reversable!`
         )
       ) {
-        this.projects = this.projects.filter(project => project.id !== id);
-        // TODO: also delete it in db
+        this.projects = this.projects.filter(
+          _project => _project._id !== project._id
+        );
+        let response = await this.$store.dispatch("endProject", {
+          projectID: project._id
+        });
+        console.log(response);
       }
       this.isEditing = false;
     }
@@ -156,7 +163,9 @@ export default {
   beforeMount: async function() {
     let clubID = this.$store.state.club._id;
     let projects = await this.$store.dispatch("getClubProject", clubID);
-    this.projects = projects.data.data;
+    this.projects = projects.data.data.filter(
+      p => p.projectStatus === "ONGOING"
+    );
   }
 };
 </script>

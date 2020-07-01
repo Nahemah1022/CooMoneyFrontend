@@ -74,18 +74,8 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
-    async judge(result, inputComment, revenueID) {
-      console.log(
-        {
-          revenueStatus: result ? "APPROVED" : "REJECTED",
-          revenueComment: inputComment,
-          revenueID: revenueID
-        },
-        {
-          clubID: this.$store.state.club._id,
-          projectID: this.projectId
-        }
-      );
+    async judge(result, inputComment, revenueID, cost) {
+      console.log(cost);
       await this.$store.dispatch("updateRevenue", {
         data: {
           revenueStatus: result ? "APPROVED" : "REJECTED",
@@ -121,7 +111,6 @@ export default {
       }
       this.detailedBills[date].push(bill);
     }
-    console.log(this.detailedBills);
   }
 };
 </script>

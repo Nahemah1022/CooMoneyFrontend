@@ -80,7 +80,7 @@ export default {
       }
     },
     judge(result, inputComment) {
-      this.$emit("judge", result, inputComment, this.revenueID);
+      this.$emit("judge", result, inputComment, this.revenueID, this.cost);
     }
   }
 };

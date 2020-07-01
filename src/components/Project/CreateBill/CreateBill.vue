@@ -198,8 +198,7 @@ export default {
     projectId: {
       type: String,
       required: true
-    },
-    accounts: Array
+    }
   },
   components: {
     // Swiper,

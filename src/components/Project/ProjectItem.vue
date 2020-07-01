@@ -5,7 +5,7 @@
       <img
         class="cross"
         src="@/assets/image/Project/cross.svg"
-        @click="$emit('delete', project.id, project.projectName)"
+        @click="$emit('delete', project.id, project.projectName, project)"
       />
     </div>
     <img
