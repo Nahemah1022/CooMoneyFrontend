@@ -51,12 +51,11 @@
     <!-- rwd_slider_container_wrapper-->
 
     <p class="title">Keep Track Of Money</p>
-    <p class="subtitle">Tracking every expenses you have and understand your spending pattern</p>
+    <p class="subtitle">
+      Tracking every expenses you have and understand your spending pattern
+    </p>
     <button class="login" @click="Login">Log In</button>
     <button class="signup" @click="SignUp">Sign Up</button>
-
-
-
   </div>
 </template>
 
@@ -65,27 +64,34 @@ export default {
   name: "Index",
   methods: {
     Login() {
-      if(localStorage.getItem('username')){
-        localStorage.removeItem('username');
+      if (localStorage.getItem("username")) {
+        localStorage.removeItem("username");
       }
-      if(localStorage.getItem('email')){
-        localStorage.removeItem('email');
+      if (localStorage.getItem("email")) {
+        localStorage.removeItem("email");
       }
-      if(localStorage.getItem('userPhoto')){
-        localStorage.removeItem('userPhoto');
+      if (localStorage.getItem("userPhoto")) {
+        localStorage.removeItem("userPhoto");
       }
       this.$router.push("/Login");
     },
     SignUp() {
-      if(localStorage.getItem(''))
+      if (localStorage.getItem("username")) {
+        localStorage.removeItem("username");
+      }
+      if (localStorage.getItem("email")) {
+        localStorage.removeItem("email");
+      }
+      if (localStorage.getItem("userPhoto")) {
+        localStorage.removeItem("userPhoto");
+      }
       this.$router.push("/SignUp");
-    }
-  }
+    },
+  },
 };
 </script>
 
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
   padding-top: 5vh;
   width: 100vw;
@@ -287,5 +293,4 @@ export default {
   background-color: #ffffff;
   border-color: #0eb9ab;
 }
-
 </style>
