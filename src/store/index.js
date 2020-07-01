@@ -30,6 +30,7 @@ export default new Vuex.Store({
       email: "",
       password: ""
     },
+    club: {}
   },
   actions,
   mutations: {

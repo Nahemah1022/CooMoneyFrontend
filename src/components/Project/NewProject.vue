@@ -4,7 +4,7 @@
       <ProjectItem
         class="theme"
         :large="true"
-        :project="{id: this.id, title: this.projectName, theme: this.theme}"
+        :project="{id: this.id, projectName: this.projectName, projectTheme: this.projectTheme}"
       ></ProjectItem>
       <!-- <img class="theme" :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt /> -->
       <div class="theme-pick">
@@ -25,12 +25,12 @@
         <p>Budget</p>
         <div class="budget">
           <span>$</span>
-          <input type="text" name="budget" v-model="budget" />
+          <input type="text" name="budget" v-model="projectBudget" />
           <img src="@/assets/image/Project/TWD.svg" alt />
         </div>
       </div>
 
-      <button @click="$emit('newProject', {title: projectName, budget: parseInt(budget)})">Confirm</button>
+      <button @click="submit">Confirm</button>
     </div>
   </div>
 </template>
@@ -44,14 +44,16 @@ export default {
     return {
       id: this.preProject.id,
       projectName:
-        this.preProject.title == undefined
+        this.preProject.projectName == undefined
           ? "New Project"
-          : this.preProject.title,
-      theme: this.preProject.theme,
+          : this.preProject.projectName,
+      projectTheme: this.preProject.projectTheme,
       partners: [],
       coverCount: 5,
-      budget:
-        this.preProject.budget == undefined ? null : this.preProject.budget
+      projectBudget:
+        this.preProject.projectBudget == undefined
+          ? null
+          : this.preProject.projectBudget
     };
   },
   props: {
@@ -60,16 +62,17 @@ export default {
   components: {
     ProjectItem
   },
-  // mount() {
-  //   if (this.preProject) {
-  //     this.id = this.preProject.id;
-  //     this.title = "Edit Project";
-  //     this.projectName = this.preProject.title;
-  //     this.theme = this.preProject.theme;
-  //     // TODO: get budget, partners from db
-  //   }
-  // },
-  methods: {}
+  methods: {
+    submit() {
+      this.$emit("newProject", {
+        projectName: this.projectName,
+        projectBudget: parseInt(this.projectBudget)
+      });
+    }
+  },
+  beforeMount() {
+    console.log(this.preProject);
+  }
 };
 </script>
 

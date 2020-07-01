@@ -4,6 +4,7 @@
     <textarea
       :class="{disable: status==='rejected' || status==='approved'}"
       :placeholder="placeholderMsg"
+      v-model="inputComment"
     ></textarea>
     <div v-if="status==='pending'" class="btns">
       <div class="approve" @click.stop="judge(true)">
@@ -21,7 +22,8 @@ export default {
   name: "Judgement",
   data() {
     return {
-      placeholderMsg: ""
+      placeholderMsg: "",
+      inputComment: ""
     };
   },
   props: {
@@ -31,7 +33,7 @@ export default {
   },
   methods: {
     judge(result) {
-      this.$emit("judge", result);
+      this.$emit("judge", result, this.inputComment);
       this.$emit("toggle");
     }
   },

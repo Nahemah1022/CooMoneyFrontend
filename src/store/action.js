@@ -49,16 +49,16 @@ const server = {
   getProjectTags: (context, params) => axios.get("/project/getProjectTags", { params }),
 
   // REVENUE MODULE
-  createRevenue: (context, { data, params }) => axios.post("/revenue/createRevenue", data, { 
+  createRevenue: (context, { data, params }) => axios.post("/revenue/createRevenue", data, {
     headers: { "Content-Type": "multipart/formdata" },
-    params 
+    params
   }),
-  revenueImage: (context, data) => axios.post("/revenue/image", data, { 
+  revenueImage: (context, data) => axios.post("/revenue/image", data, {
     headers: { "Content-Type": "multipart/formdata" },
   }),
-  updateRevenue: (context, { data, params }) => axios.post("/revenue/updateRevenue", data, { params }),
-  getAllRevenue: (context, params) => axios.get("/revenue/getAllRevenue", params),
-  getTenRevenue: (context, params) => axios.get("/revenue/getTenRevenue", params),
+  updateRevenue: (context, { data, params }) => axios.put("/revenue/updateRevenue", data, { params }),
+  getAllRevenue: (context, params) => axios.get("/revenue/getAllRevenue", { params }),
+  getTenRevenue: (context, params) => axios.get("/revenue/getTenRevenue", { params }),
 
 };
 

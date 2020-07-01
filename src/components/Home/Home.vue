@@ -5,13 +5,10 @@
     <BlurMask :show="createNewClub || showList" />
     <!-- <div class="profileBlock">
       <Profile></Profile>
-    </div> -->
+    </div>-->
     <div class="block">
       <div class="serachBarBlock">
-        <SearchBar
-          @newClub="createNewClub = true"
-          @toggleList="showList = !showList"
-        ></SearchBar>
+        <SearchBar @newClub="createNewClub = true" @toggleList="showList = !showList"></SearchBar>
       </div>
       <div class="space" />
       <div class="clubsBlock">
@@ -33,9 +30,9 @@
       </div>
       <p class="msg">
         {{
-          "didn't join " +
-            (joinedClubs.length === 0 ? "any" : "more") +
-            " groups"
+        "didn't join " +
+        (joinedClubs.length === 0 ? "any" : "more") +
+        " groups"
         }}
       </p>
       <div class="space" />
@@ -59,39 +56,43 @@ export default {
     ClubPreview,
     NewClub,
     BlurMask,
-    List,
+    List
   },
+  props: {},
   data() {
     return {
       clubLayout: false,
       createNewClub: false,
       showList: false,
       joinedClubs: [
-        {
-          name: "成大資訊營",
-          description: "a group of fire dance NCKU",
-          auth: 0,
-          createDate: "2019/05/01",
-          memberCount: 27,
-        },
-        {
-          name: "ICT NCKU",
-          description: "a group of ICT in NCKU",
-          auth: 0,
-          createDate: "2020/04/22",
-          memberCount: 24,
-        },
-        {
-          name: "成大火舞社",
-          description: "a group of fire dance NCKU",
-          auth: 1,
-          createDate: "2019/09/01",
-          memberCount: 38,
-        },
-        // { name: "Pop Dance NCKU", description: "a group of pop dance NCKU" },
-      ],
+        // {
+        //   name: "成大資訊營",
+        //   description: "a group of fire dance NCKU",
+        //   auth: 0,
+        //   createDate: "2019/05/01",
+        //   memberCount: 27
+        // },
+        // {
+        //   name: "ICT NCKU",
+        //   description: "a group of ICT in NCKU",
+        //   auth: 0,
+        //   createDate: "2020/04/22",
+        //   memberCount: 24
+        // },
+        // {
+        //   name: "成大火舞社",
+        //   description: "a group of fire dance NCKU",
+        //   auth: 1,
+        //   createDate: "2019/09/01",
+        //   memberCount: 38
+        // }
+      ]
     };
   },
+  beforeMount: async function() {
+    let club = await this.$store.dispatch("getClub");
+    this.joinedClubs = club.data.data;
+  }
 };
 </script>
 

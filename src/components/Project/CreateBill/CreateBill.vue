@@ -190,15 +190,15 @@ export default {
       newingCategory: false,
       focus: false,
       costBufferDisplay: "",
-      operation: ""
+      operation: "",
+      uploadedFile: ""
     };
   },
   props: {
     projectId: {
-      type: Number,
+      type: String,
       required: true
-    },
-    accounts: Array
+    }
   },
   components: {
     // Swiper,
@@ -221,6 +221,7 @@ export default {
     },
     uploadFile(f) {
       this.uploadedFiles.push(f.target.files[0]);
+      this.uploadedFile = f.target.files[0];
       this.evidFocus = true;
     },
     addCategory(icon) {
@@ -302,27 +303,61 @@ export default {
         this.money = operand[0];
       }
     },
-    apply() {
+    async apply() {
       if (this.date == "" || this.title == "" || this.money == 0) {
         return;
       }
       let days = ["(日)", "(一)", "(二)", "(三)", "(四)", "(五)", "(六)"];
       let d = new Date(this.date);
+      let day_f =
+        new Date(d).getFullYear() +
+        "-" +
+        ("0" + (new Date(d).getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + new Date(d).getDate()).slice(-2);
       this.$emit("newRevenue", {
-        title: this.title,
-        cost: this.money,
-        categoty: this.categorys[this.categoryIndex].type,
-        status: "pending",
-        date:
-          new Date(d).getFullYear() +
-          "-" +
-          ("0" + (new Date(d).getMonth() + 1)).slice(-2) +
-          "-" +
-          ("0" + new Date(d).getDate()).slice(-2) +
-          " " +
-          days[d.getDay()],
-        description: this.description
+        revenueTitle: this.title,
+        revenueCost: this.money,
+        revenueTag: this.categorys[this.categoryIndex].type,
+        revenueStatus: "pending",
+        revenueDate: day_f + " " + days[d.getDay()],
+        revenueDescription: this.description
       });
+
+      let bodyFormData = new FormData();
+      bodyFormData.set("revenueTitle", this.title);
+      bodyFormData.set("revenueTag", this.categorys[this.categoryIndex].type);
+      bodyFormData.set("revenueDate", day_f);
+      bodyFormData.set(
+        "revenueCost",
+        this.selectedIndex === 1 ? this.money : this.money * -1
+      );
+      bodyFormData.set("revenuePassbook", "現金");
+      bodyFormData.set("revenueDescription", this.description);
+      bodyFormData.append("revenueEvidence", this.uploadedFile);
+      console.log(
+        this.title,
+        this.categorys[this.categoryIndex].type,
+        day_f,
+        this.money,
+        this.description,
+        this.uploadedFile
+      );
+      let projectID = this.projectId;
+      let newRevenue = await this.$store.dispatch("createRevenue", {
+        data: bodyFormData,
+        params: { projectID }
+      });
+
+      let imageData = new FormData();
+      imageData.append("revenueImage", this.uploadedFiles[0]);
+      let newRevenueImage = await this.$store.dispatch(
+        "revenueImage",
+        bodyFormData
+      );
+      console.log(newRevenue);
+      console.log(newRevenueImage);
+
       this.$emit("collapse");
       this.title = "";
       this.costBufferDisplay = "";

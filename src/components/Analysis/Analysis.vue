@@ -1175,7 +1175,11 @@ export default {
       return incomeData;
     }
   },
-  computed: {}
+  computed: {},
+  async beforeMount() {
+    let club = await this.$store.dispatch("getClub");
+    console.log(club);
+  }
 };
 </script>
 

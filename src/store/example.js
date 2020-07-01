@@ -2,9 +2,9 @@
 * ctrl+F to find the dispatch function you want
 * dismiss the comment to get the dispatch function
 * pay attention to the sample data that dispatch function need
-* make sure the data format is right 
+* make sure the data format is right
 * any array type should use JSON.stringify to be tranformed to string type
-* cuz dispatch function is async function so the caller function should be async 
+* cuz dispatch function is async function so the caller function should be async
 **************************************************************/
 
 

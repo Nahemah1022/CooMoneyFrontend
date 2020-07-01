@@ -38,55 +38,55 @@ export default {
       isEditing: false,
       nullProject: {
         id: 0,
-        title: "New Project",
-        theme: 6,
-        budget: 0,
+        projectName: "New Project",
+        projectTheme: 6,
+        projectBudget: 0,
         expanse: 0,
         income: 0
       },
       targetProject: null,
       toNew: false,
       projects: [
-        {
-          id: 1,
-          title: "Orientation Party",
-          theme: 1,
-          budget: 38092,
-          expanse: 13724,
-          income: 9080
-        },
-        {
-          id: 2,
-          title: "Public Performance",
-          theme: 2,
-          budget: 15641,
-          expanse: 556,
-          income: 0
-        },
-        {
-          id: 3,
-          title: "Group Activity",
-          theme: 3,
-          budget: 1226,
-          expanse: 151,
-          income: 0
-        },
-        {
-          id: 4,
-          title: "Anniversary Activity",
-          theme: 4,
-          budget: 30000,
-          expanse: 0,
-          income: 0
-        },
-        {
-          id: 5,
-          title: "Daily Expenses",
-          theme: 5,
-          budget: 9700,
-          expanse: 300,
-          income: 0
-        }
+        // {
+        //   id: 1,
+        //   projectName: "Orientation Party",
+        //   projectTheme: 1,
+        //   projectBudget: 38092,
+        //   expanse: 13724,
+        //   income: 9080
+        // },
+        // {
+        //   id: 2,
+        //   projectName: "Public Performance",
+        //   projectTheme: 2,
+        //   projectBudget: 15641,
+        //   expanse: 556,
+        //   income: 0
+        // },
+        // {
+        //   id: 3,
+        //   projectName: "Group Activity",
+        //   projectTheme: 3,
+        //   projectBudget: 1226,
+        //   expanse: 151,
+        //   income: 0
+        // },
+        // {
+        //   id: 4,
+        //   projectName: "Anniversary Activity",
+        //   projectTheme: 4,
+        //   projectBudget: 30000,
+        //   expanse: 0,
+        //   income: 0
+        // },
+        // {
+        //   id: 5,
+        //   projectName: "Daily Expenses",
+        //   projectTheme: 5,
+        //   projectBudget: 9700,
+        //   expanse: 300,
+        //   income: 0
+        // }
       ]
     };
   },
@@ -104,22 +104,35 @@ export default {
       this.toNew = true;
       this.targetProject = this.nullProject;
     },
-    newProject(obj) {
-      obj.id = this.projects.length + 1;
-      obj.expanse = 0;
-      obj.income = 0;
-      obj.theme = 6;
-      this.projects.push(obj);
-      this.toNew = false;
-      this.enterProject(this.projects[this.projects.length - 1]);
+    async newProject(obj) {
+      if (!this.isEditing) {
+        let clubID = this.$store.state.club._id;
+        await this.$store.dispatch("createProject", {
+          data: {
+            projectName: obj.projectName,
+            projectTheme: "colorful",
+            projectBudget: obj.projectBudget,
+            projectClub: clubID,
+            projectChecker: ""
+          },
+          params: { clubID }
+        });
+        obj.expanse = 0;
+        obj.income = 0;
+        this.projects.push(obj);
+        this.toNew = false;
+        this.enterProject(this.projects[this.projects.length - 1]);
+      } else {
+        await this.$store.dispatch("updateProjectNameAndTheme", {
+          data: { projectName: obj.projectName, projectTheme: "colorful" },
+          params: { projectID: this.targetProject._id }
+        });
+        this.enterProject(this.targetProject);
+      }
     },
     editProject(project) {
       this.targetProject = project;
       this.toNew = true;
-      // this.$router.push({
-      //   name: "NewProject",
-      //   params: { preProject: project }
-      // });
     },
     enterProject(project) {
       this.$router.push({
@@ -130,17 +143,29 @@ export default {
         }
       });
     },
-    deleteProject(id, title) {
+    async deleteProject(id, title, project) {
       if (
         confirm(
           `Sure to delete project ${title}?\nThis action is not reversable!`
         )
       ) {
-        this.projects = this.projects.filter(project => project.id !== id);
-        // TODO: also delete it in db
+        this.projects = this.projects.filter(
+          _project => _project._id !== project._id
+        );
+        let response = await this.$store.dispatch("endProject", {
+          projectID: project._id
+        });
+        console.log(response);
       }
       this.isEditing = false;
     }
+  },
+  beforeMount: async function() {
+    let clubID = this.$store.state.club._id;
+    let projects = await this.$store.dispatch("getClubProject", clubID);
+    this.projects = projects.data.data.filter(
+      p => p.projectStatus === "ONGOING"
+    );
   }
 };
 </script>

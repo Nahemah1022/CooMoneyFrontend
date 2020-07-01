@@ -10,17 +10,24 @@
         />
       </div>
       <div :class="{bills: true, fullBills: full}">
-        <div v-for="bill in bills" :key="bill.id">
-          <p class="date" v-if="showDate(full && bill.date)">{{bill.date}}</p>
-          <RevenueItem
-            :costTitle="bill.title"
-            :category="bill.categoty"
-            :cost="costFormat(bill.cost)"
-            :status="bill.status"
-            :description="bill.description"
-            :fullRevenue="full"
-            :comment="bill.comment"
-          ></RevenueItem>
+        <div v-if="bills.length !== 0">
+          <div v-for="bill in bills" :key="bill._id">
+            <p
+              class="date"
+              v-if="showDate(full && (bill.revenueYear + '-' + bill.revenueMonth + '-' + bill.revenueDay))"
+            >{{(bill.revenueYear + '-' + bill.revenueMonth + '-' + bill.revenueDay)}}</p>
+            <RevenueItem
+              :costTitle="bill.revenueTitle"
+              :category="bill.revenueTag"
+              :cost="costFormat(bill.revenueCost)"
+              :status="bill.revenueStatus.toLowerCase()"
+              :description="bill.revenueDescription"
+              :fullRevenue="full"
+              :revenueID="bill._id"
+              :comment="bill.revenueComment"
+              @judge="judge"
+            ></RevenueItem>
+          </div>
         </div>
       </div>
     </div>
@@ -36,6 +43,7 @@ export default {
   data() {
     return {
       dates: {},
+      bills: [],
       detailedBills: {}
     };
   },
@@ -44,9 +52,8 @@ export default {
     //BlurMask
   },
   props: {
-    projectId: Number,
-    full: Boolean,
-    bills: Array
+    projectId: String,
+    full: Boolean
   },
   methods: {
     fullRevenue() {
@@ -67,7 +74,20 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
-
+    async judge(result, inputComment, revenueID, cost) {
+      console.log(cost);
+      await this.$store.dispatch("updateRevenue", {
+        data: {
+          revenueStatus: result ? "APPROVED" : "REJECTED",
+          revenueComment: inputComment,
+          revenueID: revenueID
+        },
+        params: {
+          clubID: this.$store.state.club._id,
+          projectID: this.projectId
+        }
+      });
+    },
     showDate(date) {
       if (!this.dates[date]) {
         this.dates[date] = true;
@@ -77,13 +97,19 @@ export default {
       }
     }
   },
-  beforeMount() {
+  async beforeMount() {
+    let projectID = this.projectId;
+    let response = await this.$store.dispatch("getAllRevenue", { projectID });
+    response = response.data.data;
+    this.bills = response;
     for (const bill of this.bills) {
-      if (this.detailedBills[bill.date] == undefined) {
-        this.detailedBills[bill.date] = new Array();
-        this.dates[bill.date] = false;
+      let date =
+        bill.revenueYear + "-" + bill.revenueMonth + "-" + bill.revenueDay;
+      if (this.detailedBills[date] == undefined) {
+        this.detailedBills[date] = new Array();
+        this.dates[date] = false;
       }
-      this.detailedBills[bill.date].push(bill);
+      this.detailedBills[date].push(bill);
     }
   }
 };
