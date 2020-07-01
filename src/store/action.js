@@ -11,6 +11,7 @@ const server = {
   getUserByUsername: (context, params) => axios.get(`/user/getUserByUsername/${params.username}`, { params: { clubID: params.clubID }}),
   getUserByID: (context, params) => axios.get("/user/getUserByID", { params }),
   checkUser: (context, params) => axios.get("/user/checkUser", { params }),
+  getAllUserByUsername: (context, params) => axios.get(`/user/getAllUserByUsername/${params}`),
 
   // CLUB MODULE
   createClub: (context, data) => axios.post("/club/createClub", data, {
