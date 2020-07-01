@@ -10,12 +10,24 @@
       <div>
         <p class="p1">or login with email.</p>
         <div class="input-block">
-          <input placeholder="Your Email" type="email" v-model="loginData.email" />
+          <input
+            placeholder="Your Email"
+            type="email"
+            v-model="loginData.email"
+          />
           <br />
           <br />
-          <input placeholder="Your Password" type="password" v-model="loginData.password" />
-          <p class="p2" v-if="showForgot" @click="sendInfor">Forgot your password?</p>
-          <p :class="textAni()" v-if="showError">incorrect account or password!</p>
+          <input
+            placeholder="Your Password"
+            type="password"
+            v-model="loginData.password"
+          />
+          <p class="p2" v-if="showForgot" @click="sendInfor">
+            Forgot your password?
+          </p>
+          <p :class="textAni()" v-if="showError">
+            incorrect account or password!
+          </p>
         </div>
       </div>
 
@@ -39,12 +51,12 @@ export default {
   components: {
     Header,
     FB,
-    Google
+    Google,
   },
   computed: {
     loginData() {
-      return this.$store.state.loginData
-    }
+      return this.$store.state.loginData;
+    },
   },
   data() {
     return {
@@ -61,20 +73,26 @@ export default {
       showError: false,
       showAni: false,
 
-      time: null
+      time: null,
     };
   },
   methods: {
     async getProp(data) {
       let response;
-      if(data.email){
-        response = await this.$store.dispatch('checkUser', { email: data.email, username: data.name, password: data.id, userPhoto: data.pic });
-        if(response.data.data.isExist){
+      if (data.email) {
+        response = await this.$store.dispatch("checkUser", {
+          email: data.email,
+          username: data.name,
+          password: data.id,
+          userPhoto: data.pic,
+        });
+        if (response.data.data.isExist) {
           this.$store.state.userData.username = response.data.data.username;
           this.$store.state.userData.email = response.data.data.email;
           this.$store.state.userData.userPhoto = response.data.data.userPhoto;
           this.$cookies.set("token", response.data.data.token, "1d");
-          localStorage.setItem('token', response.data.data.token);
+          localStorage.setItem("token", response.data.data.token);
+          console.log(this.$store.state.userData.username);
           this.$router.push("/Home");
         } else {
           console.log(response);
@@ -82,19 +100,19 @@ export default {
           this.$store.state.signUp.username = response.data.data.username;
           this.$store.state.signUp.password = response.data.data.password;
           this.$store.state.signUp.userPhoto = response.data.data.userPhoto;
-          let responseSignUp = await this.$store.dispatch('signUp');
-          if(responseSignUp.data.status == 200){
+          let responseSignUp = await this.$store.dispatch("signUp");
+          if (responseSignUp.data.status == 200) {
             this.$store.state.login.email = response.data.data.email;
             this.$store.state.login.password = response.data.data.password;
-            let response = await this.$store.dispatch('login');
+            let response = await this.$store.dispatch("login");
             console.log(response);
-            if(response.data.status == 200){
+            if (response.data.status == 200) {
               console.log(response);
               this.$store.state.userData.username = this.$store.state.signUp.username;
               this.$store.state.userData.email = this.$store.state.signUp.email;
               this.$store.state.userData.userPhoto = this.$store.state.signUp.userPhoto;
               this.$cookies.set("token", response.data.data.token, "1d");
-              localStorage.setItem('token', response.data.data.token);
+              localStorage.setItem("token", response.data.data.token);
               this.$router.push("/Home");
             } else {
               this.error();
@@ -104,11 +122,11 @@ export default {
       }
     },
     async Login() {
-      let response = await this.$store.dispatch('login');
+      let response = await this.$store.dispatch("login");
       console.log(response);
-      if(response.data.status == 200){
+      if (response.data.status == 200) {
         this.$cookies.set("token", response.data.data.token, "1d");
-        localStorage.setItem('token', response.data.data.token);
+        localStorage.setItem("token", response.data.data.token);
         this.$router.push("/Home");
         this.$store.commit("setUsername", this.username);
       } else {
@@ -140,8 +158,8 @@ export default {
     },
     sendInfor() {
       alert("你以為我會寄密碼給你嗎?並沒有，我只是想讓你點進來而已");
-    }
-  }
+    },
+  },
 };
 </script>
 

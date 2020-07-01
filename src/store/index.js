@@ -1,10 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./action";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState({ storage: window.sessionStorage })],
   state: {
     signUp: {
       email: "",
@@ -21,11 +23,18 @@ export default new Vuex.Store({
     },
     loginData: {
       email: "",
-      password: ""
+      password: "",
     },
-    club: {}
+    club: {},
   },
   actions,
-  mutations: {},
+  mutations: {
+    setSelectedClub(state, club) {
+      state.club = club;
+    },
+    setUserDate(state, userData) {
+      state.userData = userData;
+    },
+  },
   modules: {},
 });

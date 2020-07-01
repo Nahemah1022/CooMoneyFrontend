@@ -6,9 +6,13 @@
         <span class="name">{{ establisher.username }}</span>
       </div>
       <!-- <div class="title">{{ announce.title }}</div> -->
-      <!-- <div class="date">
-        {{ announce.date }}
-      </div>-->
+      <div class="date">
+        <font-awesome-icon
+          icon="trash-alt"
+          style="color: #00c5b8"
+          @click="deleteAnnounce"
+        ></font-awesome-icon>
+      </div>
     </div>
     <div class="content">{{ announce.info }}</div>
   </div>
@@ -19,11 +23,20 @@ export default {
   name: "AnnounceItem",
   data() {
     return {
-      establisher: ""
+      establisher: "",
     };
   },
   props: {
-    announce: Object
+    announce: Object,
+  },
+  methods: {
+    async deleteAnnounce() {
+      await this.$store.dispatch("deleteAnnounce", {
+        clubID: this.$store.state.club._id,
+        announceID: this.announce._id,
+      });
+      this.$emit("deleteAnnounce", this.announce._id);
+    },
   },
   beforeMount: async function() {
     let userID = [];
@@ -31,12 +44,12 @@ export default {
     userID = JSON.stringify(userID);
     let response = await this.$store.dispatch("getUserByID", { userID });
     this.establisher = response.data.data[0];
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main_b {
   border: 0;
   width: 84%;
@@ -48,8 +61,9 @@ export default {
   overflow-y: visible;
   box-shadow: 0 0 12px #c4c4c4;
   .header {
+    width: 95%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     .left {
       position: relative;

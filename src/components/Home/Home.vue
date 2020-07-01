@@ -8,7 +8,10 @@
     </div>-->
     <div class="block">
       <div class="serachBarBlock">
-        <SearchBar @newClub="createNewClub = true" @toggleList="showList = !showList"></SearchBar>
+        <SearchBar
+          @newClub="createNewClub = true"
+          @toggleList="showList = !showList"
+        ></SearchBar>
       </div>
       <div class="space" />
       <div class="clubsBlock">
@@ -30,9 +33,9 @@
       </div>
       <p class="msg">
         {{
-        "didn't join " +
-        (joinedClubs.length === 0 ? "any" : "more") +
-        " groups"
+          "didn't join " +
+            (joinedClubs.length === 0 ? "any" : "more") +
+            " groups"
         }}
       </p>
       <div class="space" />
@@ -56,7 +59,7 @@ export default {
     ClubPreview,
     NewClub,
     BlurMask,
-    List
+    List,
   },
   props: {},
   data() {
@@ -86,13 +89,14 @@ export default {
         //   createDate: "2019/09/01",
         //   memberCount: 38
         // }
-      ]
+      ],
     };
   },
   beforeMount: async function() {
+    console.log(this.$store.state);
     let club = await this.$store.dispatch("getClub");
     this.joinedClubs = club.data.data;
-  }
+  },
 };
 </script>
 
