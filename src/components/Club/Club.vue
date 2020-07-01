@@ -9,10 +9,10 @@
     <div v-if="isAddingMember" class="addMember">
       <div class="header">
         Add member
-        <div class="check">
+        <div class="check" @click="addUser">
           <img class="check" src="@/assets/image/Project/check.svg" alt />
         </div>
-        <div class="cross">
+        <div class="cross" @click="isAddingMember = false">
           <img class="cross" src="@/assets/image/Project/cross.svg" alt />
         </div>
       </div>
@@ -207,13 +207,16 @@ export default {
         (a) => a._id !== announceID
       );
     },
-    async addMember() {
+    addMember() {
       this.isAddingMember = true;
-      // let response = await this.$store.dispatch("addClubMembers", {
-      //   data: { username: this.addUsername },
-      //   params: { clubID: this.$store.state.club._id },
-      // });
-      // console.log(response);
+    },
+    async addUser() {
+      let response = await this.$store.dispatch("addClubMembers", {
+        data: { username: this.addUsername },
+        params: { clubID: this.$store.state.club._id },
+      });
+      console.log(response);
+      this.isAddingMember = false;
     },
   },
 };
@@ -236,12 +239,17 @@ $tabHeight: 36px;
     transform: translate(-50%, -50%);
     z-index: 2000;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     background-color: #fff;
     border-radius: 16px;
     border: 1px solid #00c5b8;
     .header {
-      height: 50%;
+      padding-top: 7px;
+      height: 30%;
+      color: #00c5b8;
+      font-size: 18px;
+      font-weight: 700;
       .check {
         position: absolute;
         z-index: 100;
@@ -257,10 +265,11 @@ $tabHeight: 36px;
     }
     input {
       width: 50vw;
-      height: 30px;
-      line-height: 30px;
+      height: 24px;
+      line-height: 24px;
       border: 1px solid #00c5b8;
       border-radius: 16px;
+      padding: 5px 10px;
     }
   }
   .upper {
