@@ -70,10 +70,12 @@ export default {
       if(data.email){
         response = await this.$store.dispatch('checkUser', { email: data.email, username: data.name, password: data.id, userPhoto: data.pic });
         if(response.data.data.isExist){
+          this.$store.state.userData.username = response.data.data.username;
+          this.$store.state.userData.email = response.data.data.email;
+          this.$store.state.userData.userPhoto = response.data.data.userPhoto;
           this.$cookies.set("token", response.data.data.token, "1d");
           localStorage.setItem('token', response.data.data.token);
           this.$router.push("/Home");
-          this.$store.commit("setUsername", this.username);
         } else {
           console.log(response);
           this.$store.state.signUp.email = response.data.data.email;
