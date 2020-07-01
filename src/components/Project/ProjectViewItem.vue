@@ -11,7 +11,10 @@
               {{ costFormat(this.projectBudget) }}
             </div>
           </div>
-          <img :src="require(`@/assets/image/Project/Theme_${projectTheme}.svg`)" alt />
+          <img
+            :src="require(`@/assets/image/Project/Theme_${projectTheme}.svg`)"
+            alt
+          />
         </div>
         <div class="second">
           <div class="money">
@@ -58,6 +61,7 @@
           :projectId="projectId"
           :full="fullRevenue"
           @full="toggleRevenue"
+          :ref="projectId"
         ></Revenue>
       </div>
       <button :class="{ add: true, fullPlus: fullRevenue }" @click="add">
@@ -83,13 +87,13 @@ export default {
   components: {
     Revenue,
     Account,
-    CreateBill
+    CreateBill,
   },
   data() {
     return {
       isAdding: false,
       fullRevenue: false,
-      fullAccount: false
+      fullAccount: false,
     };
   },
   props: {
@@ -98,7 +102,7 @@ export default {
     projectTheme: String,
     projectTotalExpanse: Number,
     projectBudget: Number,
-    projectTotalIncome: Number
+    projectTotalIncome: Number,
   },
   methods: {
     add() {
@@ -119,13 +123,13 @@ export default {
       this.fullRevenue = !this.fullRevenue;
     },
     async newRevenue(obj) {
-      this.bills.unshift(obj);
-    }
+      this.$refs[this.projectId].pushBill(obj);
+    },
   },
   async beforeMount() {
     // TODO: read expanse, income, budget, accoints from db
     // TODO: read last three's bills with title, cost, categoty, status, date from db
-  }
+  },
 };
 </script>
 

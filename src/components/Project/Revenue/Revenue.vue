@@ -77,6 +77,9 @@ export default {
     full: Boolean,
   },
   methods: {
+    pushBill(bill) {
+      this.bills.push(bill);
+    },
     fullRevenue() {
       if (!this.full) {
         for (const date in this.dates) {
