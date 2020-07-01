@@ -89,17 +89,18 @@ export default {
         this.$store.state.signUp.userGender = "MALE";
       }
 
-      let response = await this.$store.dispatch("signUp");
-      if (response.data.status == 200) {
-        this.$store.state.login.email = response.data.data.email;
-        this.$store.state.login.password = response.data.data.password;
+      let responseSignUp = await this.$store.dispatch("signUp");
+      if (responseSignUp.data.status == 200) {
+        console.log(responseSignUp);
+        this.$store.state.loginData.email = responseSignUp.data.data.email;
+        this.$store.state.loginData.password = this.$store.state.signUp.password;
         let response = await this.$store.dispatch("login");
         if (response.data.status == 200) {
           this.$cookies.set("token", response.data.data.token, "1d");
           localStorage.setItem("token", response.data.data.token);
-          localStorage.setItem("username", response.data.data.username);
-          localStorage.setItem("email", response.data.data.email);
-          localStorage.setItem("userPhoto", response.data.data.userPhoto);
+          localStorage.setItem("username", responseSignUp.data.data.username);
+          localStorage.setItem("email", responseSignUp.data.data.email);
+          localStorage.setItem("userPhoto", responseSignUp.data.data.userPhoto);
           axios.defaults.headers["Authorization"] =
             "Bearer " + response.data.data.token;
           this.$router.push("/Home");
@@ -107,7 +108,6 @@ export default {
           this.error();
         }
       }
-      console.log(response.data);
     },
   },
 };

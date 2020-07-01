@@ -40,8 +40,10 @@ export default {
       this.$emit("cancel");
       let clubMembers = [];
       let members = this.clubMembers.split(" ");
-      for (let i = 0; i < members.length; i++) {
-        clubMembers.push(members[i]);
+      if(members[0]){
+        for (let i = 0; i < members.length; i++) {
+          clubMembers.push(members[i]);
+        }
       }
       clubMembers = JSON.stringify(clubMembers); // 要先轉成字串
       let bodyFormData = new FormData();
