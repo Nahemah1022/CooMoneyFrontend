@@ -1132,10 +1132,19 @@ export default {
               let singleRevenue = this.projectRevenue[e];
               for (let j = 0; j < singleRevenue.length; ++j) {
                 let itemTag = singleRevenue[j].revenueTag;
-                let date =
-                  singleRevenue[j].revenueYear +
-                  "/" +
-                  singleRevenue[j].revenueMonth;
+                let date = "";
+                if (singleRevenue[j].revenueMonth < 10) {
+                  date =
+                    singleRevenue[j].revenueYear +
+                    "/0" +
+                    singleRevenue[j].revenueMonth;
+                } else {
+                  date =
+                    singleRevenue[j].revenueYear +
+                    "/" +
+                    singleRevenue[j].revenueMonth;
+                }
+
                 let money = singleRevenue[j].revenueCost;
                 singleExpense = {
                   Classification: itemTag,

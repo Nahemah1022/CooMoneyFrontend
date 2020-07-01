@@ -340,7 +340,7 @@ export default {
             else obj[key] = money;
 
             //update
-            M_Statistic[key] = obj;
+            M_Statistic[index] = obj;
             //console.log(M_Statistic);
             //console.log(M_Statistic[key]);
             // console.log(obj);
