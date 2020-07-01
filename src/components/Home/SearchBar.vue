@@ -12,13 +12,29 @@
         placeholder="尋找在CooMoney中的社群"
         @focus="isFocus = true"
         @blur="isFocus = false"
-        @change="searchClub"
+        @input="searchClub"
         v-model="clubName"
       />
       <img :src="require('@/assets/image/Home/avatar_empty.svg')" alt="" />
     </div>
     <div :class="{ block: true, focus: isFocus }">
-      <div class="result">...沒有符合條件的社群</div>
+      <div v-if="matchResult.length === 0" class="result">
+        ...沒有符合條件的社群
+      </div>
+      <div v-else class="result">
+        <div
+          class="item"
+          v-for="(club, index) in matchResult"
+          :key="index"
+          @click="apply(club.id, club.clubName)"
+        >
+          <img :src="club.clubImage" alt="" />
+          <div class="cont">
+            <div class="title">{{ club.clubName }}</div>
+            <div class="content">{{ club.clubIntro }}</div>
+          </div>
+        </div>
+      </div>
       <div class="new" @click="$emit('newClub')">
         <img class="add" :src="require('@/assets/image/Home/add.png')" alt />
         <div class="cont">
@@ -36,14 +52,37 @@ export default {
   data() {
     return {
       isFocus: false,
-      clubName: ""
+      clubName: "",
+      matchResult: [],
     };
   },
   methods: {
-    async searchClub(){
-      let response = await this.$store.dispatch('searchClub', { clubName: this.clubName });   // 預設是只會搜尋到尚未加入的社團
-      console.log(response);
-    }
+    async searchClub() {
+      this.matchResult = [];
+      if (this.clubName !== "") {
+        let response = await this.$store.dispatch("searchClub", {
+          clubName: this.clubName,
+        });
+        this.matchResult = response.data.data;
+        console.log(this.matchResult);
+      }
+    },
+    async apply(clubID, clubName) {
+      if (confirm(`確定要申請加入「${clubName}」社群嗎?`)) {
+        let d = new Date(this.date);
+        let day_f =
+          new Date(d).getFullYear() +
+          "-" +
+          ("0" + (new Date(d).getMonth() + 1)).slice(-2) +
+          "-" +
+          ("0" + new Date(d).getDate()).slice(-2);
+        let response = await this.$store.dispatch("joinApplication", {
+          data: { date: day_f, reason: "none" },
+          params: { clubID: clubID },
+        });
+        console.log(response);
+      }
+    },
   },
 };
 </script>
@@ -84,6 +123,7 @@ export default {
   .block {
     width: 100%;
     position: relative;
+    min-height: 0px;
     max-height: 0px;
     overflow: hidden;
     border: 1px #00c5b8 solid;
@@ -95,13 +135,48 @@ export default {
     transition: 0.3s;
     padding: 0;
     &.focus {
-      max-height: 100px;
+      min-height: 100px;
+      max-height: 1000px;
       padding: 20px 0 6px 0;
     }
     .result {
       width: 90%;
       margin: 10px auto;
       color: #aaaaaa;
+      .item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 60px;
+        img {
+          width: 50px;
+          height: 50px;
+          margin-right: 20px;
+          border-radius: 50%;
+          box-shadow: 0 0 12px #cacaca;
+        }
+        .cont {
+          width: 80%;
+          height: 80%;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          .title {
+            color: #676767;
+            font-weight: 700;
+            font-size: 18px;
+          }
+          .content {
+            font-size: 12px;
+            color: #8d8d8d;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+        }
+      }
     }
     .new {
       width: 100%;
