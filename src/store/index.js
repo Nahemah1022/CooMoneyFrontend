@@ -26,19 +26,6 @@ export default new Vuex.Store({
     club: {}
   },
   actions,
-  mutations: {
-    loginError: (state) => {
-      state.login.showError = true;
-      state.login.showForgot = true;
-      state.login.showAni = true;
-    },
-    setUsername: (state, name) => {
-      state.username = name;
-    },
-    setSelectedClub: (state, club) => {
-      state.club = club;
-    }
-
-  },
+  mutations: {},
   modules: {},
 });
