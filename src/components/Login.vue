@@ -82,6 +82,8 @@ export default {
           this.$store.state.signUp.userPhoto = response.data.data.userPhoto;
           let responseSignUp = await this.$store.dispatch('signUp');
           if(responseSignUp.data.status == 200){
+            this.$store.state.login.email = response.data.data.email;
+            this.$store.state.login.password = response.data.data.password;
             let response = await this.$store.dispatch('login');
             console.log(response);
             if(response.data.status == 200){
