@@ -35,9 +35,12 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import Avatar from "vue-avatar";
+
 export default {
   props: {
     allProjectName: Array,
+
+    defaultProject: Array,
   },
   components: {
     Swiper,
@@ -56,7 +59,7 @@ export default {
           clickable: true,
         },
       },
-      checkProject: [],
+
       isCheck: [],
       backGround: {
         A: "#91F1EA",
@@ -70,16 +73,11 @@ export default {
       },
       //allProjectName: [],
       clubProject: [],
+      checkProject: this.defaultProject,
     };
   },
 
   //不曉得為啥
-  /*beforeUpdate() {
-    this.checkProject.push(this.allProjectName[0]);
-    //console.log(this.checkProject);
-    this.$emit("projectSubmit", this.checkProject);
-  },*/
-
   methods: {
     //the option
     chooseBackGround(project) {
