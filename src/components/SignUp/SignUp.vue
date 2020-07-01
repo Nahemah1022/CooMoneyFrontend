@@ -46,11 +46,11 @@ export default {
         this.$store.state.login.password = response.data.data.password;
         let response = await this.$store.dispatch("login");
         if (response.data.status == 200) {
-          this.$store.state.userData.username = this.$store.state.signUp.username;
-          this.$store.state.userData.email = this.$store.state.signUp.email;
-          this.$store.state.userData.userPhoto = this.$store.state.signUp.userPhoto;
           this.$cookies.set("token", response.data.data.token, "1d");
           localStorage.setItem("token", response.data.data.token);
+          localStorage.setItem("username", response.data.data.username);
+          localStorage.setItem("email", response.data.data.email);
+          localStorage.setItem("userPhoto", response.data.data.userPhoto);
           axios.defaults.headers['Authorization'] = 'Bearer ' + response.data.data.token;
           this.$router.push("/Home");
         } else {
