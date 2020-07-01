@@ -64,6 +64,7 @@ export default {
           y2: 10,
           top: 20,
           width: "95%",
+          height: "auto",
         },
         xAxis: {
           type: "category",
@@ -146,8 +147,8 @@ export default {
       ],
       barExtend: {
         grid: {
-          width: 300,
-          height: 330,
+          width: "90%",
+          height: "auto",
         },
 
         yAxis: {
@@ -357,57 +358,6 @@ export default {
       return {
         columns: Columns,
         rows: M_Statistic,
-      };
-    },
-    lineBalance(C, R) {
-      //use it to add income
-
-      let Incomekeys = Object.keys(this.sendIncome);
-      //console.log(C);
-      //先加column
-      for (let i = 0; i < Incomekeys.length; ++i) {
-        if (!C.includes(Incomekeys[i])) C.push(Incomekeys[i]);
-      }
-      //every project
-      for (let k = 0; k < Incomekeys.length; ++k) {
-        //先照月份排序
-        let project = this.sendIncome[Incomekeys[k]];
-        project.sort((a, b) => {
-          return a.month < b.month ? -1 : 1;
-        });
-        //every month
-        for (let j = 0; j < project.length; ++j) {
-          let date = project[j].month;
-
-          let index = R.findIndex((d) => d.month === date);
-          let money = project[j].money;
-          //還沒有這個Month建立一個
-          if (money > 0) {
-            if (index === -1) {
-              let obj = {};
-              obj["month"] = date; //month:2018-8.....
-              obj[Incomekeys[k]] = money; //projectname:money
-              R.push(obj);
-            } else {
-              let key = Incomekeys[k]; //
-
-              let obj = R[index];
-
-              //if is same project
-              if (key in obj) obj[key] += money;
-              //if this is other project we need to add new key to rows
-              else obj[key] = money;
-
-              //update
-              R[key] = obj;
-            }
-          }
-        }
-      }
-      //console.log(R);
-      return {
-        columns: C,
-        rows: R,
       };
     },
   },
