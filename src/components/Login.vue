@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Header from "@/components/common/Header.vue";
 import FB from "@/components/FB.vue";
 import Google from "@/components/Google.vue";
@@ -61,30 +60,42 @@ export default {
     };
   },
   methods: {
-    getProp(data) {
+    async getProp(data) {
       this.name = data.name;
-      this.email = data.email;
+      this.$store.state.signUp.email = data.email;
+      this.$store.state.signUp.username = data.name;
+      // this.email = data.email;
       this.personalID = data.id;
       this.picture = data.pic;
       this.nickname = data.name;
-      this.username = data.email;
+      // this.username = data.email;
       this.password = data.id;
       this.otherSource = true;
+      let response;
+      if(this.$store.state.signUp.username){
+        response = await this.$store.dispatch('checkUser', { email: data.email });
+      }
+      if(response.data.data.isExist){
+        this.$cookies.set("token", response.data.data.token, "1d");
+        localStorage.setItem('token', response.data.data.token);
+        this.$router.push("/Home");
+        this.$store.commit("setUsername", this.username);
+      } else {
+        this.$router.push("/signUp");
+      }
     },
-    Login() {
-      axios
-        .post("https://coomoney.herokuapp.com/api/v1/user/login", {
-          email: this.email,
-          password: this.password
-        })
-        .then(res => {
-          this.$cookies.set("token", res.data.data.token, "1d");
-          this.$router.push("/Home");
-          this.$store.commit("setUsername", this.username);
-        })
-        .catch(() => {
-          this.error();
-        });
+    async Login() {
+      let response = await this.$store.dispatch('login');
+      console.log(response);
+      if(response.data.status == 200){
+        this.$cookies.set("token", response.data.data.token, "1d");
+        localStorage.setItem('token', response.data.data.token);
+        this.$router.push("/Home");
+        this.$store.commit("setUsername", this.username);
+      } else {
+        console.log(12321);
+        this.error();
+      }
     },
     error() {
       //console.log(this.username);
