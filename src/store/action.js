@@ -8,7 +8,7 @@ const server = {
       email: context.state.loginData.email,
       password: context.state.loginData.password,
   }),
-  getUserByUsername: (context, params) => axios.get(`/user/getUserByUsername/${params}`),
+  getUserByUsername: (context, params) => axios.get(`/user/getUserByUsername/${params.username}`, { params: { clubID: params.clubID }}),
   getUserByID: (context, params) => axios.get("/user/getUserByID", { params }),
   checkUser: (context, params) => axios.get("/user/checkUser", { params }),
 

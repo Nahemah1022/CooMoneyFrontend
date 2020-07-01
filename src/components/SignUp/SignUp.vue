@@ -90,6 +90,7 @@ export default {
       }
 
       let responseSignUp = await this.$store.dispatch("signUp");
+      console.log(responseSignUp);
       if (responseSignUp.data.status == 200) {
         console.log(responseSignUp);
         this.$store.state.loginData.email = responseSignUp.data.data.email;
