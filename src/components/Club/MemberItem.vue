@@ -9,7 +9,10 @@
       <div class="email">{{ user.email }}</div>
     </div>
     <div class="right">
-      <div v-if="user.auth===1" class="auth">管理員</div>
+      <div v-if="isJudge" class="auth">
+        <div @click="$emit('judge', true, user.applicationId)">同意</div>
+        <div @click="$emit('judge', false, user.applicationId)">拒絕</div>
+      </div>
       <!-- <div class="date">{{ user.date }}</div> -->
     </div>
   </div>
@@ -19,14 +22,15 @@
 export default {
   name: "MemberItem",
   props: {
-    user: Object,
-    idx: Number
-  }
+    user: [Object, String],
+    idx: Number,
+    isJudge: Boolean,
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
   height: 60px;
   border: 1px solid #e4e4e4;
@@ -70,12 +74,25 @@ export default {
     justify-content: flex-end;
     align-items: flex-end;
     .auth {
-      background-color: #fe7b44;
-      color: #fff;
-      margin: 5px 0;
-      padding: 2px 3px;
-      border-radius: 4px;
-      font-size: 12px;
+      width: 180%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      div {
+        width: 35%;
+        text-align: center;
+        color: #fff;
+        margin: 5px 0;
+        padding: 2px 3px;
+        border-radius: 4px;
+        font-size: 12px;
+        &:nth-child(1) {
+          background-color: #57f2cd;
+        }
+        &:nth-child(2) {
+          background-color: #f25757;
+        }
+      }
     }
     .date {
       color: #fe7b44;

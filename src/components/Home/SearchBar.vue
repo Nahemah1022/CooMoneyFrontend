@@ -15,7 +15,8 @@
         @input="searchClub"
         v-model="clubName"
       />
-      <img :src="require('@/assets/image/Home/avatar_empty.svg')" alt="" />
+      <img v-if="photoURL !== ''" :src="photoURL" />
+      <img v-else :src="require('@/assets/image/Home/avatar_empty.svg')" />
     </div>
     <div :class="{ block: true, focus: isFocus }">
       <div v-if="matchResult.length === 0" class="result">
@@ -54,7 +55,11 @@ export default {
       isFocus: false,
       clubName: "",
       matchResult: [],
+      photoURL: "",
     };
+  },
+  beforeMount() {
+    this.photoURL = localStorage.getItem("userPhoto");
   },
   methods: {
     async searchClub() {
@@ -118,6 +123,7 @@ export default {
     }
     img {
       width: 8%;
+      border-radius: 50%;
     }
   }
   .block {
