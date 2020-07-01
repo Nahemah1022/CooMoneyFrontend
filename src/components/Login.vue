@@ -102,8 +102,8 @@ export default {
           this.$store.state.signUp.userPhoto = response.data.data.userPhoto;
           let responseSignUp = await this.$store.dispatch("signUp");
           if (responseSignUp.data.status == 200) {
-            this.$store.state.login.email = response.data.data.email;
-            this.$store.state.login.password = response.data.data.password;
+            this.$store.state.loginData.email = response.data.data.email;
+            this.$store.state.loginData.password = response.data.data.password;
             let response = await this.$store.dispatch("login");
             if (response.data.status == 200) {
               this.$cookies.set("token", response.data.data.token, "1d");
@@ -128,7 +128,6 @@ export default {
         localStorage.setItem("token", response.data.data.token);
         this.$router.push("/Home");
         axios.defaults.headers['Authorization'] = 'Bearer ' + response.data.data.token;
-        this.$store.commit("setUsername", this.username);
       } else {
         this.error();
       }
