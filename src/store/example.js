@@ -39,7 +39,8 @@
 
 // USER MODULE
 // let response = await this.$store.dispatch('getUserByID', { userID });
-// let response = await this.$store.dispatch('getUserByUsername', username);
+// let response = await this.$store.dispatch('getUserByUsername', { username, clubID });
+// let response = await this.$store.dispatch('getAllUserByUsername', username);
 
 // CLUB MODULE
 // let response = await this.$store.dispatch("createClub", bodyFormData);
