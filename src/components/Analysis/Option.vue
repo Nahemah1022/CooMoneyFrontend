@@ -1,7 +1,11 @@
 <template>
   <div id="content1">
     <swiper class="swiper" ref="swiper" :options="swiperOption">
-      <swiper-slide class="swiper-slide" v-for="project in allProjectName" :key="project">
+      <swiper-slide
+        class="swiper-slide"
+        v-for="project in allProjectName"
+        :key="project"
+      >
         <label class="layout">
           <div id="container">
             <avatar
@@ -15,7 +19,12 @@
             </div>
           </div>
 
-          <input type="checkbox" :value="project" v-model="checkProject" @change="getProjectName()" />
+          <input
+            type="checkbox"
+            :value="project"
+            v-model="checkProject"
+            @change="getProjectName()"
+          />
         </label>
       </swiper-slide>
     </swiper>
@@ -28,24 +37,24 @@ import "swiper/css/swiper.css";
 import Avatar from "vue-avatar";
 export default {
   props: {
-    allProjectName: Array
+    allProjectName: Array,
   },
   components: {
     Swiper,
     SwiperSlide,
-    Avatar
+    Avatar,
   },
   data() {
     return {
       swiperOption: {
-        slidesPerView: 5,
+        slidesPerView: 4,
         centeredSlides: false,
         spaceBetween: 0,
         grabCursor: true,
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
-        }
+          clickable: true,
+        },
       },
       checkProject: [],
       isCheck: [],
@@ -57,19 +66,26 @@ export default {
         E: "#91C1F1",
         F: "#91F1EA",
         G: "#F9C2FF",
-        tick: "#4EF559"
-      }
+        tick: "#4EF559",
+      },
+      //allProjectName: [],
+      clubProject: [],
     };
   },
-  beforeMount() {
-    this.initOne();
-  },
+
+  //不曉得為啥
+  /*beforeUpdate() {
+    this.checkProject.push(this.allProjectName[0]);
+    //console.log(this.checkProject);
+    this.$emit("projectSubmit", this.checkProject);
+  },*/
+
   methods: {
     //the option
     chooseBackGround(project) {
       //如果已經勾選就變成打勾的顏色
-      if (this.checkProject.findIndex(i => i === project) === -1) {
-        switch (project.charAt(c => c === 0)) {
+      if (this.checkProject.findIndex((i) => i === project) === -1) {
+        switch (project.charAt((c) => c === 0)) {
           case "A":
             return this.backGround.A;
           case "B":
@@ -88,12 +104,13 @@ export default {
       } else return this.backGround.tick;
     },
     proejctIsCheck(project) {
-      if (this.checkProject.findIndex(i => i === project) === -1)
+      if (this.checkProject.findIndex((i) => i === project) === -1)
         return project;
       else return "✔";
     },
 
     getProjectName() {
+      //console.log(this.checkProject);
       if (this.checkProject.length === 0) {
         alert("Please choose at least 1!!");
       } else this.$emit("projectSubmit", this.checkProject);
@@ -101,11 +118,14 @@ export default {
 
     //must not zero project when enter analysis
     initOne() {
-      this.checkProject[0] = this.allProjectName[0];
-      // console.log(this.checkProject);
+      //let all = JSON.parse(JSON.stringify(this.allProjectName));
+      /*console.log(this.allProjectName);
+      this.checkProject.push(this.allProjectName[0]);
+      console.log(this.checkProject);
       this.$emit("projectSubmit", this.checkProject);
-    }
-  }
+      */
+    },
+  },
 };
 </script>
 

@@ -31,7 +31,7 @@ Vue.use(VCharts);
 export default {
   props: {
     //傳進來的project
-    sendIncome: Object
+    sendIncome: Object,
   },
   components: {},
   data() {
@@ -43,25 +43,25 @@ export default {
           cursor: "pointer",
           itemStyle: {
             shadowColor: "rgba(0, 0, 0, 0.3)",
-            shadowBlur: 5
+            shadowBlur: 5,
           },
           //圖示
 
           label: {
             show: false,
-            position: "center"
+            position: "center",
           },
           emphasis: {
             label: {
               show: true,
 
               fontSize: "20",
-              fontWeight: "bold"
-            }
+              fontWeight: "bold",
+            },
           },
           radius: [40, 130],
           //right: '145',
-          bottom: "50"
+          bottom: "50",
         },
         legend: {
           //type: 'scroll',
@@ -70,7 +70,7 @@ export default {
           //left: '140',
           top: "400",
           itemHeight: 30,
-          itemWidth: 30
+          itemWidth: 30,
         },
         color: [
           "#97EBCE",
@@ -80,8 +80,8 @@ export default {
           "#A6CEE3",
           "#C4FFFB",
           "#B2DF8A",
-          "#CE90E4"
-        ]
+          "#CE90E4",
+        ],
       },
       BackgroundColor: "transparent",
       //顏色藥用v-bind設置
@@ -89,13 +89,13 @@ export default {
       barExtend: {
         grid: {
           width: 300,
-          height: 330
+          height: 330,
         },
 
         yAxis: {
           axisLabel: {
-            fontSize: 10
-          }
+            fontSize: 10,
+          },
         },
         legend: {
           //type: 'scroll',
@@ -104,14 +104,14 @@ export default {
           //left: '140',
 
           itemHeight: 20,
-          itemWidth: 20
-        }
-      }
+          itemWidth: 20,
+        },
+      },
     };
   },
   methods: {
     projectNum(type) {
-      console.log();
+      //console.log(this.sendIncome);
       //只有一個Project
       if (type === 1) {
         if (Object.keys(this.sendIncome).length != 1) return false;
@@ -132,21 +132,23 @@ export default {
       for (let i = 0; i < projectIncome.length; ++i) {
         let name = projectIncome[i].Classification;
         let money = projectIncome[i].money;
-        let index = IncomeItem.findIndex(e => e.name === name);
+        let index = IncomeItem.findIndex((e) => e.name === name);
         //沒有這個項目
-        if (index === -1) {
-          IncomeItem[count] = { name: name, money: money };
-          ++count;
-        }
-        //已經有這個項目把錢加上去
-        else {
-          IncomeItem[index].money += money;
+        if (money < 0) {
+          if (index === -1) {
+            IncomeItem[count] = { name: name, money: money };
+            ++count;
+          }
+          //已經有這個項目把錢加上去
+          else {
+            IncomeItem[index].money += money;
+          }
         }
       }
       //console.log(IncomeItem);
       return {
         columns: ["name", "money"],
-        rows: IncomeItem
+        rows: IncomeItem,
       };
     },
     barIncome() {
@@ -169,23 +171,27 @@ export default {
             //console.log(projectIncome.length);
             let name = projectIncome[j].Classification;
             let money = projectIncome[j].money;
-            let index = IncomeItem.findIndex(e => e.items === name);
-            //沒有這個項目
-            if (index === -1) {
-              let key = keys[i];
-              let obj = {};
-              obj["items"] = name;
-              obj[key] = money;
-              IncomeItem[count] = obj;
+            let index = IncomeItem.findIndex((e) => e.items === name);
+            if (money < 0) {
+              money = -money;
+              //console.log(money);
+              //沒有這個項目
+              if (index === -1) {
+                let key = keys[i];
+                let obj = {};
+                obj["items"] = name;
+                obj[key] = money;
+                IncomeItem[count] = obj;
 
-              ++count;
-            }
-            //已經有這個項目把錢加上去
-            else {
-              let key = keys[i];
-              let obj = IncomeItem[index];
-              obj[key] += money;
-              IncomeItem[index] = obj;
+                ++count;
+              }
+              //已經有這個項目把錢加上去
+              else {
+                let key = keys[i];
+                let obj = IncomeItem[index];
+                obj[key] += money;
+                IncomeItem[index] = obj;
+              }
             }
           }
         }
@@ -195,31 +201,34 @@ export default {
           for (let j = 0; j < projectIncome.length; ++j) {
             let name = projectIncome[j].Classification;
             let money = projectIncome[j].money;
-            let index = IncomeItem.findIndex(e => e.items === name);
-            if (index === -1) {
-              //  console.log("i should not in!!!");
-              let key = keys[i];
-              let obj = {};
-              obj["items"] = name;
-              //前面也要建立這個項目(只是為0而已)
-              for (let k = i; k >= 0; k--) obj[key[k]] = 0;
-              obj[key] = money;
+            let index = IncomeItem.findIndex((e) => e.items === name);
+            if (money < 0) {
+              money = -money;
+              if (index === -1) {
+                //  console.log("i should not in!!!");
+                let key = keys[i];
+                let obj = {};
+                obj["items"] = name;
+                //前面也要建立這個項目(只是為0而已)
+                for (let k = i; k >= 0; k--) obj[key[k]] = 0;
+                obj[key] = money;
 
-              IncomeItem[count] = obj;
-              ++count;
-            }
-            //其他project有這個項目(必須一起比較)
-            else {
-              //project name
-              let key = keys[i];
-              let obj = IncomeItem[index];
+                IncomeItem[count] = obj;
+                ++count;
+              }
+              //其他project有這個項目(必須一起比較)
+              else {
+                //project name
+                let key = keys[i];
+                let obj = IncomeItem[index];
 
-              //已經有記錄過了把錢加上去
-              if (key in obj) obj[key] += money;
-              else obj[key] = money;
+                //已經有記錄過了把錢加上去
+                if (key in obj) obj[key] += money;
+                else obj[key] = money;
 
-              IncomeItem[index] = obj;
-              //console.log(IncomeItem[index]);
+                IncomeItem[index] = obj;
+                //console.log(IncomeItem[index]);
+              }
             }
           }
         }
@@ -227,11 +236,11 @@ export default {
       //console.log(IncomeItem);
       return {
         columns: Columns,
-        rows: IncomeItem
+        rows: IncomeItem,
       };
-    }
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>
 
