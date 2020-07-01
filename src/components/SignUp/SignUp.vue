@@ -4,19 +4,19 @@
     <div class="block">
       <h1 class="title">Sign Up</h1>
       <div>
-        <div class="buttons">
+        <!-- <div class="buttons">
           <img class="fb" src="@/assets/image/Login/fb_icon.svg" alt />
           <img class="google" src="@/assets/image/Login/google_icon.svg" alt />
-        </div>
+        </div> -->
         <br />
         <div class="input-block">
-          <input placeholder="   Your Email" type="email" v-model="email" />
+          <input placeholder="   Your Email" type="email" v-model="signUpData.email" />
           <br />
           <br />
-          <input placeholder="   Password" type="password" v-model="password" />
+          <input placeholder="   Password" type="password" v-model="signUpData.password" />
           <br />
           <br />
-          <input placeholder="   Username" type="text" v-model="username" />
+          <input placeholder="   Username" type="text" v-model="signUpData.username" />
         </div>
       </div>
       <button @click="signUp">Sign Up</button>
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Header from "@/components/common/Header.vue";
 
 export default {
@@ -33,32 +32,18 @@ export default {
   components: {
     Header
   },
-  data() {
-    return {
-      email: "",
-      password: "",
-      username: "",
-      userGender: "MALE"
-    };
+  computed:{
+    signUpData(){
+      return this.$store.state.signUp;
+    }
   },
   methods: {
-    signUp() {
-      axios
-        .post("https://coomoney.herokuapp.com/api/v1/user/signUp", {
-          username: this.username,
-          password: this.password,
-          email: this.email,
-          userPhoto: "",
-          userGender: this.userGender,
-          userBirth: "2020-06-28"
-        })
-        .then(res => {
-          console.log(res);
-          this.$router.push("/Login");
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    async signUp() {
+      let response = await this.$store.dispatch('signUp');
+      if(response.data.status == 200){
+        this.$router.push('/Home')
+      }
+      console.log(response.data);
     }
   }
 };

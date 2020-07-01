@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     //google function
-    onSuccess(googleUser) {
+    async onSuccess(googleUser) {
       //don't pass this parameter down
       //console.log(googleUser);
       //console.log("fuck");

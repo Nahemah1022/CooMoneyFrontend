@@ -55,7 +55,7 @@ export default {
       showForgot: false,
       showError: false,
       showAni: false,
-      otherSource: false,
+
       time: null
     };
   },
@@ -65,23 +65,45 @@ export default {
       this.$store.state.signUp.email = data.email;
       this.$store.state.signUp.username = data.name;
       // this.email = data.email;
-      this.personalID = data.id;
+      this.$store.state.signUp.password = data.id;
       this.picture = data.pic;
       this.nickname = data.name;
       // this.username = data.email;
       this.password = data.id;
       this.otherSource = true;
       let response;
-      if(this.$store.state.signUp.username){
-        response = await this.$store.dispatch('checkUser', { email: data.email });
-      }
-      if(response.data.data.isExist){
-        this.$cookies.set("token", response.data.data.token, "1d");
-        localStorage.setItem('token', response.data.data.token);
-        this.$router.push("/Home");
-        this.$store.commit("setUsername", this.username);
-      } else {
-        this.$router.push("/signUp");
+      if(data.email){
+        console.log(this.$store.state.signUp.username);
+        response = await this.$store.dispatch('checkUser', { email: data.email, username: data.name, password: data.id, userPhoto: data.pic });
+        if(response.data.data.isExist){
+          this.$cookies.set("token", response.data.data.token, "1d");
+          localStorage.setItem('token', response.data.data.token);
+          this.$router.push("/Home");
+          this.$store.commit("setUsername", this.username);
+        } else {
+          console.log(response);
+          this.$store.state.signUp.email = response.data.data.email;
+          this.$store.state.signUp.username = response.data.data.username;
+          this.$store.state.signUp.password = response.data.data.password;
+          this.$store.state.signUp.userPhoto = response.data.data.userPhoto;
+          let responseSignUp = await this.$store.dispatch('signUp');
+          if(responseSignUp.data.status == 200){
+            let response = await this.$store.dispatch('login');
+            console.log(response);
+            if(response.data.status == 200){
+              console.log(response);
+              this.$store.state.userData.username = this.$store.state.signUp.username;
+              this.$store.state.userData.email = this.$store.state.signUp.email;
+              this.$store.state.userData.userPhoto = this.$store.state.signUp.userPhoto;
+              this.$cookies.set("token", response.data.data.token, "1d");
+              localStorage.setItem('token', response.data.data.token);
+              this.$router.push("/Home");
+              this.$store.commit("setUsername", this.username);
+            } else {
+              this.error();
+            }
+          }
+        }
       }
     },
     async Login() {

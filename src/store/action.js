@@ -5,8 +5,8 @@ const server = {
   // USER MODULE
   signUp: (context) => axios.post("/user/signUp", context.state.signUp),
   login: (context) => axios.post("/user/login", {
-      email: context.state.login.email,
-      password: context.state.login.password,
+      email: context.state.signUp.email,
+      password: context.state.signUp.password,
   }),
   getUserByID: (context, params) => axios.get("/user/getUserByID", { params }),
   checkUser: (context, params) => axios.get("/user/checkUser", { params }),

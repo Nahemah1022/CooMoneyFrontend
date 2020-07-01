@@ -11,24 +11,13 @@ export default new Vuex.Store({
       password: "",
       username: "",
       userGender: "MALE",
-      participateID: [],
       userPhoto: "",
       userBirth: "2020-06-28",
     },
-    // google: {
-    //   username: "",
-    //   email: "",
-    //   personalID: "",
-    //   picture: "",
-    //   userPhoto: "",
-    //   params: {
-    //     client_id:
-    //       "1029131813912-i7g1k358ad467mk9on0r1ht9jj55akoq.apps.googleusercontent.com",
-    //   }
-    // },
-    login: {
+    userData: {
       email: "",
-      password: ""
+      username: "",
+      userPhoto: "",
     },
     club: {}
   },
