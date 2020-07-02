@@ -99,6 +99,17 @@ export default {
       return rtn;
     },
     async judge(result, inputComment, revenueID, cost) {
+      console.log({
+        data: {
+          revenueStatus: result ? "APPROVED" : "REJECTED",
+          revenueComment: inputComment,
+          revenueID: revenueID,
+        },
+        params: {
+          clubID: this.$store.state.club._id,
+          projectID: this.projectId,
+        },
+      });
       console.log(cost);
       await this.$store.dispatch("updateRevenue", {
         data: {

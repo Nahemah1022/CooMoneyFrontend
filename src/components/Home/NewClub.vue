@@ -1,6 +1,7 @@
 <template>
   <div class="main_c">
     <img
+      class="cross"
       :src="require('@/assets/image/Project/cross.svg')"
       @click="$emit('cancel')"
     />
@@ -12,33 +13,37 @@
       </div>
       <div class="pair">
         <div class="topic">社群成員</div>
-        <div :class="{ matchBlock: true, focus: focusPartner }">
-          <input
-            type="text"
-            @focus="focusPartner = true"
-            @blur="focusPartner = false"
-            @input="searchUser"
-            v-model="username"
-            placeholder="Your Partners"
-          />
-          <div class="selectedUsers">
-            <img
-              v-for="(user, index) in this.selectedUser"
-              :key="index"
-              :src="
-                user.userPhoto
-                  ? user.userPhoto
-                  : require('@/assets/image/Home/avatar_empty.svg')
-              "
-              alt=""
+        <div class="input-block">
+          <div :class="{ matchBlock: true, focus: focusPartner }">
+            <input
+              type="text"
+              @focus="focusPartner = true"
+              @blur="focusPartner = false"
+              @input="searchUser"
+              v-model="username"
+              placeholder="Your Partners"
             />
+            <div class="selectedUsers">
+              <img
+                v-for="(user, index) in this.selectedUser"
+                class="sel"
+                :key="index"
+                :src="
+                  user.userPhoto
+                    ? user.userPhoto
+                    : require('@/assets/image/Home/avatar_empty.svg')
+                "
+                alt=""
+              />
+            </div>
+            <MemberItem
+              v-for="(user, index) in this.matchUsers"
+              :key="index"
+              :idx="index + 1"
+              :user="user"
+              @select="selectUser"
+            ></MemberItem>
           </div>
-          <MemberItem
-            v-for="(user, index) in this.matchUsers"
-            :key="index"
-            :user="user"
-            @select="selectUser"
-          ></MemberItem>
         </div>
       </div>
       <div class="pair">
@@ -53,7 +58,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import MemberItem from "@/components/Club/MemberItem.vue";
 
 export default {
   name: "NewClub",
@@ -69,25 +74,33 @@ export default {
       uploadedFile: "",
     };
   },
+  components: {
+    MemberItem,
+  },
   methods: {
+    selectUser(user) {
+      this.selectedUser.push(user);
+    },
     async searchUser() {
+      console.log(this.username);
       let response = await this.$store.dispatch(
         "getAllUserByUsername",
         this.username
       );
       this.matchUsers = response.data.data;
-      console.log(this.matchUsers);
     },
     async create() {
       this.$emit("cancel");
       let clubMembers = [];
-      let members = this.clubMembers.split(" ");
+      let members = this.selectedUser;
       if (members[0]) {
         for (let i = 0; i < members.length; i++) {
-          clubMembers.push(members[i]);
+          clubMembers.push(members[i].username);
         }
       }
+
       clubMembers = JSON.stringify(clubMembers); // 要先轉成字串
+      console.log(clubMembers);
       let bodyFormData = new FormData();
       bodyFormData.append("clubImage", this.uploadedFile);
       bodyFormData.set("clubName", this.clubName);
@@ -122,7 +135,7 @@ export default {
   border-radius: 16px;
   background-color: #fff;
   z-index: 10;
-  img {
+  .cross {
     position: absolute;
     right: 0;
     transform: translate(20%, -20%);
@@ -152,6 +165,58 @@ export default {
         color: #8d8d8d;
         font-size: 14px;
       }
+      .input-block {
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1vh 0;
+        position: relative;
+        .selectedUsers {
+          width: auto;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .sel {
+            height: 16px;
+            margin: 2px 4px;
+          }
+        }
+        .matchBlock {
+          width: 100%;
+          min-height: 30px;
+          max-height: 30px;
+          border-radius: 20px;
+          z-index: 1;
+          border: 0;
+          background-color: #fff;
+          position: absolute;
+          transition: 0.3s;
+          overflow: hidden;
+          &.focus {
+            border: 1px #00c5b8 solid;
+            min-height: 100px;
+            max-height: 1000px;
+          }
+          input {
+            width: 90%;
+            margin: 0 auto;
+            line-height: 28px;
+            font-size: 16px;
+            border: #00c5b8 1px solid;
+            border-radius: 16px;
+            padding: 0 10px;
+            transition: 0.3s;
+            &:focus {
+              border-radius: 20px 20px 0 0;
+            }
+          }
+        }
+      }
+
       input[type="text"] {
         width: 90%;
         margin: 0 auto;

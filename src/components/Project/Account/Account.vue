@@ -34,7 +34,7 @@
           <br />
           <p>
             Or
-            <span @click="newAccount">click here</span> to create
+            <span class="hl" @click="newAccount">click here</span> to create
           </p>
         </div>
 
@@ -135,6 +135,11 @@ $transition: 0.5s;
 * {
   background-color: transparent;
 }
+
+.hl {
+  font-weight: 700;
+}
+
 .submain {
   width: 100%;
   .block {

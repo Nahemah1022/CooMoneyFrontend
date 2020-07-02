@@ -16,11 +16,48 @@
           <img class="cross" src="@/assets/image/Project/cross.svg" alt />
         </div>
       </div>
-      <input type="text" v-model="addUsername" />
+      <div class="input-block">
+        <div :class="{ matchBlock: true, focus: focusPartner }">
+          <input
+            type="text"
+            @focus="focusPartner = true"
+            @blur="focusPartner = false"
+            @input="searchUser"
+            v-model="addUsername"
+            placeholder="Your Partners"
+          />
+          <div class="selectedUsers">
+            <img
+              v-for="(user, index) in this.selectedUser"
+              class="sel"
+              :key="index"
+              :src="
+                user.userPhoto
+                  ? user.userPhoto
+                  : require('@/assets/image/Home/avatar_empty.svg')
+              "
+              alt=""
+            />
+          </div>
+          <MemberItem
+            v-for="(user, index) in this.matchUsers"
+            :key="index"
+            :idx="index + 1"
+            :user="user"
+            @select="selectUser"
+          ></MemberItem>
+        </div>
+      </div>
     </div>
 
     <div v-if="tabIndex === 2" :class="{ judge: true, show: judge }">
-      <div class="header">入社申請</div>
+      <div class="header">
+        入社申請
+        <img
+          @click="judge = false"
+          :src="require('@/assets/image/Project/Revenue/down.svg')"
+        />
+      </div>
       <MemberItem
         v-for="(member, index) in applicants"
         :key="index"
@@ -151,6 +188,11 @@ export default {
   },
   data() {
     return {
+      addUsername: "",
+      matchUsers: [],
+      selectedUser: [],
+      focusPartner: false,
+
       announceInputing: false,
       judge: false,
       preClub: {},
@@ -158,7 +200,6 @@ export default {
         intro: "",
         announces: [],
       },
-      addUsername: "",
       members: [],
       tabs: [{ name: "簡介" }, { name: "公告" }, { name: "成員" }],
       tabIndex: 0,
@@ -250,6 +291,18 @@ export default {
     addMember() {
       this.isAddingMember = true;
     },
+    selectUser(user) {
+      this.addUsername = user.username;
+    },
+    async searchUser() {
+      console.log(this.addUsername);
+      let response = await this.$store.dispatch(
+        "getAllUserByUsername",
+        this.addUsername
+      );
+      this.matchUsers = response.data.data;
+      console.log(this.matchUsers);
+    },
     async addUser() {
       let response = await this.$store.dispatch("addClubMembers", {
         data: { username: this.addUsername },
@@ -304,13 +357,55 @@ $tabHeight: 36px;
         left: 92%;
       }
     }
-    input {
-      width: 50vw;
-      height: 24px;
-      line-height: 24px;
-      border: 1px solid #00c5b8;
-      border-radius: 16px;
-      padding: 5px 10px;
+    .input-block {
+      height: auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1vh 0;
+      position: relative;
+      .selectedUsers {
+        width: auto;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        .sel {
+          height: 16px;
+          margin: 2px 4px;
+        }
+      }
+      .matchBlock {
+        width: 50vw;
+        min-height: 30px;
+        max-height: 30px;
+        border-radius: 20px;
+        z-index: 1;
+        border: 0;
+        background-color: #fff;
+        position: absolute;
+        transition: 0.3s;
+        overflow: hidden;
+        &.focus {
+          border: 1px #00c5b8 solid;
+          min-height: 100px;
+          max-height: 1000px;
+        }
+        input {
+          width: 44vw;
+          height: 20px;
+          line-height: 20px;
+          border: 1px solid #00c5b8;
+          border-radius: 16px;
+          padding: 5px 10px;
+          transition: 0.3s;
+          &:focus {
+            border-radius: 20px 20px 0 0;
+          }
+        }
+      }
     }
   }
   .judge {
@@ -319,7 +414,7 @@ $tabHeight: 36px;
     transform: translateX(-50%);
     height: 50vh;
     position: fixed;
-    top: 100vh;
+    top: 110vh;
     border: 0;
     border-radius: 20px;
     transition: 0.3s;
@@ -335,6 +430,13 @@ $tabHeight: 36px;
       font-weight: 700;
       color: #00c5b8;
       text-align: center;
+      position: relative;
+      img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 15px;
+      }
     }
   }
   .upper {
