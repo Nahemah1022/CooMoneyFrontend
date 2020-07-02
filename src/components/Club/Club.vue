@@ -275,6 +275,7 @@ export default {
         res.data.data.clubAnnounce[res.data.data.clubAnnounce.length - 1]
       );
       console.log(this.club.announces);
+      this.inputAnnounce = "";
     },
     async deleteAnnounce(announceID) {
       this.club.announces = this.club.announces.filter(
