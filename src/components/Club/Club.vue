@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main_club">
     <Header
       :title="''"
       :right="require('@/assets/image/Home/avatar_empty.svg')"
@@ -26,19 +26,6 @@
             v-model="addUsername"
             placeholder="Your Partners"
           />
-          <div class="selectedUsers">
-            <img
-              v-for="(user, index) in this.selectedUser"
-              class="sel"
-              :key="index"
-              :src="
-                user.userPhoto
-                  ? user.userPhoto
-                  : require('@/assets/image/Home/avatar_empty.svg')
-              "
-              alt=""
-            />
-          </div>
           <MemberItem
             v-for="(user, index) in this.matchUsers"
             :key="index"
@@ -53,10 +40,7 @@
     <div v-if="tabIndex === 2" :class="{ judge: true, show: judge }">
       <div class="header">
         入社申請
-        <img
-          @click="judge = false"
-          :src="require('@/assets/image/Project/Revenue/down.svg')"
-        />
+        <img @click="judge = false" :src="require('@/assets/image/Project/Revenue/down.svg')" />
       </div>
       <MemberItem
         v-for="(member, index) in applicants"
@@ -69,15 +53,9 @@
     </div>
 
     <BlurMask :show="isAddingMember || judge"></BlurMask>
-    <div
-      class="upper"
-      :style="{ backgroundImage: 'url(' + preClub.clubImage + ')' }"
-    >
+    <div class="upper" :style="{ backgroundImage: 'url(' + preClub.clubImage + ')' }">
       <div class="info">
-        <img
-          class="avatar"
-          :src="require('@/assets/image/Home/avatar_empty.svg')"
-        />
+        <img class="avatar" :src="require('@/assets/image/Home/avatar_empty.svg')" />
         <div class="space"></div>
         <h1>{{ club.name }}</h1>
       </div>
@@ -90,25 +68,15 @@
           :key="index"
           :class="{ selected: tabIndex === index }"
           @click="tabIndex = index"
-        >
-          {{ tab.name }}
-        </div>
+        >{{ tab.name }}</div>
       </div>
       <div class="space"></div>
       <div v-if="tabIndex === 0" class="intro">
         <div class="title">
           <span>社群簡介</span>
-          <font-awesome-icon :icon="type" @click="editIntro">
-          </font-awesome-icon>
+          <font-awesome-icon :icon="type" @click="editIntro"></font-awesome-icon>
         </div>
-        <textarea
-          v-if="introExist"
-          v-model="club.intro"
-          name="intro"
-          id="edit"
-          cols="60"
-          rows="10"
-        ></textarea>
+        <textarea v-if="introExist" v-model="club.intro" name="intro" id="edit" cols="60" rows="10"></textarea>
         <div class="content">{{ club.intro }}</div>
       </div>
       <!-- <textarea v-if="" name="intro" id="intro" cols="30" rows="10"></textarea> -->
@@ -122,7 +90,7 @@
         <div :class="{ container: true, onFocus: announceInputing }">
           <textarea
             placeholder="撰寫公告..."
-            name=""
+            name
             id="messege"
             cols="10"
             rows="5"
@@ -136,8 +104,7 @@
             size="lg"
             style="color: #00c5b8"
             @click="addAnnounce"
-          >
-          </font-awesome-icon>
+          ></font-awesome-icon>
         </div>
       </div>
       <div v-if="tabIndex === 2" class="member">
@@ -148,9 +115,11 @@
               <div @click="addMember">新增成員</div>
               <div @click="judge = !judge">
                 入社申請
-                <span v-if="application.length !== 0">{{
+                <span v-if="application.length !== 0">
+                  {{
                   application.length
-                }}</span>
+                  }}
+                </span>
               </div>
             </div>
             <span>{{ club.members.length + "人" }}</span>
@@ -211,7 +180,7 @@ export default {
       applicants: [],
     };
   },
-  beforeMount: async function() {
+  beforeMount: async function () {
     this.preClub = this.$store.state.club;
     this.club.name = this.preClub.clubName;
     this.club.createDate = this.preClub.createdAt
@@ -274,13 +243,12 @@ export default {
       this.club.announces.push(
         res.data.data.clubAnnounce[res.data.data.clubAnnounce.length - 1]
       );
-      console.log(this.club.announces);
       this.inputAnnounce = "";
     },
     async deleteAnnounce(announceID) {
-      this.club.announces = this.club.announces.filter(
-        (a) => a._id !== announceID
-      );
+      this.club.announces = this.club.announces.filter((a) => {
+        return a._id !== announceID;
+      });
     },
     async onJudge(result, appId) {
       await this.$store.dispatch("updateApplication", {
@@ -302,7 +270,6 @@ export default {
         this.addUsername
       );
       this.matchUsers = response.data.data;
-      console.log(this.matchUsers);
     },
     async addUser() {
       let response = await this.$store.dispatch("addClubMembers", {
@@ -321,8 +288,9 @@ export default {
 $textBorderColor: #5d5d5d;
 $tabHeight: 36px;
 
-.main {
+.main_club {
   width: 100%;
+  height: 100vh;
   overflow: hidden;
   // position: relative;
   .addMember {
@@ -330,7 +298,7 @@ $tabHeight: 36px;
     top: 50%;
     left: 50%;
     width: 70vw;
-    height: 20vw;
+    height: 30vw;
     transform: translate(-50%, -50%);
     z-index: 2000;
     display: flex;
@@ -348,14 +316,14 @@ $tabHeight: 36px;
       .check {
         position: absolute;
         z-index: 100;
-        top: 2%;
-        left: 84%;
+        top: 3%;
+        left: 82%;
       }
       .cross {
         position: absolute;
         z-index: 100;
-        top: 2%;
-        left: 92%;
+        top: 3%;
+        left: 91%;
       }
     }
     .input-block {
@@ -367,22 +335,11 @@ $tabHeight: 36px;
       justify-content: space-between;
       margin: 1vh 0;
       position: relative;
-      .selectedUsers {
-        width: auto;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        .sel {
-          height: 16px;
-          margin: 2px 4px;
-        }
-      }
       .matchBlock {
-        width: 50vw;
+        width: 56vw;
         min-height: 30px;
         max-height: 30px;
-        border-radius: 20px;
+        border-radius: 10px;
         z-index: 1;
         border: 0;
         background-color: #fff;
@@ -395,15 +352,15 @@ $tabHeight: 36px;
           max-height: 1000px;
         }
         input {
-          width: 44vw;
-          height: 20px;
-          line-height: 20px;
+          width: 50vw;
+          height: 18px;
+          line-height: 18px;
           border: 1px solid #00c5b8;
-          border-radius: 16px;
+          border-radius: 10px;
           padding: 5px 10px;
           transition: 0.3s;
           &:focus {
-            border-radius: 20px 20px 0 0;
+            border-radius: 10px 10px 0 0;
           }
         }
       }
@@ -517,7 +474,9 @@ $tabHeight: 36px;
     }
     .intro {
       width: 90%;
+      height: 62vh;
       margin: 2vh auto;
+
       color: #8d8d8d;
       .title {
         font-size: 26px;
@@ -531,16 +490,19 @@ $tabHeight: 36px;
         position: relative;
         border: 0;
         width: 100%;
-        height: 100%;
+        height: 30vh;
         font-size: 3vh;
       }
       .content {
         white-space: pre-wrap;
+        padding: 4px;
+        height: 54vh;
+        overflow-y: scroll;
         font-size: 14px;
       }
     }
     .announce {
-      height: 70vh;
+      height: 60vh;
       overflow: scroll;
       .container {
         height: 40px;
@@ -624,7 +586,7 @@ $tabHeight: 36px;
         }
       }
       .memberBlock {
-        height: 60vh;
+        height: 56vh;
         overflow-x: hidden;
         overflow-y: scroll;
       }

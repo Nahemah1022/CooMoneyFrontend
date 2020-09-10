@@ -1,20 +1,20 @@
 <template>
   <div class="main">
-    <img
+    <font-awesome-icon
+      icon="house-user"
+      :style="{color: active==3 ? '#00c5b8' : '#dbdbdb'}"
       @click="$router.push('/Club')"
-      :src="require(`@/assets/image/Footer/icon_chat${(active==3) ? '_active' : ''}.svg`)"
-      alt
-    />
-    <img
+    ></font-awesome-icon>
+    <font-awesome-icon
+      icon="wallet"
+      :style="{color: active==2 ? '#00c5b8' : '#dbdbdb'}"
       @click="$router.push('/Project')"
-      :src="require(`@/assets/image/Footer/icon_home${(active==2) ? '_active' : ''}.svg`)"
-      alt
-    />
-    <img
+    ></font-awesome-icon>
+    <font-awesome-icon
+      icon="chart-pie"
+      :style="{color: active==1 ? '#00c5b8' : '#dbdbdb'}"
       @click="$router.push('/Analysis')"
-      :src="require(`@/assets/image/Footer/icon_analysis${(active==1) ? '_active' : ''}.svg`)"
-      alt
-    />
+    ></font-awesome-icon>
   </div>
 </template>
 
@@ -23,9 +23,9 @@ export default {
   name: "Footer",
   props: {
     active: {
-      type: Number
-    }
-  }
+      type: Number,
+    },
+  },
 };
 </script>
 
@@ -43,5 +43,9 @@ export default {
   bottom: 0;
   background-color: #fff;
   box-shadow: 0px -1px 10px #c8c8c8;
+  svg {
+    width: 30px;
+    height: 30px;
+  }
 }
 </style>

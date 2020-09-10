@@ -1,5 +1,5 @@
 <template>
-  <div class="main_b">
+  <div class="main_b" v-if="!announce.deleted">
     <div class="header">
       <div class="left">
         <img :src="establisher.userPhoto" alt />
@@ -7,11 +7,7 @@
       </div>
       <!-- <div class="title">{{ announce.title }}</div> -->
       <div class="date">
-        <font-awesome-icon
-          icon="trash-alt"
-          style="color: #00c5b8"
-          @click="deleteAnnounce"
-        ></font-awesome-icon>
+        <font-awesome-icon icon="trash-alt" style="color: #00c5b8" @click="deleteAnnounce"></font-awesome-icon>
       </div>
     </div>
     <div class="content">{{ announce.info }}</div>
@@ -38,7 +34,14 @@ export default {
       this.$emit("deleteAnnounce", this.announce._id);
     },
   },
-  beforeMount: async function() {
+  beforeMount: async function () {
+    let userID = [];
+    userID.push(this.announce.establisher);
+    userID = JSON.stringify(userID);
+    let response = await this.$store.dispatch("getUserByID", { userID });
+    this.establisher = response.data.data[0];
+  },
+  updated: async function () {
     let userID = [];
     userID.push(this.announce.establisher);
     userID = JSON.stringify(userID);
