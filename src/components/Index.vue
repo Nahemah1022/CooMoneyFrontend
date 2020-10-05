@@ -51,9 +51,7 @@
     <!-- rwd_slider_container_wrapper-->
 
     <p class="title">Keep Track Of Money</p>
-    <p class="subtitle">
-      Tracking every expenses you have and understand your spending pattern
-    </p>
+    <p class="subtitle">Tracking every expenses you have and understand your spending pattern</p>
     <button class="login" @click="Login">Log In</button>
     <button class="signup" @click="SignUp">Sign Up</button>
   </div>
@@ -93,9 +91,9 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  padding-top: 5vh;
+  margin-top: 5vh;
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   position: absolute;
   background-color: #ffffff;
 }
