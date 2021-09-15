@@ -63,7 +63,8 @@ export default {
     status: String,
     description: String,
     fullRevenue: Boolean,
-    comment: String
+    comment: String,
+    revenueID: String
   },
   components: {
     Judgement
@@ -78,8 +79,8 @@ export default {
         // this.$emit("toggle");
       }
     },
-    judge(result) {
-      this.$emit("judge", result);
+    judge(result, inputComment) {
+      this.$emit("judge", result, inputComment, this.revenueID, this.cost);
     }
   }
 };
@@ -134,7 +135,7 @@ $transition: 0.3s;
     .titleBlock {
       width: 70%;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: flex-start;
       height: 3vh;
       font-size: 16px;
@@ -163,6 +164,7 @@ $transition: 0.3s;
         width: auto;
         height: auto;
         font-size: 20px;
+        align-items: flex-start;
         img {
           width: 5vw;
           &:not(.space) {

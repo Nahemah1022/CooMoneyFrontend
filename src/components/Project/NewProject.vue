@@ -4,77 +4,145 @@
       <ProjectItem
         class="theme"
         :large="true"
-        :project="{id: this.id, title: this.projectName, theme: this.theme}"
+        :project="{
+          id: this.id,
+          projectName: this.projectName,
+          projectTheme: this.projectTheme,
+        }"
       ></ProjectItem>
       <!-- <img class="theme" :src="require(`@/assets/image/Project/Theme_${theme}.svg`)" alt /> -->
+      <div class="input-block">
+        <div :class="{ matchBlock: true, focus: focusPartner }">
+          <input
+            type="text"
+            @focus="focusPartner = true"
+            @blur="focusPartner = false"
+            @input="searchUser"
+            v-model="username"
+            placeholder="Your Managers"
+          />
+          <div class="selectedUsers">
+            <img
+              v-for="(user, index) in this.selectedUser"
+              :key="index"
+              :src="
+                user.userPhoto
+                  ? user.userPhoto
+                  : require('@/assets/image/Home/avatar_empty.svg')
+              "
+              alt=""
+            />
+          </div>
+          <MemberItem
+            v-for="(user, index) in this.matchUsers"
+            :key="index"
+            :user="user"
+            @select="selectUser"
+          ></MemberItem>
+        </div>
+        <input
+          type="text"
+          class="name"
+          v-model="projectName"
+          placeholder="Project's Name"
+        />
+      </div>
       <div class="theme-pick">
         <p>choose cover</p>
         <div class="pick-bar">
-          <label v-for="index in coverCount" :key="index" :for="`cover_${index}`">
+          <label
+            v-for="index in coverCount"
+            :key="index"
+            :for="`cover_${index}`"
+          >
             <input type="radio" :name="`covers`" :id="`cover_${index}`" />
 
             <img :src="require(`@/assets/image/Project/cover_${index}.svg`)" />
           </label>
         </div>
       </div>
-      <div class="input-block">
-        <input type="text" name="name" v-model="projectName" placeholder="Project's Name" />
-        <input type="text" name="partners[]" placeholder="Your Partners" />
-      </div>
       <div class="budget-block">
         <p>Budget</p>
         <div class="budget">
           <span>$</span>
-          <input type="text" name="budget" v-model="budget" />
+          <input type="text" name="budget" v-model="projectBudget" />
           <img src="@/assets/image/Project/TWD.svg" alt />
         </div>
       </div>
 
-      <button @click="$emit('newProject', {title: projectName, budget: parseInt(budget)})">Confirm</button>
+      <button @click="submit">Confirm</button>
     </div>
   </div>
 </template>
 
 <script>
 import ProjectItem from "@/components/Project/ProjectItem.vue";
+import MemberItem from "@/components/Club/MemberItem.vue";
 
 export default {
   name: "NewProject",
   data() {
     return {
+      username: "",
+      matchUsers: [],
+      selectedUser: [],
+      focusPartner: false,
       id: this.preProject.id,
       projectName:
-        this.preProject.title == undefined
+        this.preProject.projectName == undefined
           ? "New Project"
-          : this.preProject.title,
-      theme: this.preProject.theme,
+          : this.preProject.projectName,
+      projectTheme: this.preProject.projectTheme,
       partners: [],
       coverCount: 5,
-      budget:
-        this.preProject.budget == undefined ? null : this.preProject.budget
+      projectBudget:
+        this.preProject.projectBudget == undefined
+          ? null
+          : this.preProject.projectBudget,
     };
   },
   props: {
-    preProject: Object
+    preProject: Object,
   },
   components: {
-    ProjectItem
+    ProjectItem,
+    MemberItem,
   },
-  // mount() {
-  //   if (this.preProject) {
-  //     this.id = this.preProject.id;
-  //     this.title = "Edit Project";
-  //     this.projectName = this.preProject.title;
-  //     this.theme = this.preProject.theme;
-  //     // TODO: get budget, partners from db
-  //   }
-  // },
-  methods: {}
+  methods: {
+    selectUser(user) {
+      this.selectedUser.push(user);
+      console.log(this.selectedUser);
+    },
+    submit() {
+      let checkers = [];
+      for (const user in this.selectedUser) {
+        checkers.push(user.username);
+      }
+      checkers = JSON.stringify(checkers);
+      this.$emit("newProject", {
+        projectName: this.projectName,
+        projectBudget: parseInt(this.projectBudget),
+        projectChecker: checkers,
+        projectTheme: "colorful",
+      });
+    },
+    async searchUser() {
+      let response = await this.$store.dispatch("getUserByUsername", {
+        username: this.username,
+        clubID: this.$store.state.club._id,
+      });
+      this.matchUsers = response.data.data;
+      console.log(this.matchUsers);
+    },
+  },
+  beforeMount() {
+    console.log(this.preProject);
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .center {
   padding-top: 8vh;
   display: flex;
@@ -111,19 +179,59 @@ export default {
     }
   }
   .input-block {
-    height: 16vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     margin: 1vh 0;
-    input {
+    position: relative;
+    .selectedUsers {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      img {
+        height: 30px;
+        margin: 5px 8px;
+      }
+    }
+    .matchBlock {
+      width: 100%;
+      min-height: 36px;
+      max-height: 36px;
+      border-radius: 20px;
+      z-index: 1;
+      border: 0;
+      background-color: #fff;
+      position: absolute;
+      transition: 0.3s;
+      overflow: hidden;
+      &.focus {
+        border: 1px #00c5b8 solid;
+        min-height: 100px;
+        max-height: 1000px;
+      }
+      input {
+        width: 240px;
+        line-height: 32px;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 16px;
+        border: #00c5b8 1px solid;
+        transition: 0.3s;
+        &:focus {
+          border-radius: 20px 20px 0 0;
+        }
+      }
+    }
+    .name {
       width: 240px;
-      line-height: 35px;
+      line-height: 32px;
       border-radius: 20px;
       text-align: center;
       font-size: 16px;
       border: #00c5b8 1px solid;
+      margin-top: 50px;
     }
   }
   .budget-block {

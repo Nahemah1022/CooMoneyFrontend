@@ -1,26 +1,54 @@
 <template>
   <div class="submain">
     <!-- <BlurMask :show="judgementShow"></BlurMask> -->
-    <div :class="{block: true, fullBlock: full}">
-      <div :class="{header: true, fullHeader: full}">
+    <div :class="{ block: true, fullBlock: full }">
+      <div :class="{ header: true, fullHeader: full }">
         <span>Bills</span>
         <img
           @click="fullRevenue"
-          :src="require('@/assets/image/Project/Revenue/'+ (full ? 'down' : 'option') +'.svg')"
+          :src="
+            require('@/assets/image/Project/Revenue/' +
+              (full ? 'down' : 'option') +
+              '.svg')
+          "
         />
       </div>
-      <div :class="{bills: true, fullBills: full}">
-        <div v-for="bill in bills" :key="bill.id">
-          <p class="date" v-if="showDate(full && bill.date)">{{bill.date}}</p>
-          <RevenueItem
-            :costTitle="bill.title"
-            :category="bill.categoty"
-            :cost="costFormat(bill.cost)"
-            :status="bill.status"
-            :description="bill.description"
-            :fullRevenue="full"
-            :comment="bill.comment"
-          ></RevenueItem>
+      <div :class="{ bills: true, fullBills: full }">
+        <div v-if="bills.length !== 0">
+          <div v-for="bill in bills" :key="bill._id">
+            <p
+              class="date"
+              v-if="
+                showDate(
+                  full &&
+                    bill.revenueYear +
+                      '-' +
+                      bill.revenueMonth +
+                      '-' +
+                      bill.revenueDay
+                )
+              "
+            >
+              {{
+                bill.revenueYear +
+                  "-" +
+                  bill.revenueMonth +
+                  "-" +
+                  bill.revenueDay
+              }}
+            </p>
+            <RevenueItem
+              :costTitle="bill.revenueTitle"
+              :category="bill.revenueTag"
+              :cost="costFormat(bill.revenueCost)"
+              :status="bill.revenueStatus.toLowerCase()"
+              :description="bill.revenueDescription"
+              :fullRevenue="full"
+              :revenueID="bill._id"
+              :comment="bill.revenueComment"
+              @judge="judge"
+            ></RevenueItem>
+          </div>
         </div>
       </div>
     </div>
@@ -36,19 +64,22 @@ export default {
   data() {
     return {
       dates: {},
-      detailedBills: {}
+      bills: [],
+      detailedBills: {},
     };
   },
   components: {
-    RevenueItem
+    RevenueItem,
     //BlurMask
   },
   props: {
-    projectId: Number,
+    projectId: String,
     full: Boolean,
-    bills: Array
   },
   methods: {
+    pushBill(bill) {
+      this.bills.push(bill);
+    },
     fullRevenue() {
       if (!this.full) {
         for (const date in this.dates) {
@@ -67,7 +98,31 @@ export default {
       rtn = rtn.slice(0, -2);
       return rtn;
     },
-
+    async judge(result, inputComment, revenueID, cost) {
+      console.log({
+        data: {
+          revenueStatus: result ? "APPROVED" : "REJECTED",
+          revenueComment: inputComment,
+          revenueID: revenueID,
+        },
+        params: {
+          clubID: this.$store.state.club._id,
+          projectID: this.projectId,
+        },
+      });
+      console.log(cost);
+      await this.$store.dispatch("updateRevenue", {
+        data: {
+          revenueStatus: result ? "APPROVED" : "REJECTED",
+          revenueComment: inputComment,
+          revenueID: revenueID,
+        },
+        params: {
+          clubID: this.$store.state.club._id,
+          projectID: this.projectId,
+        },
+      });
+    },
     showDate(date) {
       if (!this.dates[date]) {
         this.dates[date] = true;
@@ -75,22 +130,29 @@ export default {
       } else {
         return false;
       }
+    },
+  },
+  async beforeMount() {
+    let projectID = this.projectId;
+    let response = await this.$store.dispatch("getAllRevenue", { projectID });
+    response = response.data.data;
+    this.bills = response;
+    console.log(this.bills);
+    for (const bill of this.bills) {
+      let date =
+        bill.revenueYear + "-" + bill.revenueMonth + "-" + bill.revenueDay;
+      if (this.detailedBills[date] == undefined) {
+        this.detailedBills[date] = new Array();
+        this.dates[date] = false;
+      }
+      this.detailedBills[date].push(bill);
     }
   },
-  beforeMount() {
-    for (const bill of this.bills) {
-      if (this.detailedBills[bill.date] == undefined) {
-        this.detailedBills[bill.date] = new Array();
-        this.dates[bill.date] = false;
-      }
-      this.detailedBills[bill.date].push(bill);
-    }
-  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 $transition: 0.5s;
 * {
   background-color: transparent;

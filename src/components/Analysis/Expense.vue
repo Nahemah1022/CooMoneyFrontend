@@ -21,7 +21,12 @@
         :color="Colors"
         v-if="chartType(2)"
       ></ve-bar>
-      <ve-line class="Line" :data="lineExpense()" :extend="lineExtend" v-if="chartType(3)"></ve-line>
+      <ve-line
+        class="Line"
+        :data="lineExpense()"
+        :extend="lineExtend"
+        v-if="chartType(3)"
+      ></ve-line>
       <!-- for toggle button -->
       <div class="container">
         <h2>{{ changeText() }}</h2>
@@ -44,7 +49,7 @@ export default {
   props: {
     //傳進來的project
     sendExpense: Object,
-    sendIncome: Object
+    sendIncome: Object,
   },
   components: {},
   data() {
@@ -58,23 +63,24 @@ export default {
           x2: 10,
           y2: 10,
           top: 20,
-          width: "95%"
+          width: "95%",
+          height: "auto",
         },
         xAxis: {
           type: "category",
           splitNumber: 3,
-          axisLabel: { fontSize: 15, interval: 3 } //隔一個顯示一格
+          axisLabel: { fontSize: 15, interval: 3 }, //隔一個顯示一格
         },
         yAxis: {
-          axisLabel: { fontSize: 12, interval: 0 }
+          axisLabel: { fontSize: 12, interval: 0 },
         },
         series: {
           lineStyle: {
             type: "solid",
-            width: 1
+            width: 1,
           },
           symbol: "circle",
-          smooth: 0
+          smooth: 0,
         },
 
         //can slide when overflow
@@ -84,9 +90,9 @@ export default {
             show: true,
             start: 0,
             end: 100,
-            maxSpan: 60
-          }
-        ]
+            maxSpan: 60,
+          },
+        ],
 
         //color: ["#61dddd", "#b3b2b2"]
       },
@@ -97,26 +103,26 @@ export default {
           cursor: "pointer",
           itemStyle: {
             shadowColor: "rgba(0, 0, 0, 0.3)",
-            shadowBlur: 5
+            shadowBlur: 5,
           },
           //圖示
 
           label: {
             show: false,
-            position: "center"
+            position: "center",
           },
           emphasis: {
             label: {
               show: true,
 
               fontSize: "20",
-              fontWeight: "bold"
-            }
+              fontWeight: "bold",
+            },
           },
           radius: [40, 130],
           //right: '145',
-          bottom: "50"
-        }
+          bottom: "50",
+        },
       },
       pieLegend: {
         //type: 'scroll',
@@ -125,7 +131,7 @@ export default {
         //left: '140',
         top: "350",
         itemHeight: 30,
-        itemWidth: 30
+        itemWidth: 30,
       },
       BackgroundColor: "transparent",
       //顏色藥用v-bind設置
@@ -137,18 +143,18 @@ export default {
         "#A6CEE3",
         "#C4FFFB",
         "#B2DF8A",
-        "#CE90E4"
+        "#CE90E4",
       ],
       barExtend: {
         grid: {
-          width: 300,
-          height: 330
+          width: "90%",
+          height: "auto",
         },
 
         yAxis: {
           axisLabel: {
-            fontSize: 10
-          }
+            fontSize: 10,
+          },
         },
         legend: {
           //type: 'scroll',
@@ -157,13 +163,13 @@ export default {
           //left: 140,
 
           itemHeight: 20,
-          itemWidth: 20
-        }
+          itemWidth: 20,
+        },
       },
 
       //for month or item
       ischecked: false,
-      h1Text: "Category comparison"
+      h1Text: "Category comparison",
     };
   },
   methods: {
@@ -204,6 +210,7 @@ export default {
       }
     },
     pieExpense() {
+      //console.log(this.sendExpense);
       let key = Object.keys(this.sendExpense);
       let projectExpense = this.sendExpense[key];
       //console.log(projectExpense);
@@ -212,25 +219,28 @@ export default {
       for (let i = 0; i < projectExpense.length; ++i) {
         let name = projectExpense[i].Classification;
         let money = projectExpense[i].money;
-        let index = expenseItem.findIndex(e => e.name === name);
+        let index = expenseItem.findIndex((e) => e.name === name);
         //沒有這個項目
-        if (index === -1) {
-          expenseItem.push({ name: name, money: money });
-        }
-        //已經有這個項目把錢加上去
-        else {
-          expenseItem[index].money += money;
+        if (money > 0) {
+          if (index === -1) {
+            expenseItem.push({ name: name, money: money });
+          }
+          //已經有這個項目把錢加上去
+          else {
+            expenseItem[index].money += money;
+          }
         }
       }
       //console.log(expenseItem);
       return {
         columns: ["name", "money"],
-        rows: expenseItem
+        rows: expenseItem,
       };
     },
     barExpense() {
       //console.log(this.sendExpense);
       //得到這個Project的所有名字
+
       let keys = Object.keys(this.sendExpense);
       let Columns = ["items"];
       for (let i = 0; i < keys.length; ++i) {
@@ -247,40 +257,44 @@ export default {
         for (let j = 0; j < projectExpense.length; ++j) {
           //console.log(projectExpense.length);
           let name = projectExpense[j].Classification;
+          //console.log("name=" + name);
           let money = projectExpense[j].money;
-          let index = expenseItem.findIndex(e => e.items === name);
+          let index = expenseItem.findIndex((e) => e.items === name);
           //沒有這個項目
-          if (index === -1) {
-            let key = keys[i]; //project name
-            let obj = {};
-            obj["items"] = name;
-            obj[key] = money;
-            expenseItem.push(obj);
-          }
-          //已經有這個項目把錢加上去
-          else {
-            //project name
-            let key = keys[i];
-            let obj = expenseItem[index];
+          if (money > 0) {
+            if (index === -1) {
+              let key = keys[i]; //project name
+              let obj = {};
+              obj["items"] = name;
+              obj[key] = money;
+              expenseItem.push(obj);
+            }
+            //已經有這個項目把錢加上去
+            else {
+              //project name
+              let key = keys[i];
+              let obj = expenseItem[index];
 
-            //已經有記錄過了把錢加上去
-            if (key in obj) obj[key] += money;
-            //還沒紀錄設定money
-            else obj[key] = money;
+              //已經有記錄過了把錢加上去
+              if (key in obj) obj[key] += money;
+              //還沒紀錄設定money
+              else obj[key] = money;
 
-            expenseItem[index] = obj;
-            //console.log(expenseItem[index]);
+              expenseItem[index] = obj;
+              //console.log(expenseItem[index]);
+            }
           }
         }
       }
       //console.log(expenseItem);
       return {
         columns: Columns,
-        rows: expenseItem
+        rows: expenseItem,
       };
     },
     lineExpense() {
       //get expense income project
+      //console.log(this.sendIncome);
       let Expensekeys = Object.keys(this.sendExpense);
       let M_Statistic = [];
       //we need to add every project to column at first
@@ -299,95 +313,55 @@ export default {
         for (let j = 0; j < project.length; ++j) {
           let date = project[j].month;
 
-          let index = M_Statistic.findIndex(d => d.month === date);
+          let index = M_Statistic.findIndex((d) => d.month === date);
           let money = -project[j].money;
+
           //還沒有這個Month建立一個
+
+          //console.log("fuck");
           if (index === -1) {
             let obj = {};
             obj["month"] = date; //month:2018-8.....
             obj[Expensekeys[k]] = money; //projectname:money
+            // console.log(obj);
             M_Statistic.push(obj);
+            //console.log(M_Statistic);
           } else {
             let key = Expensekeys[k]; //
 
             let obj = M_Statistic[index];
 
             //if is same project
-            if (key in obj) obj[key] += money;
+            if (key in obj) {
+              obj[key] += money;
+              //console.log(money);
+            }
             //if this is other project we need to add new key to rows
             else obj[key] = money;
 
             //update
-            M_Statistic[key] = obj;
+            M_Statistic[index] = obj;
+            //console.log(M_Statistic);
+            //console.log(M_Statistic[key]);
+            // console.log(obj);
           }
         }
       }
-
+      console.log(M_Statistic);
       //最後還要排一次
       //先照月份排序
 
       M_Statistic.sort((a, b) => {
         return a.month < b.month ? -1 : 1;
       });
-      //console.log(M_Statistic);
 
-      /*return {
+      return {
         columns: Columns,
         rows: M_Statistic,
-      };*/
-      return this.lineBalance(Columns, M_Statistic);
-    },
-    lineBalance(C, R) {
-      //use it to add income
-
-      let Incomekeys = Object.keys(this.sendIncome);
-      //console.log(C);
-      //先加column
-      for (let i = 0; i < Incomekeys.length; ++i) {
-        if (!C.includes(Incomekeys[i])) C.push(Incomekeys[i]);
-      }
-      //every project
-      for (let k = 0; k < Incomekeys.length; ++k) {
-        //先照月份排序
-        let project = this.sendIncome[Incomekeys[k]];
-        project.sort((a, b) => {
-          return a.month < b.month ? -1 : 1;
-        });
-        //every month
-        for (let j = 0; j < project.length; ++j) {
-          let date = project[j].month;
-
-          let index = R.findIndex(d => d.month === date);
-          let money = project[j].money;
-          //還沒有這個Month建立一個
-          if (index === -1) {
-            let obj = {};
-            obj["month"] = date; //month:2018-8.....
-            obj[Incomekeys[k]] = money; //projectname:money
-            R.push(obj);
-          } else {
-            let key = Incomekeys[k]; //
-
-            let obj = R[index];
-
-            //if is same project
-            if (key in obj) obj[key] += money;
-            //if this is other project we need to add new key to rows
-            else obj[key] = money;
-
-            //update
-            R[key] = obj;
-          }
-        }
-      }
-      //console.log(R);
-      return {
-        columns: C,
-        rows: R
       };
-    }
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>
 

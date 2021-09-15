@@ -54,9 +54,6 @@
     <p class="subtitle">Tracking every expenses you have and understand your spending pattern</p>
     <button class="login" @click="Login">Log In</button>
     <button class="signup" @click="SignUp">Sign Up</button>
-
-
-
   </div>
 </template>
 
@@ -65,21 +62,38 @@ export default {
   name: "Index",
   methods: {
     Login() {
+      if (localStorage.getItem("username")) {
+        localStorage.removeItem("username");
+      }
+      if (localStorage.getItem("email")) {
+        localStorage.removeItem("email");
+      }
+      if (localStorage.getItem("userPhoto")) {
+        localStorage.removeItem("userPhoto");
+      }
       this.$router.push("/Login");
     },
     SignUp() {
+      if (localStorage.getItem("username")) {
+        localStorage.removeItem("username");
+      }
+      if (localStorage.getItem("email")) {
+        localStorage.removeItem("email");
+      }
+      if (localStorage.getItem("userPhoto")) {
+        localStorage.removeItem("userPhoto");
+      }
       this.$router.push("/SignUp");
-    }
-  }
+    },
+  },
 };
 </script>
 
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .main {
-  padding-top: 5vh;
+  margin-top: 5vh;
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   position: absolute;
   background-color: #ffffff;
 }
@@ -277,5 +291,4 @@ export default {
   background-color: #ffffff;
   border-color: #0eb9ab;
 }
-
 </style>

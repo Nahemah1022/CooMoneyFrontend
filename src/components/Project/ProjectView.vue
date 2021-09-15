@@ -5,12 +5,12 @@
       <swiper class="swiper" :options="swiperOption" :activeIndex="3">
         <swiper-slide v-for="preProject in projects" :key="preProject.id">
           <ProjectViewItem
-            :title="preProject.title"
-            :theme="preProject.theme"
-            :projectId="preProject.id"
-            :budget="preProject.budget"
-            :expanse="preProject.expanse"
-            :income="preProject.income"
+            :projectName="preProject.projectName"
+            :projectTheme="preProject.projectTheme"
+            :projectId="preProject._id"
+            :projectBudget="preProject.projectBudget"
+            :projectTotalExpanse="preProject.projectTotalExpanse"
+            :projectTotalIncome="preProject.projectTotalIncome"
           ></ProjectViewItem>
         </swiper-slide>
       </swiper>
